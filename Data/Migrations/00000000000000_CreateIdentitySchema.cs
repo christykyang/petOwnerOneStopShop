@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PetOwnersOneStopShop.Data.Migrations
+namespace petOwnerOneStopShop.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
