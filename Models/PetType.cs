@@ -10,6 +10,7 @@ namespace petOwnerOneStopShop.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Type of Pet")]
         public string TypeName { get; set; }
 
     }

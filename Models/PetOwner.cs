@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace petOwnerOneStopShop.Models
 {
+    [Authorize(Roles = "Pet Owner")]
     public class PetOwner
     {
         public int Id { get; set; }

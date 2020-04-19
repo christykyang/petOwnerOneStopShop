@@ -20,6 +20,7 @@ namespace petOwnerOneStopShop.Models
         public string IdentityUserId { get; set; }
         public IdentityUser identityUser { get; set; }
         [ForeignKey("BusinessType")]
+        [Display(Name = "Business Type")]
         public int? BusinessTypeId { get; set; }
         public BusinessType BusinessType { get; set; }
     }

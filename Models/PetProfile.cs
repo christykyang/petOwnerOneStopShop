@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,11 @@ namespace petOwnerOneStopShop.Models
         public bool?  isMale { get; set; }
         public bool? isAdopted { get; set; }
         [ForeignKey("PetType")]
+        [Display(Name = "Type of Pet")]
         public int? PetTypeId { get; set; }
         public PetType PetType { get; set; }
         [ForeignKey("PetOwner")]
+        [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
     }
