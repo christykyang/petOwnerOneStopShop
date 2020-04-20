@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using petOwnerOneStopShop.Contracts;
 using petOwnerOneStopShop.Data;
 using petOwnerOneStopShop.Models;
 
@@ -14,17 +17,22 @@ namespace petOwnerOneStopShop.Controllers
     [Authorize(Roles = "Pet-Friendly Business")]
     public class PetBusinessesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private IGetCoordinatesRequest _getCoordinates;
+        private IRepositoryWrapper _repo;
 
-        public PetBusinessesController(ApplicationDbContext context)
+        public IdentityUser IdentityUser { get; private set; }
+
+        public PetBusinessesController(IRepositoryWrapper repo, IGetCoordinatesRequest getCoordinates)
         {
-            _context = context;
+            _repo = repo;
+            _getCoordinates = getCoordinates;
         }
 
         // GET: PetBusinesses
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PetBusiness.Include(p => p.Address).Include(p => p.BusinessType).Include(p => p.identityUser);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,10 +44,7 @@ namespace petOwnerOneStopShop.Controllers
                 return NotFound();
             }
 
-            var petBusiness = await _context.PetBusiness
-                .Include(p => p.Address)
-                .Include(p => p.BusinessType)
-                .Include(p => p.identityUser)
+            var petBusiness = await _repo.PetBusiness.FindByCondition(p => p.Id == id)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (petBusiness == null)
             {
@@ -52,10 +57,13 @@ namespace petOwnerOneStopShop.Controllers
         // GET: PetBusinesses/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "City");
-            ViewData["BusinessTypeId"] = new SelectList(_context.Set<BusinessType>(), "Id", "Id");
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            PetBusiness petBusiness = new PetBusiness();
+
+            petBusiness.IdentityUserId = userId;
+
+            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness");
+            return View(petBusiness);
         }
 
         // POST: PetBusinesses/Create
@@ -63,36 +71,47 @@ namespace petOwnerOneStopShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,AddressId,IdentityUserId,BusinessTypeId")] PetBusiness petBusiness)
+        public IActionResult Create([Bind("Id,Name,BusinessTypeId")] PetBusiness petBusiness)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(petBusiness);
-                await _context.SaveChangesAsync();
+                if (_repo.Address.GetByAddress(petBusiness.Address) == null)
+                {
+                    _repo.Address.CreateAddress(petBusiness.Address);
+                    string url = _getCoordinates.GetAddressAsURL(petBusiness.Address);
+                    petBusiness.Address.Lat = _getCoordinates.GetLat(url, petBusiness.Address).Result;
+                    petBusiness.Address.Lng = _getCoordinates.GetLng(url, petBusiness.Address).Result;
+                    _repo.Save();
+
+                }
+                else
+                {
+                    petBusiness.Address = _repo.Address.GetByAddress(petBusiness.Address);
+                    string url = _getCoordinates.GetAddressAsURL(petBusiness.Address);
+                    petBusiness.Address.Lat = _getCoordinates.GetLat(url, petBusiness.Address).Result;
+                    petBusiness.Address.Lng = _getCoordinates.GetLng(url, petBusiness.Address).Result;
+                    _repo.Save();
+                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "City", petBusiness.AddressId);
-            ViewData["BusinessTypeId"] = new SelectList(_context.Set<BusinessType>(), "Id", "Id", petBusiness.BusinessTypeId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", petBusiness.IdentityUserId);
+            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
             return View(petBusiness);
         }
 
         // GET: PetBusinesses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var petBusiness = await _context.PetBusiness.FindAsync(id);
+            var petBusiness = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == id);
             if (petBusiness == null)
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "City", petBusiness.AddressId);
-            ViewData["BusinessTypeId"] = new SelectList(_context.Set<BusinessType>(), "Id", "Id", petBusiness.BusinessTypeId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", petBusiness.IdentityUserId);
+            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness");
             return View(petBusiness);
         }
 
@@ -112,8 +131,8 @@ namespace petOwnerOneStopShop.Controllers
             {
                 try
                 {
-                    _context.Update(petBusiness);
-                    await _context.SaveChangesAsync();
+                    _repo.PetBusiness.Update(petBusiness);
+                    await _repo.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,9 +147,7 @@ namespace petOwnerOneStopShop.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Set<Address>(), "Id", "City", petBusiness.AddressId);
-            ViewData["BusinessTypeId"] = new SelectList(_context.Set<BusinessType>(), "Id", "Id", petBusiness.BusinessTypeId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", petBusiness.IdentityUserId);
+            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
             return View(petBusiness);
         }
 
@@ -141,12 +158,12 @@ namespace petOwnerOneStopShop.Controllers
             {
                 return NotFound();
             }
-
-            var petBusiness = await _context.PetBusiness
-                .Include(p => p.Address)
-                .Include(p => p.BusinessType)
-                .Include(p => p.identityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var petBusiness = await _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == id).FirstOrDefaultAsync();
+            //var petBusiness = await _repo.PetBusiness
+            //    .Include(p => p.Address)
+            //    .Include(p => p.BusinessType)
+            //    .Include(p => p.identityUser)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
             if (petBusiness == null)
             {
                 return NotFound();
@@ -160,15 +177,22 @@ namespace petOwnerOneStopShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var petBusiness = await _context.PetBusiness.FindAsync(id);
-            _context.PetBusiness.Remove(petBusiness);
-            await _context.SaveChangesAsync();
+            var petBusiness = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == id);
+            _repo.PetBusiness.DeleteBusiness(petBusiness);
+            await _repo.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PetBusinessExists(int id)
         {
-            return _context.PetBusiness.Any(e => e.Id == id);
+            if(_repo.PetBusiness.FindByCondition(e => e.Id == id) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

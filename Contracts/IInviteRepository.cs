@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Contracts
 {
-    interface IInviteRepository
+    public interface IInviteRepository : IRepositoryBase<Invite>
     {
+        void CreateInvite(Invite invite);
     }
 }

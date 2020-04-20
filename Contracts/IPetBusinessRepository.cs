@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Contracts
 {
-    interface IPetBusinessRepository
+    public interface IPetBusinessRepository : IRepositoryBase<PetBusiness>
     {
+        PetBusiness GetPetBusiness(int petBusinessId);
+        PetBusiness GetPetBusinessById(string userId);
+        void DeleteBusiness(IQueryable<PetBusiness> petBusiness);
+        //Task FindAsync(int id);
     }
 }

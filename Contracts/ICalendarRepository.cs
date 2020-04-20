@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Contracts
 {
-    interface ICalendarRepository
+    public interface ICalendarRepository : IRepositoryBase<Calendar>
     {
+        void CreateCalendar(Calendar calendar);
     }
 }

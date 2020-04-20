@@ -8,6 +8,6 @@ namespace petOwnerOneStopShop.Contracts
 {
     public interface IEventRepository : IRepositoryBase<Event>
     {
-        void CreateEvent(Event event);
+        void CreateEvent(Event _event);
     }
 }
