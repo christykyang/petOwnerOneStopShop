@@ -183,6 +183,106 @@ namespace petOwnerOneStopShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> DisplayServices()
+        {
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int petBusinessId = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            IEnumerable<ServiceOffered> servicesOffered = await _repo.ServiceOffered.GetServicesOfferedIncludeAllAsync(petBusinessId);
+
+            return View(servicesOffered);
+        }
+        public IActionResult DisplayServiceOfferedDetails(int id)
+        {
+            ServiceOffered serviceOffered = _repo.ServiceOffered.GetServicesOfferedIncludeAll().Where(s => s.Id == id).FirstOrDefault();
+            return View(serviceOffered);
+        }
+        public IActionResult CreateServiceOffered()
+        {
+            
+            ServiceOffered serviceOffered = new ServiceOffered();
+            _repo.Service.GetAllServices();
+
+            ViewData["Services"] = new SelectList(_repo.Service.GetAllServices(), "Id", "ServiceName");
+
+            return View(serviceOffered);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateServiceOffered(ServiceOffered serviceOffered)
+        {
+            try
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _repo.ServiceOffered.CreateServiceOffered(serviceOffered.Cost, serviceOffered.PetBusiness, serviceOffered.Service);
+                _repo.Save();
+
+                return RedirectToAction(nameof(DisplayServices));
+            }
+            catch
+            {
+                return View(serviceOffered);
+            }
+        }
+
+
+        public IActionResult EditServiceOffered(int id)
+        {
+            ServiceOffered serviceOffered = _repo.ServiceOffered.FindByCondition(s => s.Id == id).FirstOrDefault();
+            //ServiceOfferedViewModel serviceOfferedViewModel = new ServiceOfferedViewModel();
+            //serviceOfferedViewModel.ServiceOfferedId = serviceOffered.Id;
+            //serviceOfferedViewModel.Address = serviceOffered.Address;
+            //serviceOfferedViewModel.Category = serviceOffered.Category;
+            //serviceOfferedViewModel.Demographic = serviceOffered.Demographic;
+            //serviceOfferedViewModel.Service = serviceOffered.Service;
+            //serviceOfferedViewModel.AgeSensitive = ConvertNullableBoolToInt(serviceOffered.Demographic.IsAgeSensitive);
+            //serviceOfferedViewModel.FamilySelection = ConvertNullableBoolToInt(serviceOffered.Demographic.FamilyFriendly);
+            //serviceOfferedViewModel.GenderSelection = ConvertNullableBoolToInt(serviceOffered.Demographic.IsMale);
+            //serviceOfferedViewModel.SmokingSelection = ConvertNullableBoolToInt(serviceOffered.Demographic.SmokingIsAllowed);
+            //serviceOfferedViewModel.Cost = serviceOffered.Cost;
+            //ViewData["Categories"] = new SelectList(_repo.Category.GetAllCategories(), "Id", "Name");
+            //Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("Co-ed", "Male", "Female");
+            //ViewData["Genders"] = new SelectList(genderDictionary, "Key", "Value");
+            //Dictionary<int, string> familyFriendly = CreateNullableBoolDictionary("Not Applicable", "Family Friendly", "Individual");
+            //ViewData["FamilySize"] = new SelectList(familyFriendly, "Key", "Value");
+            //Dictionary<int, string> smokingAllowed = CreateNullableBoolDictionary("Not Applicable", "Smoking Allowed", "No Smoking");
+            //ViewData["Smoking"] = new SelectList(smokingAllowed, "Key", "Value");
+            //Dictionary<int, string> ageSensitive = CreateNullableBoolDictionary("Not Applicable", "Above 60", "18 and up");
+            //ViewData["AgeSensitive"] = new SelectList(ageSensitive, "Key", "Value");
+            ViewData["Services"] = new SelectList(_repo.Service.GetAllServices(), "Id", "ServiceName");
+
+            serviceOffered.PetBusiness = new PetBusiness();
+            return View(serviceOffered);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditServiceOffered(int id, ServiceOffered serviceOffered)
+        {
+            ServiceOffered updatedServiceOffered = new ServiceOffered();
+            updatedServiceOffered.Id = id;
+            updatedServiceOffered.PetBusinessId = serviceOffered.PetBusinessId;
+            updatedServiceOffered.Cost = serviceOffered.Cost;
+            updatedServiceOffered.Service = _repo.Service.FindByCondition(s => s.Id == serviceOffered.Service.Id).FirstOrDefault();
+            _repo.ServiceOffered.Update(serviceOffered);
+            _repo.Save();
+            return RedirectToAction(nameof(DisplayServices));
+        }
+        public IActionResult DeleteServiceOffered(int id)
+        {
+            ServiceOffered serviceOffered = _repo.ServiceOffered.GetServicesOfferedIncludeAll(id).FirstOrDefault();
+            return View(serviceOffered);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteServiceOffered(ServiceOffered serviceOffered)
+        {
+            ServiceOffered serviceOfferedToBeDeleted = _repo.ServiceOffered.GetServicesOfferedIncludeAll().FirstOrDefault(s => s.Id == serviceOffered.Id);
+            _repo.ServiceOffered.Delete(_repo.ServiceOffered.GetServiceOffered(serviceOfferedToBeDeleted.Id));
+            _repo.Save();
+            return RedirectToAction(nameof(DisplayServices));
+
+        }
+
         private bool PetBusinessExists(int id)
         {
             if(_repo.PetBusiness.FindByCondition(e => e.Id == id) == null)
