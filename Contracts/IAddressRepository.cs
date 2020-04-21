@@ -13,5 +13,6 @@ namespace petOwnerOneStopShop.Contracts
         Address GetAddressById(int? addressId);
         Task<Address> GetAddressByIdAsync(int? addressId);
         Task<Address> GetByAddressAsync(Address address);
+        ICollection<Address> GetAllAddresses();
     }
 }

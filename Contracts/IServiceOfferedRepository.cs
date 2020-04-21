@@ -8,7 +8,7 @@ namespace petOwnerOneStopShop.Contracts
 {
     public interface IServiceOfferedRepository : IRepositoryBase<ServiceOffered>
     {
-		ICollection<ServiceOffered> GetServicesOfferedByProvider(int petBusinessId);
+		ICollection<ServiceOffered> GetServicesOfferedByPetBusiness(int petBusinessId);
 		ICollection<ServiceOffered> GetServicesOfferedIncludeAll();
 		ICollection<ServiceOffered> GetServicesOfferedIncludeAll(int id);
 		Task<ICollection<ServiceOffered>> GetServicesOfferedIncludeAllAsync();

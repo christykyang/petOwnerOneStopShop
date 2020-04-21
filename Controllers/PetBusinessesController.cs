@@ -34,16 +34,16 @@ namespace petOwnerOneStopShop.Controllers
 
         // GET: PetBusinesses
 
-        
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    //var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
-        //    //return View(await applicationDbContext.ToListAsync());
 
 
-        //}
+        public async Task<IActionResult> Index()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
+            return View(await applicationDbContext.ToListAsync());
+
+
+        }
 
         // GET: PetBusinesses/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -237,26 +237,7 @@ namespace petOwnerOneStopShop.Controllers
         public IActionResult EditServiceOffered(int id)
         {
             ServiceOffered serviceOffered = _repo.ServiceOffered.FindByCondition(s => s.Id == id).FirstOrDefault();
-            //ServiceOfferedViewModel serviceOfferedViewModel = new ServiceOfferedViewModel();
-            //serviceOfferedViewModel.ServiceOfferedId = serviceOffered.Id;
-            //serviceOfferedViewModel.Address = serviceOffered.Address;
-            //serviceOfferedViewModel.Category = serviceOffered.Category;
-            //serviceOfferedViewModel.Demographic = serviceOffered.Demographic;
-            //serviceOfferedViewModel.Service = serviceOffered.Service;
-            //serviceOfferedViewModel.AgeSensitive = ConvertNullableBoolToInt(serviceOffered.Demographic.IsAgeSensitive);
-            //serviceOfferedViewModel.FamilySelection = ConvertNullableBoolToInt(serviceOffered.Demographic.FamilyFriendly);
-            //serviceOfferedViewModel.GenderSelection = ConvertNullableBoolToInt(serviceOffered.Demographic.IsMale);
-            //serviceOfferedViewModel.SmokingSelection = ConvertNullableBoolToInt(serviceOffered.Demographic.SmokingIsAllowed);
-            //serviceOfferedViewModel.Cost = serviceOffered.Cost;
-            //ViewData["Categories"] = new SelectList(_repo.Category.GetAllCategories(), "Id", "Name");
-            //Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("Co-ed", "Male", "Female");
-            //ViewData["Genders"] = new SelectList(genderDictionary, "Key", "Value");
-            //Dictionary<int, string> familyFriendly = CreateNullableBoolDictionary("Not Applicable", "Family Friendly", "Individual");
-            //ViewData["FamilySize"] = new SelectList(familyFriendly, "Key", "Value");
-            //Dictionary<int, string> smokingAllowed = CreateNullableBoolDictionary("Not Applicable", "Smoking Allowed", "No Smoking");
-            //ViewData["Smoking"] = new SelectList(smokingAllowed, "Key", "Value");
-            //Dictionary<int, string> ageSensitive = CreateNullableBoolDictionary("Not Applicable", "Above 60", "18 and up");
-            //ViewData["AgeSensitive"] = new SelectList(ageSensitive, "Key", "Value");
+
             ViewData["Services"] = new SelectList(_repo.Service.GetAllServices(), "Id", "ServiceName");
 
             serviceOffered.PetBusiness = new PetBusiness();
@@ -272,7 +253,7 @@ namespace petOwnerOneStopShop.Controllers
             updatedServiceOffered.PetBusinessId = serviceOffered.PetBusinessId;
             updatedServiceOffered.Cost = serviceOffered.Cost;
             updatedServiceOffered.Service = _repo.Service.FindByCondition(s => s.Id == serviceOffered.Service.Id).FirstOrDefault();
-            _repo.ServiceOffered.Update(serviceOffered);
+            _repo.ServiceOffered.Update(updatedServiceOffered);
             _repo.Save();
             return RedirectToAction(nameof(DisplayServices));
         }

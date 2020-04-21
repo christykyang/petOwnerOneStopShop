@@ -12,8 +12,8 @@ namespace petOwnerOneStopShop.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-        public bool?  isMale { get; set; }
-        public bool? isAdopted { get; set; }
+        public bool?  IsMale { get; set; }
+        public bool? IsAdopted { get; set; }
         [ForeignKey("PetType")]
         [Display(Name = "Type of Pet")]
         public int? PetTypeId { get; set; }

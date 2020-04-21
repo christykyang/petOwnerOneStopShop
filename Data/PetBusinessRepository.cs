@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using petOwnerOneStopShop.Contracts;
 using petOwnerOneStopShop.Models;
 
@@ -16,8 +17,13 @@ namespace petOwnerOneStopShop.Data
         }
         public PetBusiness GetPetBusiness(int petBusinessId) => FindByCondition(i => i.Id == petBusinessId).SingleOrDefault();
         public PetBusiness GetPetBusinessById(string userId) => FindByCondition(p => p.IdentityUserId == userId).FirstOrDefault();
-
-        private void Delete(IQueryable<PetBusiness> petBusiness)
+        public async Task<ICollection<PetBusiness>> GetBusinessesIncludeAllAsync()
+        {
+            return await FindAll()
+                .Include(t => t.BusinessType)
+                .Include(a => a.Address).ToListAsync();
+        }
+        public void DeleteBusiness(IQueryable<PetBusiness> petBusiness)
         {
             throw new NotImplementedException();
         }

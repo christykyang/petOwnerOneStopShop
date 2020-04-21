@@ -8,6 +8,6 @@ namespace petOwnerOneStopShop.Contracts
 {
     public interface IPetTypeRepository : IRepositoryBase<PetType>
     {
-
+        ICollection<PetType> GetAllPetTypes();
     }
 }

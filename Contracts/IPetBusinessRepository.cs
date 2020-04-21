@@ -10,6 +10,7 @@ namespace petOwnerOneStopShop.Contracts
     {
         PetBusiness GetPetBusiness(int petBusinessId);
         PetBusiness GetPetBusinessById(string userId);
+        Task<ICollection<PetBusiness>> GetBusinessesIncludeAllAsync();
         void DeleteBusiness(IQueryable<PetBusiness> petBusiness);
         //Task FindAsync(int id);
     }

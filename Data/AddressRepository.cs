@@ -31,5 +31,9 @@ namespace petOwnerOneStopShop.Data
 		{
 			return await FindByCondition(a => a.StreetAddress == address.StreetAddress && a.City == address.City && a.State == address.State && a.ZipCode == address.ZipCode).FirstOrDefaultAsync();
 		}
+		public ICollection<Address> GetAllAddresses()
+		{
+			return FindAll().ToList();
+		}
 	}
 }
