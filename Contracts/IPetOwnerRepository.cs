@@ -10,5 +10,6 @@ namespace petOwnerOneStopShop.Contracts
     {
         PetOwner GetPetOwner(int providerId);
         PetOwner GetPetOwnerById(string userId);
+        void Remove(PetOwner petOwner);
     }
 }

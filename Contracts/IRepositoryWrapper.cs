@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Contracts
 {
@@ -26,5 +27,6 @@ namespace petOwnerOneStopShop.Contracts
 		void Save();
         IEnumerable Set<T>();
 		Task SaveChangesAsync();
-	}
+        void Update(PetOwner petOwner);
+    }
 }

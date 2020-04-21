@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
+using System.Security.Policy;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,12 +33,17 @@ namespace petOwnerOneStopShop.Controllers
         }
 
         // GET: PetBusinesses
-        public async Task<IActionResult> Index()
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
-            return View(await applicationDbContext.ToListAsync());
-        }
+
+        
+
+        //public async Task<IActionResult> Index()
+        //{
+        //    //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    //var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
+        //    //return View(await applicationDbContext.ToListAsync());
+
+
+        //}
 
         // GET: PetBusinesses/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -294,5 +303,8 @@ namespace petOwnerOneStopShop.Controllers
                 return true;
             }
         }
+
+
+
     }
 }

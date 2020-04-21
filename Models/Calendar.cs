@@ -14,6 +14,6 @@ namespace petOwnerOneStopShop.Models
         [ForeignKey("IdentityUser")]
         [Display(Name = "Identity User")]
         public string IdentityUserId { get; set; }
-        public IdentityUser identityUser { get; set; }
+        public IdentityUser IdentityUser { get; set; }
     }
 }

@@ -8,17 +8,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace petOwnerOneStopShop.Models
 {
-    public class Invite
+    public class NewsFeed
     {
         public int Id { get; set; }
-        public bool? isInvitationAccepted { get; set; }
         [ForeignKey("IdentityUser")]
-        [Display(Name = "IdentityUser")]
+        [Display(Name = "Identity User")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
-        [ForeignKey("Event")]
-        [Display(Name = "Event")]
-        public int? EventId { get; set; }
-        public Event Event { get; set; }
     }
 }

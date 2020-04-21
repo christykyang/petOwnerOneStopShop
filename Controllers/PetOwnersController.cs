@@ -24,7 +24,7 @@ namespace petOwnerOneStopShop.Controllers
         // GET: PetOwners
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PetOwner.Include(p => p.identityUser);
+            var applicationDbContext = _context.PetOwner.Include(p => p.IdentityUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +37,7 @@ namespace petOwnerOneStopShop.Controllers
             }
 
             var petOwner = await _context.PetOwner
-                .Include(p => p.identityUser)
+                .Include(p => p.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (petOwner == null)
             {
@@ -133,7 +133,7 @@ namespace petOwnerOneStopShop.Controllers
             }
 
             var petOwner = await _context.PetOwner
-                .Include(p => p.identityUser)
+                .Include(p => p.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (petOwner == null)
             {
