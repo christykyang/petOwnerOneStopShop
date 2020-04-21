@@ -16,5 +16,6 @@ namespace petOwnerOneStopShop.Data
         }
         public PetOwner GetPetOwner(int petOwnerId) => FindByCondition(i => i.Id == petOwnerId).SingleOrDefault();
         public PetOwner GetPetOwnerById(string userId) => FindByCondition(p => p.IdentityUserId == userId).FirstOrDefault();
+        public void Remove(PetOwner petOwner) => FindByCondition(o => o.Id == petOwner.Id).FirstOrDefault();
     }
 }
