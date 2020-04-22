@@ -15,9 +15,9 @@ namespace petOwnerOneStopShop.Models
         [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
-        [ForeignKey("BusinessType")]
-        [Display(Name = "Type of Business")]
-        public int? BusinessTypeId { get; set; }
-        public BusinessType BusinessType { get; set; }
+        [ForeignKey("PetBusiness")]
+        [Display(Name = "Pet-Friendly Business")]
+        public int? PetBusinessId { get; set; }
+        public PetBusiness PetBusiness { get; set; }
     }
 }

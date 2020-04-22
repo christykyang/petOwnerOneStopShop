@@ -15,5 +15,9 @@ namespace petOwnerOneStopShop.Data
 
         }
         public void CreateFollow(Follow follow) => Create(follow);
+        public Follow FindFollowByPetBusinessId(int petBusinessId)
+        { return FindByCondition(b => b.PetBusinessId == petBusinessId).FirstOrDefault(); }
+        public Follow FindFollowByPetOwnerId(int petOwnerId) 
+        { return FindByCondition(o => o.PetOwnerId == petOwnerId).FirstOrDefault(); }
     }
 }

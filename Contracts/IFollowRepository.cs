@@ -9,5 +9,8 @@ namespace petOwnerOneStopShop.Contracts
     public interface IFollowRepository : IRepositoryBase<Follow>
     {
         void CreateFollow(Follow follow);
+        //void FindFollowById(int followId);
+        Follow FindFollowByPetBusinessId(int petBusinessId);
+        Follow FindFollowByPetOwnerId(int petBusinessId);
     }
 }

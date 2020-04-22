@@ -321,6 +321,62 @@ namespace petOwnerOneStopShop.Controllers
             return View("DisplayPetBusinesses", viewModel);
         }
 
+        public IActionResult Follow(int petBusinessId, int petOwnerId)
+        {
+            Follow follow = new Follow();
+            follow.PetBusinessId = petBusinessId;
+            follow.PetOwnerId = petOwnerId;
+
+            return View(follow);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Follow(int petBusinessId, int petOwnerId, PetBusiness petBusiness, PetOwner petOwner)
+        {
+            Follow following = new Follow();
+
+            if (petBusinessId == petBusiness.Id && petOwnerId == petOwner.Id)
+            {
+                following.PetOwnerId = petOwner.Id;
+                following.PetBusinessId = petBusiness.Id;
+                following.IsFollowing = true;
+                _repo.Follow.CreateFollow(following);
+                _repo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                following.PetOwnerId = petOwner.Id;
+                following.PetBusinessId = petBusiness.Id;
+                following.IsFollowing = true;
+                _repo.Follow.Update(following);
+                _repo.Save();
+                return RedirectToAction(nameof(Index));
+            }
+
+            
+        }
+
+        public IActionResult Unfollow(int id)
+        {
+            Follow follow = _repo.Follow.FindByCondition(f => f.Id == id).FirstOrDefault();
+            return View(follow);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Unfollow(int id, PetBusiness petBusiness, PetOwner petOwner)
+        {
+            Follow following = _repo.Follow.FindByCondition(f => f.Id == id).FirstOrDefault();
+            following.PetBusinessId = petBusiness.Id;
+            following.PetOwnerId = petOwner.Id;
+            following.IsFollowing = false;
+            _repo.Follow.Update(following);
+            _repo.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool PetOwnerExists(int id)
         {
             if (_repo.PetOwner.FindByCondition(e => e.Id == id) == null)
