@@ -221,12 +221,16 @@ namespace petOwnerOneStopShop.Data
         public DbSet<petOwnerOneStopShop.Models.PetOwner> PetOwner { get; set; }
         public DbSet<petOwnerOneStopShop.Models.PetBusiness> PetBusiness { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Address> Address { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Event> Event { get; set; }
+        public DbSet<petOwnerOneStopShop.Models.CalendarEvent> Event { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Calendar> Calendar { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Follow> Follow { get; set; }
         public DbSet<petOwnerOneStopShop.Models.PetProfile> PetProfile { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Adoptable> Adoptable { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Invite> Invite { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Message> Message { get; set; }
+        public DbSet<petOwnerOneStopShop.Models.FeedUpdate> FeedUpdate { get; set; }
+
+        //DELETE
+        public DbSet<Employee> Employees { get; set; }
     }
 }

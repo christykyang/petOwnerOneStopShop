@@ -39,11 +39,60 @@ namespace petOwnerOneStopShop.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
 
+            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByPetBusinessIncludeAll(userId);
+
+
+            return View(await newsFeedUpdate);
+        }
+
+        public IActionResult CreateUpdate()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            FeedUpdate update = new FeedUpdate();
+
+            return View(update);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUpdate(FeedUpdate update, NewsFeed newsFeed)
+        {
+            FeedUpdate newUpdate = new FeedUpdate();
+            DateTime dt = DateTime.Now;
+
+            string timeStamp = dt.ToShortDateString();
+
+            newUpdate.Description = update.Description;
+            newUpdate.Title = update.Title;
+            newUpdate.PubDate = timeStamp;
+            newUpdate.NewsFeedId = newsFeed.Id;
+            _repo.FeedUpdate.Create(newUpdate);
+            _repo.Save();
+
+            return RedirectToAction(nameof(Index));
 
         }
+
+        //public IActionResult EditUpdate(int id)
+        //{
+        //    FeedUpdate update = _repo.FeedUpdate.FindUpdateById(id);
+
+        //    return View(update);
+
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult EditUpdate(int id, FeedUpdate post)
+        //{
+        //    FeedUpdate update = new FeedUpdate();
+        //    update.Id = id;
+        //    update.PubDate = post.PubDate;
+        //    News
+        //}
+
 
         // GET: PetBusinesses/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -23,6 +23,7 @@ namespace petOwnerOneStopShop.Contracts
 		IPetProfileRepository PetProfile { get; }
 		IPetTypeRepository PetType { get; }
 		IServiceOfferedRepository ServiceOffered { get; }
+		IFeedUpdateRepository FeedUpdate { get; }
 
 		void Save();
         IEnumerable Set<T>();

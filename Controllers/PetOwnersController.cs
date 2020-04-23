@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,13 +21,15 @@ namespace petOwnerOneStopShop.Controllers
     {
         private IGetCoordinatesRequest _getCoordinates;
         private IRepositoryWrapper _repo;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public IdentityUser IdentityUser { get; private set; }
 
-        public PetOwnersController(IRepositoryWrapper repo, IGetCoordinatesRequest getCoordinates)
+        public PetOwnersController(IRepositoryWrapper repo, IGetCoordinatesRequest getCoordinates, IWebHostEnvironment hostEnvironment)
         {
             _repo = repo;
             _getCoordinates = getCoordinates;
+            webHostEnvironment = hostEnvironment;
         }
 
         // GET: PetOwners
@@ -70,7 +74,7 @@ namespace petOwnerOneStopShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] PetOwner petOwner)
+        public IActionResult Create([Bind("Id,Name")] PetOwner petOwner)
         {
             if (ModelState.IsValid)
             {
@@ -217,7 +221,7 @@ namespace petOwnerOneStopShop.Controllers
         {
             PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
-            petProfile.PetOwner = new PetOwner();
+            //petProfile.PetOwner = new PetOwner();
             return View(petProfile);
         }
 
@@ -254,6 +258,48 @@ namespace petOwnerOneStopShop.Controllers
 
         }
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> New(PetProfileViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string uniqueFileName = UploadedPicture(model);
+
+        //        PetProfile pet = new PetProfile
+        //        {
+        //            Name = model.Name,
+        //            IsMale = model.IsMale,
+        //            Age = model.Age,
+        //            IsAdopted = model.IsAdopted,
+        //            PetTypeId = model.PetTypeId,
+        //            PetOwnerId = model.PetOwnerId,
+        //            ProfilePicture = uniqueFileName,
+        //        };
+        //        dbContext.Add(pet);
+        //        await dbContext.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View();
+        //}
+
+        private string UploadedPicture(PetProfileViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.ProfileImage != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfileImage.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
         public async Task<IActionResult> DisplayPetBusinesses()
         {
             ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
@@ -276,7 +322,7 @@ namespace petOwnerOneStopShop.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> FilteredSearch(ViewModelServiceOffered searchResults)
+        public async Task<IActionResult> FilteredPetBusinessSearch(ViewModelServiceOffered searchResults)
         {
             ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
 
@@ -377,6 +423,94 @@ namespace petOwnerOneStopShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //TOGGLE in view
+        //public IActionResult ToggleIsFollowing(int followId)
+        //{
+        //    Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
+        //    if (!follow.IsFollowing == true)
+        //    {
+        //        follow.IsFollowing = true;
+        //    }
+        //    else 
+        //    {
+        //        follow.IsFollowing = false;
+        //    }
+        //    _repo.Follow.Update(follow);
+        //    _repo.Save();
+        //    return RedirectToAction(nameof(DisplayPetBusinesses), followId);
+        //}
+
+        public async Task<IActionResult> SearchPetProfiles()
+        {
+            ViewModelPetProfiles viewModel = new ViewModelPetProfiles();
+
+            var pets = await _repo.PetProfile.GetPetIncludeAll();
+            IEnumerable<PetProfile> petProfiles = pets.ToList();
+
+            viewModel.PetProfiles = _repo.PetProfile.FindAll().ToList();
+            viewModel.PetProfiles.Insert(0, (new PetProfile()));
+            viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
+            viewModel.PetTypes.Insert(0, new PetType());
+            viewModel.IsMale = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
+            viewModel.IsAdopted = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> FilteredThroughPetProfiles(ViewModelPetProfiles searchResults)
+        {
+            ViewModelPetProfiles viewModel = new ViewModelPetProfiles();
+
+            var pets = await _repo.PetProfile.GetPetIncludeAll();
+            IEnumerable<PetProfile> petProfiles = pets.ToList();
+
+            if (searchResults.PetTypeId != 0)
+            {
+                petProfiles = petProfiles.Where(bt => bt.PetTypeId == searchResults.PetTypeId);
+            }
+            if (searchResults.GenderSelection != 0)
+            {
+                switch (searchResults.GenderSelection)
+                {
+                    case 1:
+                        petProfiles = petProfiles.Where(p => p.IsMale == null);
+                        break;
+                    case 2:
+                        petProfiles = petProfiles.Where(p => p.IsMale == true);
+                        break;
+                    case 3:
+                        petProfiles = petProfiles.Where(p => p.IsMale == false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (searchResults.AdoptionStatus != 0)
+            {
+                switch (searchResults.AdoptionStatus)
+                {
+                    case 1:
+                        petProfiles = petProfiles.Where(p => p.IsAdopted == null);
+                        break;
+                    case 2:
+                        petProfiles = petProfiles.Where(p => p.IsAdopted == true);
+                        break;
+                    case 3:
+                        petProfiles = petProfiles.Where(p => p.IsAdopted == false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            viewModel.PetProfiles = _repo.PetProfile.FindAll().ToList();
+            viewModel.PetProfiles.Insert(0, (new PetProfile()));
+            viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
+            viewModel.PetTypes.Insert(0, new PetType());
+            viewModel.IsMale = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
+            viewModel.IsAdopted = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
+            return View("SearchPetProfiles", viewModel);
+        }
         private bool PetOwnerExists(int id)
         {
             if (_repo.PetOwner.FindByCondition(e => e.Id == id) == null)

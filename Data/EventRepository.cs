@@ -7,13 +7,13 @@ using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Data
 {
-    public class EventRepository : RepositoryBase<Event>, IEventRepository
+    public class EventRepository : RepositoryBase<CalendarEvent>, IEventRepository
     {
         public EventRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
 
         }
-        public void CreateEvent(Event _event) => Create(_event);
+        public void CreateEvent(CalendarEvent _event) => Create(_event);
     }
 }

@@ -22,5 +22,7 @@ namespace petOwnerOneStopShop.Models
         [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
+        public string ProfilePicture { get; set; }
+
     }
 }

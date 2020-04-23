@@ -6,8 +6,8 @@ using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Contracts
 {
-    public interface IEventRepository : IRepositoryBase<Event>
+    public interface IEventRepository : IRepositoryBase<CalendarEvent>
     {
-        void CreateEvent(Event _event);
+        void CreateEvent(CalendarEvent _event);
     }
 }
