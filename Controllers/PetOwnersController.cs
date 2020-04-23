@@ -484,23 +484,6 @@ namespace petOwnerOneStopShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //TOGGLE in view
-        //public IActionResult ToggleIsFollowing(int followId)
-        //{
-        //    Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
-        //    if (!follow.IsFollowing == true)
-        //    {
-        //        follow.IsFollowing = true;
-        //    }
-        //    else 
-        //    {
-        //        follow.IsFollowing = false;
-        //    }
-        //    _repo.Follow.Update(follow);
-        //    _repo.Save();
-        //    return RedirectToAction(nameof(DisplayPetBusinesses), followId);
-        //}
-
         public async Task<IActionResult> SearchPetProfiles()
         {
             ViewModelPetProfiles viewModel = new ViewModelPetProfiles();
