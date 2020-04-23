@@ -11,8 +11,12 @@ namespace petOwnerOneStopShop.Models
     public class NewsFeed
     {
         public int Id { get; set; }
+        [ForeignKey("PetBusiness")]
+        [Display(Name = "Pet-Friendly Business")]
+        public int PetBusinessId { get; set; }
+        public PetBusiness PetBusiness { get; set; }
         [ForeignKey("IdentityUser")]
-        [Display(Name = "Identity User")]
+        [Display(Name = "IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
     }

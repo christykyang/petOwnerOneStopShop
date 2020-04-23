@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -201,19 +202,32 @@ namespace petOwnerOneStopShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePetProfile(PetProfile petProfile)
+        public IActionResult CreatePetProfile(PetProfileViewModel viewModel)
         {
             try
             {
                 //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                _repo.PetProfile.CreatePetProfile(petProfile.PetOwner, petProfile.PetType, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted);
+                string uniqueFileName = UploadedPicture(viewModel);
+
+                PetProfile petProfile = new PetProfile
+                {
+                    Name = viewModel.Name,
+                    Age = viewModel.Age,
+                    IsMale = viewModel.IsMale,
+                    IsAdopted = viewModel.IsAdopted,
+                    PetOwnerId = viewModel.PetOwnerId,
+                    PetTypeId = viewModel.PetTypeId,
+                    ProfilePicture = uniqueFileName,
+                };
+
+                _repo.PetProfile.CreatePetProfile(petProfile.PetOwner, petProfile.PetType, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
                 _repo.Save();
 
                 return RedirectToAction(nameof(DisplayPetProfiles));
             }
             catch
             {
-                return View(petProfile);
+                return View(viewModel);
             }
         }
 

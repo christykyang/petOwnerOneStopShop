@@ -20,6 +20,7 @@ namespace petOwnerOneStopShop.Models
         public DateTime EndTime { get; set; }
         public bool Delete { get; set; }
         public int ColorId { get; set; }
+        [NotMapped]
         public IEnumerable<string> Attendees { get; set; }
         [ForeignKey("Calendar")]
         public int? CalendarId { get; set; }

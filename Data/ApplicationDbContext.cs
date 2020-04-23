@@ -229,8 +229,6 @@ namespace petOwnerOneStopShop.Data
         public DbSet<petOwnerOneStopShop.Models.Invite> Invite { get; set; }
         public DbSet<petOwnerOneStopShop.Models.Message> Message { get; set; }
         public DbSet<petOwnerOneStopShop.Models.FeedUpdate> FeedUpdate { get; set; }
-
-        //DELETE
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<petOwnerOneStopShop.Models.ServiceOffered> ServiceOffered { get; set; }
     }
 }

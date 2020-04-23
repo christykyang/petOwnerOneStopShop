@@ -38,7 +38,7 @@ namespace petOwnerOneStopShop.Data
 			return await FindAll().Include(o => o.PetOwner)
 								  .Include(t => t.PetType).ToListAsync();
 		}
-		public void CreatePetProfile(PetOwner petOwner, PetType petType, string name, int age, bool? isMale, bool? isAdopted)
+		public void CreatePetProfile(PetOwner petOwner, PetType petType, string name, int age, bool? isMale, bool? isAdopted, string picture)
 		{
 			PetProfile petProfile = new PetProfile();
 			petProfile.PetOwnerId = petOwner.Id;
@@ -47,6 +47,7 @@ namespace petOwnerOneStopShop.Data
 			petProfile.Age = age;
 			petProfile.IsMale = isMale;
 			petProfile.IsAdopted = isAdopted;
+			petProfile.ProfilePicture = picture;
 			Create(petProfile);
 		}
 	}

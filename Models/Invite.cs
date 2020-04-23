@@ -18,7 +18,7 @@ namespace petOwnerOneStopShop.Models
         public IdentityUser IdentityUser { get; set; }
         [ForeignKey("Event")]
         [Display(Name = "Event")]
-        public int? EventId { get; set; }
-        public Event Event { get; set; }
+        public int? CalendarEventId { get; set; }
+        public CalendarEvent Event { get; set; }
     }
 }
