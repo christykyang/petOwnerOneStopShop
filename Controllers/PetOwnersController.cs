@@ -200,9 +200,16 @@ namespace petOwnerOneStopShop.Controllers
         public IActionResult CreatePetProfile()
         {
             PetProfile petProfile = new PetProfile();
-            _repo.PetType.GetAllPetTypes();
 
+            _repo.PetType.GetAllPetTypes();
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+
             return View(petProfile);
         }
 
@@ -241,6 +248,13 @@ namespace petOwnerOneStopShop.Controllers
         {
             PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+
             //petProfile.PetOwner = new PetOwner();
             return View(petProfile);
         }
@@ -540,6 +554,47 @@ namespace petOwnerOneStopShop.Controllers
             else
             {
                 return true;
+            }
+        }
+
+        private Dictionary<int, string> CreateNullableBoolDictionary(string nullValue, string trueValue, string falseValue)
+        {
+            Dictionary<int, string> dictionary = new Dictionary<int, string>()
+            {
+                { 0, nullValue },
+                { 1, trueValue },
+                { 2, falseValue }
+            };
+
+            return dictionary;
+        }
+        private bool? ConvertToNullableBool(int resultFromForm)
+        {
+            switch (resultFromForm)
+            {
+                case 0:
+                    return null;
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+            }
+
+            return ConvertToNullableBool(resultFromForm);
+        }
+        private int ConvertNullableBoolToInt(bool? nullableBool)
+        {
+            if (!nullableBool.HasValue)
+            {
+                return 0;
+            }
+            else if (nullableBool.Value == true)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
             }
         }
     }
