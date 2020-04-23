@@ -41,7 +41,11 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                <img src="~/images/@item.ProfilePicture"
+                     class="rounded-circle"
+                     height="40" width="40"
+                     asp-append-version="true" />
+                @item.Name
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
@@ -53,13 +57,10 @@
                 @Html.DisplayFor(modelItem => item.IsAdopted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PetType.Id)
+                @Html.DisplayFor(modelItem => item.PetType.TypeName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PetOwner.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfilePicture)
+                @Html.DisplayFor(modelItem => item.PetOwner.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
