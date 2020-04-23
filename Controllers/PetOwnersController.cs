@@ -401,17 +401,40 @@ namespace petOwnerOneStopShop.Controllers
             return View("DisplayPetBusinesses", viewModel);
         }
 
-        public IActionResult Follow(int petBusinessId, int petOwnerId)
+        public IActionResult ToggleFollowAndUnfollow(int? followId, int petBusinessId, int petOwnerId)
+        {
+            Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
+            if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == true).Any())
+            {
+                _repo.Follow.Unfollow(followId, petBusinessId, petOwnerId);
+                _repo.Save();
+            }
+            else if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == false).Any())
+            {
+                _repo.Follow.Follow(followId, petBusinessId, petBusinessId);
+                _repo.Save();
+            }
+            else
+            {
+                CreateFollow(petBusinessId, petOwnerId);
+            }
+            return RedirectToAction(nameof(DisplayPetBusinesses));
+        }
+
+        public IActionResult CreateFollow(int petBusinessId, int petOwnerId)
         {
             Follow follow = new Follow();
             follow.PetBusinessId = petBusinessId;
             follow.PetOwnerId = petOwnerId;
 
+            Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
+            ViewData["Follow Status"] = new SelectList(following, "Key", "Value");
+
             return View(follow);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Follow(int petBusinessId, int petOwnerId, PetBusiness petBusiness, PetOwner petOwner)
+        public IActionResult CreateFollow(int petBusinessId, int petOwnerId, PetBusiness petBusiness, PetOwner petOwner)
         {
             Follow following = new Follow();
 
@@ -422,7 +445,7 @@ namespace petOwnerOneStopShop.Controllers
                 following.IsFollowing = true;
                 _repo.Follow.CreateFollow(following);
                 _repo.Save();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(DisplayPetBusinesses));
             }
             else
             {
@@ -431,7 +454,7 @@ namespace petOwnerOneStopShop.Controllers
                 following.IsFollowing = true;
                 _repo.Follow.Update(following);
                 _repo.Save();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(DisplayPetBusinesses));
             }
 
             
@@ -440,6 +463,10 @@ namespace petOwnerOneStopShop.Controllers
         public IActionResult Unfollow(int id)
         {
             Follow follow = _repo.Follow.FindByCondition(f => f.Id == id).FirstOrDefault();
+
+            Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
+            ViewData["FollowStatus"] = new SelectList(following, "Key", "Value");
+
             return View(follow);
         }
 

@@ -94,9 +94,6 @@
             {
             <tr>
                 <td>
-                    @Html.ActionLink("Follow", "Follow", new { petBusinessId = item.Id }) |
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 @if (item.Address != null)
@@ -106,9 +103,9 @@
                         @Html.DisplayFor(modelItem => item.Address.State), @Html.DisplayFor(modelItem => item.Address.ZipCode)
                     </td>
                 }
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.BusinessType)
-                </td>
+                </td>*@
                 @if (item.BusinessType != null)
                 {
                     <td>

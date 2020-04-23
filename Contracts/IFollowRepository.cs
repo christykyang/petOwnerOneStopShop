@@ -12,5 +12,7 @@ namespace petOwnerOneStopShop.Contracts
         //void FindFollowById(int followId);
         Follow FindFollowByPetBusinessId(int petBusinessId);
         Follow FindFollowByPetOwnerId(int petBusinessId);
+        void Unfollow(int? id, int petBusinessId, int petOwnerId);
+        void Follow(int? id, int petBusinessId, int petOwnerId);
     }
 }

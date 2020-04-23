@@ -25,12 +25,24 @@ namespace petOwnerOneStopShop.Models
         public int AddressId { get; set; }
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
+        [Display(Name = "Pet Owner")]
+        public int PetOwnerId { get; set; }
         public string Cost { get; set; }
-    //    [Display(Name = "Resource")]
-    //    public int ServiceOfferedId { get; set; }
-    //    [Display(Name = "Minimum Cost")]
-    //    public string MinCost { get; set; }
-    //    [Display(Name = "Maximum Cost")]
-    //    public string MaxCost { get; set; }
+        public PetOwner PetOwner { get; set; }
+        public List<PetOwner> PetOwners { get; set; }
+        [Display(Name = "Pet Profile")]
+        public int PetProfileId { get; set; }
+        public PetProfile PetProfile { get; set; }
+        public List<PetProfile> PetProfiles { get; set; }
+        [Display(Name = "Follow")]
+        public int FollowId { get; set; }
+        public Follow Follow { get; set; }
+        public List<Follow> Follows { get; set; }
+        //    [Display(Name = "Resource")]
+        //    public int ServiceOfferedId { get; set; }
+        //    [Display(Name = "Minimum Cost")]
+        //    public string MinCost { get; set; }
+        //    [Display(Name = "Maximum Cost")]
+        //    public string MaxCost { get; set; }
     }
 }

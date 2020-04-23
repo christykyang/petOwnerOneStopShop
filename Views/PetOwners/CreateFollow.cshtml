@@ -1,20 +1,21 @@
-﻿@model petOwnerOneStopShop.Models.PetProfile
+﻿@model petOwnerOneStopShop.Models.Follow
 
 @{
-    ViewData["Title"] = "CreatePetProfile";
+    ViewData["Title"] = "Follow";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create Pet Profile</h1>
+<h1>Follow</h1>
 
-<h4>Pet Profile</h4>
+<h4>I want to follow @Model.PetBusiness.Name</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreatePetProfile">
+        <form asp-action="Follow">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PetOwnerId" class="form-control" />
-            <div class="form-group">
+            <input type="hidden" asp-for="PetBusinessId" class="form-control" />
+            @*<div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -25,8 +26,8 @@
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IsMale" class="control-label"></label>
-                <select asp-for="IsMale" class="form-control" asp-items="ViewBag.GenderSelection"></select>
+                <label asp-for="IsFollowing" class="control-label"></label>
+                <select asp-for="IsFollowing" class="form-control" asp-items="ViewBag.FollowStatus"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IsAdopted" class="control-label"></label>
@@ -40,15 +41,15 @@
                 <label asp-for="ProfilePicture" class="control-label"></label>
                 <input asp-for="ProfilePicture" class="form-control" />
                 <span asp-validation-for="ProfilePicture" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Follow" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="DisplayPetProfiles">Back to Pet Profiles List</a>
+    <a asp-action="DisplayPetBusinesses">Back to Pet Businesses Search</a>
 </div>
 

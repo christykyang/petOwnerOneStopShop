@@ -10,7 +10,7 @@ namespace petOwnerOneStopShop.Models
     public class Follow
     {
         public int Id { get; set; }
-        public bool IsFollowing { get; set; }
+        public bool? IsFollowing { get; set; }
         [ForeignKey("PetOwner")]
         [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
