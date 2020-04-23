@@ -27,6 +27,10 @@ namespace petOwnerOneStopShop.Data
 		{
 			return FindAll().Include(p => p.PetOwner).Include(p => p.PetType).ToList();
 		}
+		public ICollection<PetProfile> GetPetProfileAndIncludeAll(int id)
+		{
+			return FindAll().Include(p => p.PetOwner).Include(p => p.PetType).Where(p => p.Id == id).ToList();
+		}
 		public async Task<PetProfile> GetPetByIdIncludeAllAsync(int? petId)
 		{
 			return await FindByCondition(m => m.Id == petId).Include(p => p.PetOwner)

@@ -191,6 +191,12 @@ namespace petOwnerOneStopShop.Controllers
             return View(petProfiles);
         }
 
+        public IActionResult DisplayPetProfileDetails(int id)
+        {
+            PetProfile pet = _repo.PetProfile.GetPetAndIncludeAll().Where(p => p.Id == id).FirstOrDefault();
+            return View(pet);
+        }
+
         public IActionResult CreatePetProfile()
         {
             PetProfile petProfile = new PetProfile();
