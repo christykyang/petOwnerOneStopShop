@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>EditServiceOffered</h1>
+<h1>Edit Service Offered</h1>
 
-<h4>ServiceOffered</h4>
+<h4>Service Offered</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,7 +16,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
+                <input asp-for="Cost" class="form-control" value="@Model.Cost"/>
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,6 +37,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="DisplayServices">Back to Services Offered</a> |
+    <a asp-action="DeleteServiceOffered" asp-route-id="@Model.Id">Delete</a>
 </div>
 

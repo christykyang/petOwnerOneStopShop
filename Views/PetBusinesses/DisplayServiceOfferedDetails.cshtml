@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>DisplayServiceOfferedDetails</h1>
+<h1>Display Service Offered Details</h1>
 
 <div>
-    <h4>ServiceOffered</h4>
+    <h4>Service Offered</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -32,6 +32,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="EditServiceOffered" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="DisplayServices">Back to List</a>
 </div>

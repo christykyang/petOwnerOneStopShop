@@ -25,13 +25,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="IsMale" class="control-label"></label>
-                <input asp-for="IsMale" class="form-control" />
-                <span asp-validation-for="IsMale" class="text-danger"></span>
+                <select asp-for="IsMale" class="form-control" asp-items="ViewBag.GenderSelection"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IsAdopted" class="control-label"></label>
-                <input asp-for="IsAdopted" class="form-control" />
-                <span asp-validation-for="IsAdopted" class="text-danger"></span>
+                <select asp-for="IsAdopted" class="form-control" asp-items="ViewBag.AdoptionStatus"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PetTypeId" class="control-label"></label>
