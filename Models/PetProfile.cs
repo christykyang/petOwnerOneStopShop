@@ -14,7 +14,7 @@ namespace petOwnerOneStopShop.Models
         public string Name { get; set; }
         [Display(Name = "Age")]
         public int Age { get; set; }
-        [Display(Name = "Gender")]
+        [Display(Name = "Gender Is Male")]
         public bool?  IsMale { get; set; }
         [Display(Name = "Adoption Status")]
         public bool? IsAdopted { get; set; }
