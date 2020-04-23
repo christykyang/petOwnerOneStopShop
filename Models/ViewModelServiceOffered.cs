@@ -21,7 +21,7 @@ namespace petOwnerOneStopShop.Models
         public int PetBusinessId { get; set; }
         [Display(Name = "Business Type")]
         public int BusinessTypeId { get; set; }
-        [Display(Name = "Address")]
+        [Display(Name = "Address by Zipcode")]
         public int AddressId { get; set; }
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
