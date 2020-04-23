@@ -10,9 +10,13 @@ namespace petOwnerOneStopShop.Models
     public class PetProfile
     {
         public int Id { get; set; }
+        [Display(Name = "Name")]
         public string Name { get; set; }
+        [Display(Name = "Age")]
         public int Age { get; set; }
+        [Display(Name = "Gender")]
         public bool?  IsMale { get; set; }
+        [Display(Name = "Adoption Status")]
         public bool? IsAdopted { get; set; }
         [ForeignKey("PetType")]
         [Display(Name = "Type of Pet")]
