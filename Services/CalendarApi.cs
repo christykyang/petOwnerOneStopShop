@@ -19,6 +19,9 @@ using petOwnerOneStopShop.Contracts;
 using Google.Apis.Auth;
 //using Calendar = petOwnerOneStopShop.Models.Calendar;
 using Calendar = Google.Apis.Calendar.v3.Data.Calendar;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace petOwnerOneStopShop.Services
 {
@@ -88,6 +91,12 @@ namespace petOwnerOneStopShop.Services
             }
             Console.Read();
         }
+
+        app.UsegoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+        {
+            ClientId = "745851009726-g229larqh4c4i2mbp9k5dpk1ea5vpqa4.apps.googleusercontent.com",
+            ClientSecret - "yZO1jC6FTnmn6WD2zE6ob0rN"
+        });
 
         //private static string calID = "christykyang@gmail.com"; //System.Configuration.ConfigurationManager.AppSettings["GoogleCalendarID"].ToString()
         //private static string UserId = " "; //System.Web.HttpContext.Current.User.Identity.Name
