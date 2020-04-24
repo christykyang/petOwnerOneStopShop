@@ -20,12 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="GenderSelection" class="control-label"></label>
-                <select asp-for="GenderSelection" asp-items='new SelectList(@Model.IsMale, "Key", "Value")' class="form-control"></select>
+                <select asp-for="GenderSelection" asp-items='new SelectList(@Model.GenderOptions, "Key", "Value")' class="form-control"></select>
                 <span asp-validation-for="GenderSelection" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdoptionStatus" class="control-label"></label>
-                <select asp-for="AdoptionStatus" asp-items='new SelectList(@Model.IsAdopted, "Key", "Value")' class="form-control"></select>
+                <select asp-for="AdoptionStatus" asp-items='new SelectList(@Model.Adoption, "Key", "Value")' class="form-control"></select>
                 <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,28 +53,35 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.PetProfiles)
+            @foreach (var pet in Model.PetProfiles)
             {
-                <tr>
+            <tr>
+                <td>
+                <img src="~/images/@pet.ProfilePicture"
+                     class="rounded-circle"
+                     height="80" width="40"
+                     asp-append-version="true" />
+                @pet.Name
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => pet.Name)
+                </td>
+                @if (pet.PetType != null)
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => pet.PetType)
                     </td>
-                    @if (item.PetType != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PetType)
-                        </td>
-                    }
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => pet.IsMale)
+                </td>
+                @if (pet.IsAdopted != null)
+                {
                     <td>
-                            @Html.DisplayFor(modelItem => item.IsMale)
+                        @Html.DisplayFor(modelItem => pet.IsAdopted)
                     </td>
-                    @if (item.IsAdopted != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsAdopted)
-                        </td>
-                    }
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>
