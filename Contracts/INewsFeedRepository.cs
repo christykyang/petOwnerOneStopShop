@@ -8,7 +8,7 @@ namespace petOwnerOneStopShop.Contracts
 {
     public interface INewsFeedRepository : IRepositoryBase<NewsFeed>
     {
-        NewsFeed? GetNewsFeedByPetBusiness(int petBusinessId);
-        NewsFeed? GetNewsFeedByPetOwner(int petOwnerId);
+        NewsFeed GetNewsFeedByPetBusiness(int petBusinessId);
+        NewsFeed GetNewsFeedByPetOwner(int petOwnerId);
     }
 }

@@ -41,7 +41,12 @@ namespace petOwnerOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
-            NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
+
+            NewsFeed newsFeed = new NewsFeed();
+            newsFeed.IdentityUserId
+
+            if()
+            //NewsFeed? newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
             if(newsFeed == null)
             {
                 NewsFeed creatingNewsFeed = new NewsFeed();
@@ -157,7 +162,7 @@ namespace petOwnerOneStopShop.Controllers
                 _repo.Save();
 
                 NewsFeed newsFeed = new NewsFeed();
-                newsFeed.PetBusinessId = petBusiness.Id;
+                newsFeed.IdentityUserId = userId;
                 _repo.NewsFeed.Create(newsFeed);
                 _repo.Save();
 
