@@ -15,7 +15,7 @@ namespace petOwnerOneStopShop.Data
 
         }
 
-        public NewsFeed GetNewsFeedByPetBusiness(int petBusinessId) => FindByCondition(n => n.PetBusinessId == petBusinessId).FirstOrDefault();
-        public NewsFeed GetNewsFeedByPetOwner(int petOwnerId) => FindByCondition(n => n.PetOwnerId == petOwnerId).FirstOrDefault();
+        public NewsFeed? GetNewsFeedByPetBusiness(int petBusinessId) => FindByCondition(n => n.PetBusinessId == petBusinessId).FirstOrDefault();
+        public NewsFeed? GetNewsFeedByPetOwner(int petOwnerId) => FindByCondition(n => n.PetOwnerId == petOwnerId).FirstOrDefault();
     }
 }

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using petOwnerOneStopShop.Data;
 
-namespace petOwnerOneStopShop.Data.Migrations
+namespace petOwnerOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200424233305_saysToAddMigrationAgain1")]
-    partial class saysToAddMigrationAgain1
+    [Migration("20200424233704_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace petOwnerOneStopShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "020ffbe6-1666-4da9-b7df-834745b3ab7d",
-                            ConcurrencyStamp = "4f7ada7e-9055-4223-97c3-332b5a82e561",
+                            Id = "42e97c1d-8c65-437f-8043-88340f347ad6",
+                            ConcurrencyStamp = "fd0639af-89b5-4ca4-b06c-8ba953084fb0",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "8a458493-6842-48dc-be21-7e0ae2189193",
-                            ConcurrencyStamp = "525e2854-41fb-411c-9dae-ef771ee189fe",
+                            Id = "7d789b3b-c4fe-4e4e-b09a-9f8a5307330e",
+                            ConcurrencyStamp = "235cd85a-f885-4efb-99d0-5bf231529bb8",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });

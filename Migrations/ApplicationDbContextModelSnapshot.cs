@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using petOwnerOneStopShop.Data;
 
-namespace petOwnerOneStopShop.Data.Migrations
+namespace petOwnerOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200424122124_update2")]
-    partial class update2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,15 +48,15 @@ namespace petOwnerOneStopShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3042abe9-5b0b-447b-8ef2-caac53f87d91",
-                            ConcurrencyStamp = "4c1404e4-f6ae-4a64-946c-2964af98cb0b",
+                            Id = "42e97c1d-8c65-437f-8043-88340f347ad6",
+                            ConcurrencyStamp = "fd0639af-89b5-4ca4-b06c-8ba953084fb0",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "ebeeee21-33c3-4be4-a438-b15005b5415b",
-                            ConcurrencyStamp = "6b99bbae-f8e1-4602-ae8e-a249de50e331",
+                            Id = "7d789b3b-c4fe-4e4e-b09a-9f8a5307330e",
+                            ConcurrencyStamp = "235cd85a-f885-4efb-99d0-5bf231529bb8",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });
@@ -928,7 +926,7 @@ namespace petOwnerOneStopShop.Data.Migrations
             modelBuilder.Entity("petOwnerOneStopShop.Models.FeedUpdate", b =>
                 {
                     b.HasOne("petOwnerOneStopShop.Models.NewsFeed", "NewsFeed")
-                        .WithMany()
+                        .WithMany("Updates")
                         .HasForeignKey("NewsFeedId");
                 });
 
