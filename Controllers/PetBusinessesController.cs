@@ -39,9 +39,16 @@ namespace petOwnerOneStopShop.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
             //var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
 
-            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByPetBusinessIncludeAll(userId);
+            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusiness.Id);
+            //NewsFeedViewModel viewModel = new NewsFeedViewModel();
+            //viewModel.PetBusiness = petBusiness;
+            //viewModel.PetBusiness.IdentityUserId = _repo.FeedUpdate.FindUpdateByUserId(userId).ToString();
+
+            
 
 
             return View(await newsFeedUpdate);
@@ -65,7 +72,6 @@ namespace petOwnerOneStopShop.Controllers
             string timeStamp = dt.ToShortDateString();
 
             newUpdate.Description = update.Description;
-            newUpdate.Title = update.Title;
             newUpdate.PubDate = timeStamp;
             newUpdate.NewsFeedId = newsFeed.Id;
             _repo.FeedUpdate.Create(newUpdate);

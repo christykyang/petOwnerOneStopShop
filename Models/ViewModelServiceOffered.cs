@@ -38,11 +38,5 @@ namespace petOwnerOneStopShop.Models
         public int FollowId { get; set; }
         public Follow Follow { get; set; }
         public List<Follow> Follows { get; set; }
-        //    [Display(Name = "Resource")]
-        //    public int ServiceOfferedId { get; set; }
-        //    [Display(Name = "Minimum Cost")]
-        //    public string MinCost { get; set; }
-        //    [Display(Name = "Maximum Cost")]
-        //    public string MaxCost { get; set; }
     }
 }

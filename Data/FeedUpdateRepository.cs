@@ -16,9 +16,14 @@ namespace petOwnerOneStopShop.Data
         }
         public async Task<ICollection<FeedUpdate>> FindUpdatesByPetBusinessIncludeAll(string userId)
         {
-            return await FindByCondition(f => f.NewsFeed.IdentityUserId == userId).ToListAsync();
+            return await FindAll().Where(f => f.NewsFeed.IdentityUserId == userId).ToListAsync();
+        }
+        public async Task<ICollection<FeedUpdate>> FindUpdatesByPetBusinessIdIncludeAll(int id)
+        {
+            return await FindAll().Where(f => f.NewsFeed.PetBusinessId == id).ToListAsync();
         }
 
         public FeedUpdate FindUpdateById(int updateId) => FindByCondition(u => u.Id == updateId).FirstOrDefault();
+        public FeedUpdate FindUpdateByUserId(string identityUserId) => FindByCondition(u => u.NewsFeed.IdentityUserId == identityUserId).FirstOrDefault();
     }
 }
