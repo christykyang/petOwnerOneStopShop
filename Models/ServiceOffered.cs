@@ -12,11 +12,11 @@ namespace petOwnerOneStopShop.Models
         public int Id { get; set; }
         public string Cost { get; set; }
         [ForeignKey("PetBusiness")]
-        public int? PetBusinessId { get; set; }
+        public int PetBusinessId { get; set; }
         public PetBusiness PetBusiness { get; set; }
         [ForeignKey("Service")]
         [Display(Name = "Service")]
-        public int? ServiceId { get; set; }
+        public int ServiceId { get; set; }
         public Service Service { get; set; }
     }
 }

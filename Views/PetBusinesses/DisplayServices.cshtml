@@ -8,16 +8,13 @@
 <h1>Display Services</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateServiceOffered">Create New Service</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PetBusiness)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Service)
@@ -32,10 +29,7 @@
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PetBusiness.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Service.Id)
+                @Html.DisplayFor(modelItem => item.Service.ServiceName)
             </td>
             <td>
                 <a asp-action="DisplayServiceOfferedDetails" asp-route-id="@item.Id">Details</a> |

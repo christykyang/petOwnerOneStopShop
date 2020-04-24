@@ -254,9 +254,12 @@ namespace petOwnerOneStopShop.Controllers
         }
         public IActionResult CreateServiceOffered()
         {
-            
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            PetBusiness petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
             ServiceOffered serviceOffered = new ServiceOffered();
-            _repo.Service.GetAllServices();
+
+            serviceOffered.PetBusinessId = petBusiness.Id;
+            //_repo.Service.GetAllServices();
 
             ViewData["Services"] = new SelectList(_repo.Service.GetAllServices(), "Id", "ServiceName");
 
@@ -268,8 +271,9 @@ namespace petOwnerOneStopShop.Controllers
         {
             try
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                _repo.ServiceOffered.CreateServiceOffered(serviceOffered.Cost, serviceOffered.PetBusiness, serviceOffered.Service);
+                
+
+                _repo.ServiceOffered.CreateServiceOffered(serviceOffered.Cost, serviceOffered.PetBusinessId, serviceOffered.ServiceId);
                 _repo.Save();
 
                 return RedirectToAction(nameof(DisplayServices));
