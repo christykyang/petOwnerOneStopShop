@@ -553,8 +553,8 @@ namespace petOwnerOneStopShop.Controllers
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
-            viewModel.IsMale = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
-            viewModel.IsAdopted = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
+            viewModel.GenderOptions = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
+            viewModel.Adoption = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
 
             return View(viewModel);
         }
@@ -609,8 +609,8 @@ namespace petOwnerOneStopShop.Controllers
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
-            viewModel.IsMale = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
-            viewModel.IsAdopted = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
+            viewModel.GenderOptions = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
+            viewModel.Adoption = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
             return View("SearchPetProfiles", viewModel);
         }
         private bool PetOwnerExists(int id)
