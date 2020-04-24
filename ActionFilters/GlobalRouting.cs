@@ -20,12 +20,12 @@ namespace petOwnerOneStopShop.ActionFilters
             var controller = context.RouteData.Values["controller"];
             if (controller.Equals("Home"))
             {
-                if (_claimsPrincipal.IsInRole("Pet Owner"))
+                if (_claimsPrincipal.IsInRole("PetOwner"))
                 {
                     context.Result = new RedirectToActionResult("Index",
                     "PetOwners", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Pet Business"))
+                else if (_claimsPrincipal.IsInRole("PetBusiness"))
                 {
                     context.Result = new RedirectToActionResult("Index",
                     "PetBusinesss", null);
