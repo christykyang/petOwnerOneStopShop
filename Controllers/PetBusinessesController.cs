@@ -41,30 +41,32 @@ namespace petOwnerOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
-            //var applicationDbContext = _repo.PetBusiness.FindByCondition(p => p.IdentityUserId == userId);
+            NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
+            if(newsFeed == null)
+            {
+                NewsFeed creatingNewsFeed = new NewsFeed();
+                creatingNewsFeed.PetBusinessId = petBusiness.Id;
+                _repo.NewsFeed.Create(creatingNewsFeed);
+                _repo.Save();
+                
+            }
 
             var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusiness.Id);
-            //NewsFeedViewModel viewModel = new NewsFeedViewModel();
-            //viewModel.PetBusiness = petBusiness;
-            //viewModel.PetBusiness.IdentityUserId = _repo.FeedUpdate.FindUpdateByUserId(userId).ToString();
-
-            
-
-
             return View(await newsFeedUpdate);
         }
 
-        public IActionResult CreateUpdate()
+        public IActionResult CreateUpdate(int newsFeedId)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             FeedUpdate update = new FeedUpdate();
+
+            update.NewsFeedId = newsFeedId;
 
             return View(update);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateUpdate(FeedUpdate update, NewsFeed newsFeed)
+        public IActionResult CreateUpdate(FeedUpdate update)
         {
             FeedUpdate newUpdate = new FeedUpdate();
             DateTime dt = DateTime.Now;
@@ -73,7 +75,7 @@ namespace petOwnerOneStopShop.Controllers
 
             newUpdate.Description = update.Description;
             newUpdate.PubDate = timeStamp;
-            newUpdate.NewsFeedId = newsFeed.Id;
+            newUpdate.NewsFeedId = update.NewsFeedId;
             _repo.FeedUpdate.Create(newUpdate);
             _repo.Save();
 
@@ -150,6 +152,12 @@ namespace petOwnerOneStopShop.Controllers
 
                 _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
                 _repo.Save();
+
+                NewsFeed newsFeed = new NewsFeed();
+                newsFeed.PetBusinessId = petBusiness.Id;
+                _repo.NewsFeed.Create(newsFeed);
+                _repo.Save();
+
                 return RedirectToAction(nameof(Details));
             }
 

@@ -28,6 +28,7 @@ namespace petOwnerOneStopShop.Contracts
 		private IPetTypeRepository _petType;
 		private IServiceOfferedRepository _serviceOffered;
 		private IServiceRepository _service;
+		private INewsFeedRepository _newsFeed;
 
 		public RepositoryWrapper(ApplicationDbContext context)
 		{
@@ -130,6 +131,17 @@ namespace petOwnerOneStopShop.Contracts
 					_message = new MessageRepository(_context);
 				}
 				return _message;
+			}
+		}
+		public INewsFeedRepository NewsFeed
+		{
+			get
+			{
+				if (_newsFeed == null)
+				{
+					_newsFeed = new NewsFeedRepository(_context);
+				}
+				return _newsFeed;
 			}
 		}
 		public IPetBusinessRepository PetBusiness
