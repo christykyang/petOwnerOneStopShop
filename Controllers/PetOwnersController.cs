@@ -238,11 +238,13 @@ namespace petOwnerOneStopShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //NOT WORKING
         public async Task<IActionResult> DisplayPetProfiles()
         {
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int petOwner = _repo.PetOwner.GetPetOwnerById(userId).Id;
-            IEnumerable<PetProfile> petProfiles = await _repo.PetProfile.GetPetsByOwnerIdAndIncludeAll(petOwner);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwner = _repo.PetOwner.GetPetOwnerById(userId);
+
+            IEnumerable<PetProfile> petProfiles = await _repo.PetProfile.GetPetsByOwnerIdAndIncludeAll(petOwner.Id);
 
             return View(petProfiles);
         }
@@ -255,7 +257,7 @@ namespace petOwnerOneStopShop.Controllers
 
         public IActionResult CreatePetProfile()
         {
-            PetProfile petProfile = new PetProfile();
+            PetProfileViewModel petProfile = new PetProfileViewModel();
 
             _repo.PetType.GetAllPetTypes();
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
@@ -271,7 +273,7 @@ namespace petOwnerOneStopShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePetProfile(PetProfileViewModel viewModel)
+        public IActionResult CreatePetProfile(int petOwnerId, PetProfileViewModel viewModel)
         {
             try
             {
@@ -284,12 +286,12 @@ namespace petOwnerOneStopShop.Controllers
                     Age = viewModel.Age,
                     IsMale = viewModel.IsMale,
                     IsAdopted = viewModel.IsAdopted,
-                    PetOwnerId = viewModel.PetOwnerId,
+                    PetOwnerId = petOwnerId,
                     PetTypeId = viewModel.PetTypeId,
                     ProfilePicture = uniqueFileName,
                 };
 
-                _repo.PetProfile.CreatePetProfile(petProfile.PetOwner, petProfile.PetType, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
+                _repo.PetProfile.CreatePetProfile(petOwnerId, petProfile.PetType.Id, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
                 _repo.Save();
 
                 return RedirectToAction(nameof(DisplayPetProfiles));
@@ -377,14 +379,14 @@ namespace petOwnerOneStopShop.Controllers
         {
             string uniqueFileName = null;
 
-            if (model.ProfileImage != null)
+            if (model.ProfilePicture != null)
             {
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfilePicture.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    model.ProfileImage.CopyTo(fileStream);
+                    model.ProfilePicture.CopyTo(fileStream);
                 }
             }
             return uniqueFileName;

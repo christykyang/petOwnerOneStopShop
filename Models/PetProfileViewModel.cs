@@ -21,14 +21,14 @@ namespace petOwnerOneStopShop.Models
         public bool IsAdopted { get; set; }
         [Required(ErrorMessage = "Please choose profile image")]
         [Display(Name = "Profile Picture")]
-        public IFormFile ProfileImage { get; set; }
-        [ForeignKey("PetOwner")]
+        public IFormFile ProfilePicture { get; set; }
         [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
-        [ForeignKey("PetType")]
         [Display(Name = "Type of Pet")]
         public int? PetTypeId { get; set; }
         public PetType PetType { get; set; }
+        public Dictionary<int, string> GenderOptions { get; set; }
+        public Dictionary<int, string> Adoption { get; set; }
     }
 }

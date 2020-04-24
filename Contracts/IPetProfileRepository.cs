@@ -13,7 +13,7 @@ namespace petOwnerOneStopShop.Contracts
 		PetProfile GetPetByIdIncludeAll(int petId);
 		Task<PetProfile> GetPetByIdIncludeAllAsync(int? petId);
 		Task<ICollection<PetProfile>> GetPetIncludeAll();
-		void CreatePetProfile(PetOwner petOwner, PetType petType, string name, int age, bool? isMale, bool? isAdopted, string picture);
+		void CreatePetProfile(int? petOwnerId, int? petTypeId, string name, int age, bool? isMale, bool? isAdopted, string? picture);
 		ICollection<PetProfile> GetPetAndIncludeAll();
 		ICollection<PetProfile> GetPetsTiedToOwner(int petOwnerId);
 		ICollection<PetProfile> GetPetsByOwnerId(int id);

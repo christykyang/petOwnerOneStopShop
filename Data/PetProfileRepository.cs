@@ -52,11 +52,11 @@ namespace petOwnerOneStopShop.Data
 			return await FindAll().Include(o => o.PetOwner)
 								  .Include(t => t.PetType).ToListAsync();
 		}
-		public void CreatePetProfile(PetOwner petOwner, PetType petType, string name, int age, bool? isMale, bool? isAdopted, string picture)
+		public void CreatePetProfile(int? petOwnerId, int? petTypeId, string name, int age, bool? isMale, bool? isAdopted, string? picture)
 		{
 			PetProfile petProfile = new PetProfile();
-			petProfile.PetOwnerId = petOwner.Id;
-			petProfile.PetTypeId = petType.Id;
+			petProfile.PetOwnerId = petOwnerId;
+			petProfile.PetTypeId = petTypeId;
 			petProfile.Name = name;
 			petProfile.Age = age;
 			petProfile.IsMale = isMale;
