@@ -25,7 +25,7 @@ namespace petOwnerOneStopShop.ActionFilters
                     context.Result = new RedirectToActionResult("Index",
                     "Pet Owners", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Pet Business"))
+                else if (_claimsPrincipal.IsInRole("PetBusiness"))
                 {
                     context.Result = new RedirectToActionResult("Index",
                     "Pet Businesss", null);
