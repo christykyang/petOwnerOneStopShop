@@ -13,5 +13,6 @@ namespace petOwnerOneStopShop.Contracts
         Task<ICollection<PetBusiness>> GetBusinessesIncludeAllAsync();
         void DeleteBusiness(IQueryable<PetBusiness> petBusiness);
         //Task FindAsync(int id);
+        void CreatePetBusiness(string name, int? businessType, int address, string identityUser);
     }
 }

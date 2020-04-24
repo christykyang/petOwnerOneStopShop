@@ -35,5 +35,9 @@ namespace petOwnerOneStopShop.Data
 		{
 			return FindAll().ToList();
 		}
+		public Address GetAddressByFullAddress(string streetAddress, string city, string state, string zipcode)
+		{
+			return FindByCondition(a => a.StreetAddress == streetAddress && a.City == city && a.State == state && a.ZipCode == zipcode).FirstOrDefault();
+		}
 	}
 }

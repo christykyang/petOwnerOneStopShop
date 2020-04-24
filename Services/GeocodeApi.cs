@@ -6,12 +6,13 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using petOwnerOneStopShop.Contracts;
 using petOwnerOneStopShop.Data;
 using petOwnerOneStopShop.Models;
 
 namespace petOwnerOneStopShop.Services
 {
-    public class GeocodeApi
+    public class GeocodeApi : IGetCoordinatesRequest
     {
         private ApplicationDbContext _context;
 

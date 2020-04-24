@@ -95,20 +95,10 @@ namespace petOwnerOneStopShop.Controllers
 
 
         // GET: PetBusinesses/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var petBusiness = await _repo.PetBusiness.FindByCondition(p => p.Id == id)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (petBusiness == null)
-            {
-                return NotFound();
-            }
-
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            PetBusiness petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
             return View(petBusiness);
         }
 
@@ -120,7 +110,7 @@ namespace petOwnerOneStopShop.Controllers
 
             petBusiness.IdentityUserId = userId;
 
-            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness");
+            ViewData["BusinessType"] = new SelectList(_repo.BusinessType.GetAllBusinessTypes(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
             return View(petBusiness);
         }
 
@@ -129,9 +119,9 @@ namespace petOwnerOneStopShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name,BusinessTypeId")] PetBusiness petBusiness)
+        public IActionResult Create(PetBusiness petBusiness)
         {
-            if (ModelState.IsValid)
+            try
             {
                 if (_repo.Address.GetByAddress(petBusiness.Address) == null)
                 {
@@ -150,10 +140,18 @@ namespace petOwnerOneStopShop.Controllers
                     petBusiness.Address.Lng = _getCoordinates.GetLng(url, petBusiness.Address).Result;
                     _repo.Save();
                 }
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
+                _repo.Save();
+                return RedirectToAction(nameof(Details));
             }
-            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
-            return View(petBusiness);
+
+            catch
+            {
+                return View(petBusiness);
+            }
+            
         }
 
         // GET: PetBusinesses/Edit/5
@@ -169,7 +167,7 @@ namespace petOwnerOneStopShop.Controllers
             {
                 return NotFound();
             }
-            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness");
+            ViewData["BusinessType"] = new SelectList(_repo.BusinessType.GetAllBusinessTypes(), "Id", "TypeOfBusiness");
             return View(petBusiness);
         }
 
@@ -205,7 +203,7 @@ namespace petOwnerOneStopShop.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BusinessType"] = new SelectList(_repo.Set<BusinessType>(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
+            ViewData["BusinessType"] = new SelectList(_repo.BusinessType.GetAllBusinessTypes(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
             return View(petBusiness);
         }
 

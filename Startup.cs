@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using petOwnerOneStopShop.ActionFilters;
+using petOwnerOneStopShop.Contracts;
+using petOwnerOneStopShop.Services;
 
 namespace petOwnerOneStopShop
 {
@@ -47,6 +49,9 @@ namespace petOwnerOneStopShop
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IGetCoordinatesRequest, GeocodeApi>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
