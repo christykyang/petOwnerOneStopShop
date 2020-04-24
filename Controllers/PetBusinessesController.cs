@@ -36,7 +36,7 @@ namespace petOwnerOneStopShop.Controllers
 
 
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -48,18 +48,21 @@ namespace petOwnerOneStopShop.Controllers
                 creatingNewsFeed.PetBusinessId = petBusiness.Id;
                 _repo.NewsFeed.Create(creatingNewsFeed);
                 _repo.Save();
-                
+                newsFeed.Id = creatingNewsFeed.Id;
             }
-
-            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusiness.Id);
-            return View(await newsFeedUpdate);
+            
+            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByNewsFeedId(newsFeed.Id);
+            return View(newsFeedUpdate);
         }
 
-        public IActionResult CreateUpdate(int newsFeedId)
+        public IActionResult CreateUpdate()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
+            NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
             FeedUpdate update = new FeedUpdate();
 
-            update.NewsFeedId = newsFeedId;
+            update.NewsFeedId = newsFeed.Id;
 
             return View(update);
         }
