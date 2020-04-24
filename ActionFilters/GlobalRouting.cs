@@ -23,12 +23,12 @@ namespace petOwnerOneStopShop.ActionFilters
                 if (_claimsPrincipal.IsInRole("Pet Owner"))
                 {
                     context.Result = new RedirectToActionResult("Index",
-                    "Pet Owners", null);
+                    "PetOwners", null);
                 }
-                else if (_claimsPrincipal.IsInRole("PetBusiness"))
+                else if (_claimsPrincipal.IsInRole("Pet Business"))
                 {
                     context.Result = new RedirectToActionResult("Index",
-                    "Pet Businesss", null);
+                    "PetBusinesss", null);
                 }
             }
         }
