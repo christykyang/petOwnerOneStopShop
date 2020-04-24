@@ -303,7 +303,7 @@ namespace petOwnerOneStopShop.Controllers
             updatedServiceOffered.Id = id;
             updatedServiceOffered.PetBusinessId = serviceOffered.PetBusinessId;
             updatedServiceOffered.Cost = serviceOffered.Cost;
-            updatedServiceOffered.Service = _repo.Service.FindByCondition(s => s.Id == serviceOffered.Service.Id).FirstOrDefault();
+            updatedServiceOffered.Service = _repo.Service.FindByCondition(s => s.Id == serviceOffered.ServiceId).FirstOrDefault();
             _repo.ServiceOffered.Update(updatedServiceOffered);
             _repo.Save();
             return RedirectToAction(nameof(DisplayServices));
