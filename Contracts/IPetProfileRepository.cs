@@ -16,5 +16,7 @@ namespace petOwnerOneStopShop.Contracts
 		void CreatePetProfile(PetOwner petOwner, PetType petType, string name, int age, bool? isMale, bool? isAdopted, string picture);
 		ICollection<PetProfile> GetPetAndIncludeAll();
 		ICollection<PetProfile> GetPetsTiedToOwner(int petOwnerId);
+		ICollection<PetProfile> GetPetsByOwnerId(int id);
+		Task<ICollection<PetProfile>> GetPetsByOwnerIdAndIncludeAll(int petOwnerId);
 	}
 }

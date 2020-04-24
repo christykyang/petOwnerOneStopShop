@@ -23,6 +23,16 @@ namespace petOwnerOneStopShop.Data
 				.Include(t => t.PetType).FirstOrDefault();
 		}
 		public ICollection<PetProfile> GetPetsTiedToOwner(int petOwnerId) => FindByCondition(o => o.PetOwnerId == petOwnerId).ToList();
+		public ICollection<PetProfile> GetPetsByOwnerId(int id)
+		{
+			return FindAll().Where(o => o.PetOwnerId == id).ToList();
+		}
+		public async Task<ICollection<PetProfile>> GetPetsByOwnerIdAndIncludeAll(int petOwnerId)
+		{
+			return await FindAll()
+				.Include(p => p.PetType)
+				.Where(o => o.PetOwnerId == petOwnerId).ToListAsync();
+		}
 		public ICollection<PetProfile> GetPetAndIncludeAll()
 		{
 			return FindAll().Include(p => p.PetOwner).Include(p => p.PetType).ToList();

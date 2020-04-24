@@ -15,11 +15,11 @@ namespace petOwnerOneStopShop.Contracts
         private IAdoptableRepository _adoptable;
         private IBusinessTypeRepository _businessType;
         private ICalendarRepository _calendarRepo;
-        private ICalendarRequest _calendarReq;
+        //private ICalendarRequest _calendarReq;
         private IEventRepository _event;
 		private IFeedUpdateRepository _feedUpdate;
 		private IFollowRepository _follow;
-		private IGetCoordinatesRequest _getCoordinatesReq;
+		//private IGetCoordinatesRequest _getCoordinatesReq;
 		private IInviteRepository _invite;
 		private IMessageRepository _message;
 		private IPetBusinessRepository _petBusiness;
