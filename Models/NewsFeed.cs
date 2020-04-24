@@ -23,5 +23,6 @@ namespace petOwnerOneStopShop.Models
         [Display(Name = "IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        public List<FeedUpdate> Updates { get; set; }
     }
 }
