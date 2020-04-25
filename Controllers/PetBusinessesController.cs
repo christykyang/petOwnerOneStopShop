@@ -158,15 +158,12 @@ namespace petOwnerOneStopShop.Controllers
                 }
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                //_repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
-                //_repo.Save();
+                _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
+                _repo.Save();
 
                 NewsFeed newsFeed = new NewsFeed();
                 newsFeed.IdentityUserId = userId;
                 _repo.NewsFeed.Create(newsFeed);
-                _repo.Save();
-
-                _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
                 _repo.Save();
 
                 return RedirectToAction(nameof(Details));
