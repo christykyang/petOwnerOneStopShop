@@ -14,5 +14,6 @@ namespace PawentsOneStopShop.Contracts
         Follow FindFollowByPetOwnerId(int petBusinessId);
         void Unfollow(int? id, int petBusinessId, int petOwnerId);
         void Follow(int? id, int petBusinessId, int petOwnerId);
+        ICollection<Follow> GetAllFollowsEqualTrueByPetOwnerIncludeAll(int petOwnerId);
     }
 }

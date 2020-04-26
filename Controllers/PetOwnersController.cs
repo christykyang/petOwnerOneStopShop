@@ -33,25 +33,32 @@ namespace PawentsOneStopShop.Controllers
             webHostEnvironment = hostEnvironment;
         }
 
-        // GET: PetOwners
-        //public IActionResult Index()
-        //{
-        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    var petOwner = _repo.PetOwner.GetPetOwnerById(userId);
+        public IActionResult Index()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //    NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetOwner(petOwner.Id);
-        //    if (newsFeed == null)
-        //    {
-        //        NewsFeed creatingNewsFeed = new NewsFeed();
-        //        //creatingNewsFeed.PetOwnerId = petOwner.Id;
-        //        _repo.NewsFeed.Create(creatingNewsFeed);
-        //        _repo.Save();
-        //        newsFeed.Id = creatingNewsFeed.Id;
-        //    }
+            var petOwner = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-        //    var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByNewsFeedId(newsFeed.Id);
-        //    return View(newsFeedUpdate);
-        //}
+            var follows = _repo.Follow.GetAllFollowsEqualTrueByPetOwnerIncludeAll(petOwner);
+
+            var petBusinesses = _repo.PetBusiness.FindAll();
+
+            IQueryable<FeedUpdate> allUpdates = new FeedUpdate[] { }.AsQueryable();
+
+            foreach (var follow in follows)
+            {
+                foreach (var business in petBusinesses)
+                {
+                    if(follow.PetBusinessId == business.Id)
+                    {
+                        var updates = _repo.FeedUpdate.FindByCondition(u => u.PetBusinessId == business.Id);
+                        allUpdates.Concat(updates);
+                    }
+                }
+            }
+
+            return View(allUpdates);
+        }
 
         // GET: PetOwners/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -155,10 +162,7 @@ namespace PawentsOneStopShop.Controllers
                 _repo.PetOwner.CreatePetOwner(petOwner.Name, petOwner.Address.Id, userId);
                 _repo.Save();
 
-                NewsFeed newsFeed = new NewsFeed();
-                newsFeed.IdentityUserId = userId;
-                _repo.NewsFeed.Create(newsFeed);
-                return RedirectToAction(nameof(Details));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {

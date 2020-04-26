@@ -34,5 +34,10 @@ namespace PawentsOneStopShop.Data
 
         public FeedUpdate FindUpdateById(int updateId) => FindByCondition(u => u.Id == updateId).FirstOrDefault();
         public FeedUpdate FindUpdateByUserId(string identityUserId) => FindByCondition(u => u.PetBusiness.IdentityUserId == identityUserId).FirstOrDefault();
+
+        public ICollection<FeedUpdate> GetAllUpdates()
+        {
+            return FindAll().ToList();
+        }
     }
 }

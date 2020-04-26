@@ -13,5 +13,6 @@ namespace PawentsOneStopShop.Contracts
         ICollection<FeedUpdate> FindUpdatesByPetBusinessIdIncludeAll(int id);
         FeedUpdate FindUpdateById(int updateId);
         ICollection<FeedUpdate> FindUpdatesByNewsFeedId(int id);
+        ICollection<FeedUpdate> GetAllUpdates();
     }
 }

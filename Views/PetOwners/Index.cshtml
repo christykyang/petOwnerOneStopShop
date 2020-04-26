@@ -21,9 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.NewsFeed.PetBusiness.Name)
-            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.PetBusiness.Name)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,9 +36,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.NewsFeed.PetBusiness.Name)
-            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.PetBusiness.Name)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

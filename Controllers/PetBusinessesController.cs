@@ -226,11 +226,7 @@ namespace NewPetApp.Controllers
                 return NotFound();
             }
             var petBusiness = await _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == id).FirstOrDefaultAsync();
-            //var petBusiness = await _repo.PetBusiness
-            //    .Include(p => p.Address)
-            //    .Include(p => p.BusinessType)
-            //    .Include(p => p.identityUser)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
+   
             if (petBusiness == null)
             {
                 return NotFound();
