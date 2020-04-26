@@ -12,6 +12,7 @@ namespace PawentsOneStopShop.Models
     public class PetOwner
     {
         public int Id { get; set; }
+        [Display(Name = "Owner")]
         public string Name { get; set; }
 
         [ForeignKey("IdentityUser")]

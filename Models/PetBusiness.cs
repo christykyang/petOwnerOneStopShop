@@ -11,6 +11,7 @@ namespace PawentsOneStopShop.Models
     public class PetBusiness
     {
         public int Id { get; set; }
+        [Display(Name = "Business Name")]
         public string Name { get; set; }
         [ForeignKey("Address")]
         public int? AddressId { get; set; }
@@ -20,7 +21,7 @@ namespace PawentsOneStopShop.Models
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
         [ForeignKey("BusinessType")]
-        [Display(Name = "Business Type")]
+        [Display(Name = "Type of Business")]
         public int? BusinessTypeId { get; set; }
         public BusinessType BusinessType { get; set; }
     }

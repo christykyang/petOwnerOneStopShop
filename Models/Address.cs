@@ -13,8 +13,10 @@ namespace PawentsOneStopShop.Models
 		[Display(Name = "Street Address")]
 		public string StreetAddress { get; set; }
 		[Required]
+		[Display(Name = "City")]
 		public string City { get; set; }
 		[Required]
+		[Display(Name = "State")]
 		public string State { get; set; }
 		[Required]
 		[Display(Name = "Zip Code")]

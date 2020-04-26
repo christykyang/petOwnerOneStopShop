@@ -10,6 +10,7 @@ namespace PawentsOneStopShop.Models
     public class Adoptable
     {
         public int Id { get; set; }
+        [Display(Name = "Adoption Status")]
         public bool? isAdoptable { get; set; }
         [ForeignKey("PetProfile")]
         [Display(Name = "Pet")]

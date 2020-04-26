@@ -10,6 +10,7 @@ namespace PawentsOneStopShop.Models
     public class ServiceOffered
     {
         public int Id { get; set; }
+        [Display(Name = "Service Price")]
         public string Cost { get; set; }
         [ForeignKey("PetBusiness")]
         public int PetBusinessId { get; set; }
