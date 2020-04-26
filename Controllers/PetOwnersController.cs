@@ -285,9 +285,10 @@ namespace PawentsOneStopShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePetProfile(int petOwnerId, ViewModelPetProfile viewModel)
+        public IActionResult CreatePetProfile(ViewModelPetProfile viewModel)
         {
-            try
+
+            if (ModelState.IsValid)
             {
                 //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 string uniqueFileName = UploadedPicture(viewModel);
@@ -298,7 +299,7 @@ namespace PawentsOneStopShop.Controllers
                     Age = viewModel.Age,
                     IsMale = viewModel.IsMale,
                     IsAdopted = viewModel.IsAdopted,
-                    PetOwnerId = petOwnerId,
+                    PetOwnerId = viewModel.PetOwnerId,
                     PetTypeId = viewModel.PetTypeId,
                     ProfilePicture = uniqueFileName,
                 };
@@ -308,15 +309,43 @@ namespace PawentsOneStopShop.Controllers
 
                 return RedirectToAction(nameof(DisplayPetProfiles));
             }
-            catch
-            {
-                ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
-                Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
-                ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
-                Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
-                ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
-                return View(viewModel);
-            }
+            ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+            return View(viewModel);
+
+            //try
+            //{
+            //    //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //    string uniqueFileName = UploadedPicture(viewModel);
+
+            //    PetProfile petProfile = new PetProfile
+            //    {
+            //        Name = viewModel.Name,
+            //        Age = viewModel.Age,
+            //        IsMale = viewModel.IsMale,
+            //        IsAdopted = viewModel.IsAdopted,
+            //        PetOwnerId = petOwnerId,
+            //        PetTypeId = viewModel.PetTypeId,
+            //        ProfilePicture = uniqueFileName,
+            //    };
+
+            //    _repo.PetProfile.CreatePetProfile(petOwnerId, petProfile.PetType.Id, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
+            //    _repo.Save();
+
+            //    return RedirectToAction(nameof(DisplayPetProfiles));
+            //}
+            //catch
+            //{
+            //    ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+            //    Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            //    ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+            //    Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            //    ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+            //    return View(viewModel);
+            //}
         }
 
         public IActionResult EditPetProfile(int id)
