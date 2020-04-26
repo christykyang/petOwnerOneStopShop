@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using static PawentsOneStopShop.Models.PetOwner;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
-    public class ViewModelPetProfiles
+    public class ViewModelPetProfile
     {
         public List<PetProfile> PetProfiles { get; set; }
         public PetProfile PetProfile { get; set; }

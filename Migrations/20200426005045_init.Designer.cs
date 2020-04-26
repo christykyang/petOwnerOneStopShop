@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PawentsOneStopShop.Data;
 
 namespace PawentsOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200426005045_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace PawentsOneStopShop.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1763d718-662f-45fa-b3ea-7c6c5dbc9da9",
-                            ConcurrencyStamp = "34dc7f90-6cbd-4257-a662-85b95d02c5c9",
+                            Id = "04b8f30d-ed0d-42e8-8dc4-23d71f920115",
+                            ConcurrencyStamp = "172a258d-5d2e-4f04-8eae-5f528693aa09",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "8f5c3110-4eb4-4d3d-b83f-52becda764d8",
-                            ConcurrencyStamp = "498488c0-5512-4b71-8da5-5fb5d70a8f40",
+                            Id = "fc3cdf70-0ee5-4496-b5d3-a0b3beec8484",
+                            ConcurrencyStamp = "4057a3ea-0c78-4074-aa2f-4cfe672cfa85",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });
@@ -353,9 +355,6 @@ namespace PawentsOneStopShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BusinessName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

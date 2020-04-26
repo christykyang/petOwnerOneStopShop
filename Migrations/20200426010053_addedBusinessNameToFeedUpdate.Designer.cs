@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using petOwnerOneStopShop.Data;
+using PawentsOneStopShop.Data;
 
-namespace petOwnerOneStopShop.Migrations
+namespace PawentsOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200424233704_init")]
-    partial class init
+    [Migration("20200426010053_addedBusinessNameToFeedUpdate")]
+    partial class addedBusinessNameToFeedUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace petOwnerOneStopShop.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "42e97c1d-8c65-437f-8043-88340f347ad6",
-                            ConcurrencyStamp = "fd0639af-89b5-4ca4-b06c-8ba953084fb0",
+                            Id = "1763d718-662f-45fa-b3ea-7c6c5dbc9da9",
+                            ConcurrencyStamp = "34dc7f90-6cbd-4257-a662-85b95d02c5c9",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "7d789b3b-c4fe-4e4e-b09a-9f8a5307330e",
-                            ConcurrencyStamp = "235cd85a-f885-4efb-99d0-5bf231529bb8",
+                            Id = "8f5c3110-4eb4-4d3d-b83f-52becda764d8",
+                            ConcurrencyStamp = "498488c0-5512-4b71-8da5-5fb5d70a8f40",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });
@@ -233,7 +233,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Address", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,7 +267,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Adoptable", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Adoptable", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,7 +292,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("Adoptable");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.BusinessType", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.BusinessType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -349,122 +349,20 @@ namespace petOwnerOneStopShop.Migrations
                         });
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Calendar", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.FeedUpdate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("Calendar");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.CalendarEvent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CalendarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Delete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Details")
+                    b.Property<string>("BusinessName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CalendarId");
-
-                    b.ToTable("Event");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Office")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Salary")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.FeedUpdate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NewsFeedId")
+                    b.Property<int?>("PetBusinessId")
                         .HasColumnType("int");
 
                     b.Property<string>("PubDate")
@@ -472,12 +370,12 @@ namespace petOwnerOneStopShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NewsFeedId");
+                    b.HasIndex("PetBusinessId");
 
                     b.ToTable("FeedUpdate");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Follow", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Follow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -502,32 +400,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("Follow");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Invite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CalendarEventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool?>("isInvitationAccepted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CalendarEventId");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("Invite");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Message", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -551,7 +424,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.NewsFeed", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectCalendar", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -561,24 +434,83 @@ namespace petOwnerOneStopShop.Migrations
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("PetBusinessId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("ObjectCalendar");
+                });
+
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PetOwnerId")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Delete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ObjectCalendarId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectCalendarId");
+
+                    b.ToTable("ObjectEvent");
+                });
+
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectInvite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ObjectCalendarEventId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ObjectEventId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("isInvitationAccepted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityUserId");
 
-                    b.HasIndex("PetBusinessId");
+                    b.HasIndex("ObjectEventId");
 
-                    b.HasIndex("PetOwnerId");
-
-                    b.ToTable("NewsFeed");
+                    b.ToTable("ObjectInvite");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetBusiness", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetBusiness", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -608,7 +540,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("PetBusiness");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetOwner", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetOwner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -633,7 +565,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("PetOwner");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetProfile", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -670,7 +602,7 @@ namespace petOwnerOneStopShop.Migrations
                     b.ToTable("PetProfile");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetType", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -727,7 +659,7 @@ namespace petOwnerOneStopShop.Migrations
                         });
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Service", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -824,7 +756,7 @@ namespace petOwnerOneStopShop.Migrations
                         });
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.ServiceOffered", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.ServiceOffered", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -900,86 +832,67 @@ namespace petOwnerOneStopShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Adoptable", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Adoptable", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.PetBusiness", "PetBusiness")
+                    b.HasOne("PawentsOneStopShop.Models.PetBusiness", "PetBusiness")
                         .WithMany()
                         .HasForeignKey("PetBusinessId");
 
-                    b.HasOne("petOwnerOneStopShop.Models.PetProfile", "PetProfile")
+                    b.HasOne("PawentsOneStopShop.Models.PetProfile", "PetProfile")
                         .WithMany()
                         .HasForeignKey("PetProfileId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Calendar", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.FeedUpdate", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                    b.HasOne("PawentsOneStopShop.Models.PetBusiness", "PetBusiness")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("PetBusinessId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.CalendarEvent", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.Follow", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.Calendar", "Calendar")
-                        .WithMany()
-                        .HasForeignKey("CalendarId");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.FeedUpdate", b =>
-                {
-                    b.HasOne("petOwnerOneStopShop.Models.NewsFeed", "NewsFeed")
-                        .WithMany("Updates")
-                        .HasForeignKey("NewsFeedId");
-                });
-
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Follow", b =>
-                {
-                    b.HasOne("petOwnerOneStopShop.Models.PetBusiness", "PetBusiness")
+                    b.HasOne("PawentsOneStopShop.Models.PetBusiness", "PetBusiness")
                         .WithMany()
                         .HasForeignKey("PetBusinessId");
 
-                    b.HasOne("petOwnerOneStopShop.Models.PetOwner", "PetOwner")
+                    b.HasOne("PawentsOneStopShop.Models.PetOwner", "PetOwner")
                         .WithMany()
                         .HasForeignKey("PetOwnerId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.Invite", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectCalendar", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.CalendarEvent", "Event")
-                        .WithMany()
-                        .HasForeignKey("CalendarEventId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.NewsFeed", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectEvent", b =>
+                {
+                    b.HasOne("PawentsOneStopShop.Models.ObjectCalendar", "ObjectCalendar")
+                        .WithMany()
+                        .HasForeignKey("ObjectCalendarId");
+                });
+
+            modelBuilder.Entity("PawentsOneStopShop.Models.ObjectInvite", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
 
-                    b.HasOne("petOwnerOneStopShop.Models.PetBusiness", "PetBusiness")
+                    b.HasOne("PawentsOneStopShop.Models.ObjectEvent", "ObjectEvent")
                         .WithMany()
-                        .HasForeignKey("PetBusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("petOwnerOneStopShop.Models.PetOwner", "PetOwner")
-                        .WithMany()
-                        .HasForeignKey("PetOwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ObjectEventId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetBusiness", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetBusiness", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.Address", "Address")
+                    b.HasOne("PawentsOneStopShop.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("petOwnerOneStopShop.Models.BusinessType", "BusinessType")
+                    b.HasOne("PawentsOneStopShop.Models.BusinessType", "BusinessType")
                         .WithMany()
                         .HasForeignKey("BusinessTypeId");
 
@@ -988,9 +901,9 @@ namespace petOwnerOneStopShop.Migrations
                         .HasForeignKey("IdentityUserId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetOwner", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetOwner", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.Address", "Address")
+                    b.HasOne("PawentsOneStopShop.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
@@ -999,26 +912,26 @@ namespace petOwnerOneStopShop.Migrations
                         .HasForeignKey("IdentityUserId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.PetProfile", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.PetProfile", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.PetOwner", "PetOwner")
+                    b.HasOne("PawentsOneStopShop.Models.PetOwner", "PetOwner")
                         .WithMany()
                         .HasForeignKey("PetOwnerId");
 
-                    b.HasOne("petOwnerOneStopShop.Models.PetType", "PetType")
+                    b.HasOne("PawentsOneStopShop.Models.PetType", "PetType")
                         .WithMany()
                         .HasForeignKey("PetTypeId");
                 });
 
-            modelBuilder.Entity("petOwnerOneStopShop.Models.ServiceOffered", b =>
+            modelBuilder.Entity("PawentsOneStopShop.Models.ServiceOffered", b =>
                 {
-                    b.HasOne("petOwnerOneStopShop.Models.PetBusiness", "PetBusiness")
+                    b.HasOne("PawentsOneStopShop.Models.PetBusiness", "PetBusiness")
                         .WithMany()
                         .HasForeignKey("PetBusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("petOwnerOneStopShop.Models.Service", "Service")
+                    b.HasOne("PawentsOneStopShop.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)

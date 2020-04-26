@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
-    public class InviteRepository : RepositoryBase<Invite>, IInviteRepository
+    public class InviteRepository : RepositoryBase<ObjectInvite>, IInviteRepository
     {
         public InviteRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
 
         }
-        public void CreateInvite(Invite invite) => Create(invite);
+        public void CreateInvite(ObjectInvite invite) => Create(invite);
     }
 }

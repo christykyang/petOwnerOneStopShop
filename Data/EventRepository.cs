@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
-    public class EventRepository : RepositoryBase<CalendarEvent>, IEventRepository
+    public class EventRepository : RepositoryBase<ObjectEvent>, IEventRepository
     {
         public EventRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
 
         }
-        public void CreateEvent(CalendarEvent _event) => Create(_event);
+        public void CreateEvent(ObjectEvent _event) => Create(_event);
     }
 }

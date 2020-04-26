@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
-    public class Calendar
+    public class ObjectCalendar
     {
         public int Id { get; set; }
         [ForeignKey("IdentityUser")]

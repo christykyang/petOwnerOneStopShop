@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Models;
+using static PawentsOneStopShop.Models.PetOwner;
 
-namespace petOwnerOneStopShop.Contracts
+namespace PawentsOneStopShop.Contracts
 {
     public interface IRepositoryWrapper
     {

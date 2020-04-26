@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Contracts
+namespace PawentsOneStopShop.Contracts
 {
     public interface INewsFeedRepository : IRepositoryBase<NewsFeed>
     {
-        NewsFeed GetNewsFeedByPetBusiness(int petBusinessId);
-        NewsFeed GetNewsFeedByPetOwner(int petOwnerId);
+        //NewsFeed GetNewsFeedByPetBusiness(int petBusinessId);
+        //NewsFeed GetNewsFeedByPetOwner(int petOwnerId);
+        NewsFeed GetNewsFeedByIdentityUserId(string identityUserId);
+        void CreateNewsFeedByUserId(string identityUserId);
+        void CreateNewsFeed(int userId, string identityUserId);
     }
 }

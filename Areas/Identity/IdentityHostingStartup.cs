@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using petOwnerOneStopShop.Data;
+using PawentsOneStopShop.Data;
 
-[assembly: HostingStartup(typeof(petOwnerOneStopShop.Areas.Identity.IdentityHostingStartup))]
-namespace petOwnerOneStopShop.Areas.Identity
+[assembly: HostingStartup(typeof(PawentsOneStopShop.Areas.Identity.IdentityHostingStartup))]
+namespace PawentsOneStopShop.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

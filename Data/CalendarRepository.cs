@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
-    public class CalendarRepository : RepositoryBase<Calendar>, ICalendarRepository
+    public class CalendarRepository : RepositoryBase<ObjectCalendar>, ICalendarRepository
     {
         public CalendarRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
 
         }
-        public void CreateCalendar(Calendar calendar) => Create(calendar);
+        public void CreateCalendar(ObjectCalendar calendar) => Create(calendar);
     }
 }

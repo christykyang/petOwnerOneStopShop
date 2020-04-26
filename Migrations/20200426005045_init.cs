@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace petOwnerOneStopShop.Migrations
+namespace PawentsOneStopShop.Migrations
 {
     public partial class init : Migration
     {
@@ -75,27 +75,6 @@ namespace petOwnerOneStopShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BusinessType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(maxLength: 100, nullable: false),
-                    FullName = table.Column<string>(nullable: true),
-                    Age = table.Column<int>(nullable: false),
-                    Gender = table.Column<string>(nullable: false),
-                    Position = table.Column<string>(nullable: false),
-                    Office = table.Column<string>(nullable: false),
-                    Salary = table.Column<int>(nullable: false),
-                    ProfilePicture = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,7 +226,7 @@ namespace petOwnerOneStopShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calendar",
+                name: "ObjectCalendar",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -256,9 +235,9 @@ namespace petOwnerOneStopShop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calendar", x => x.Id);
+                    table.PrimaryKey("PK_ObjectCalendar", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Calendar_AspNetUsers_IdentityUserId",
+                        name: "FK_ObjectCalendar_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -327,7 +306,7 @@ namespace petOwnerOneStopShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "ObjectEvent",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -340,15 +319,15 @@ namespace petOwnerOneStopShop.Migrations
                     EndTime = table.Column<DateTime>(nullable: false),
                     Delete = table.Column<bool>(nullable: false),
                     ColorId = table.Column<int>(nullable: false),
-                    CalendarId = table.Column<int>(nullable: true)
+                    ObjectCalendarId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_ObjectEvent", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_Calendar_CalendarId",
-                        column: x => x.CalendarId,
-                        principalTable: "Calendar",
+                        name: "FK_ObjectEvent_ObjectCalendar_ObjectCalendarId",
+                        column: x => x.ObjectCalendarId,
+                        principalTable: "ObjectCalendar",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -385,6 +364,27 @@ namespace petOwnerOneStopShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FeedUpdate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(nullable: true),
+                    PubDate = table.Column<string>(nullable: true),
+                    PetBusinessId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FeedUpdate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FeedUpdate_PetBusiness_PetBusinessId",
+                        column: x => x.PetBusinessId,
+                        principalTable: "PetBusiness",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Follow",
                 columns: table => new
                 {
@@ -409,39 +409,6 @@ namespace petOwnerOneStopShop.Migrations
                         principalTable: "PetOwner",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NewsFeed",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PetBusinessId = table.Column<int>(nullable: false),
-                    PetOwnerId = table.Column<int>(nullable: false),
-                    IdentityUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NewsFeed", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_NewsFeed_AspNetUsers_IdentityUserId",
-                        column: x => x.IdentityUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_NewsFeed_PetBusiness_PetBusinessId",
-                        column: x => x.PetBusinessId,
-                        principalTable: "PetBusiness",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NewsFeed_PetOwner_PetOwnerId",
-                        column: x => x.PetOwnerId,
-                        principalTable: "PetOwner",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -472,28 +439,29 @@ namespace petOwnerOneStopShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invite",
+                name: "ObjectInvite",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isInvitationAccepted = table.Column<bool>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true),
-                    CalendarEventId = table.Column<int>(nullable: true)
+                    ObjectCalendarEventId = table.Column<int>(nullable: true),
+                    ObjectEventId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invite", x => x.Id);
+                    table.PrimaryKey("PK_ObjectInvite", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invite_Event_CalendarEventId",
-                        column: x => x.CalendarEventId,
-                        principalTable: "Event",
+                        name: "FK_ObjectInvite_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Invite_AspNetUsers_IdentityUserId",
-                        column: x => x.IdentityUserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_ObjectInvite_ObjectEvent_ObjectEventId",
+                        column: x => x.ObjectEventId,
+                        principalTable: "ObjectEvent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -525,34 +493,13 @@ namespace petOwnerOneStopShop.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "FeedUpdate",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: true),
-                    PubDate = table.Column<string>(nullable: true),
-                    NewsFeedId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FeedUpdate", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FeedUpdate_NewsFeed_NewsFeedId",
-                        column: x => x.NewsFeedId,
-                        principalTable: "NewsFeed",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "42e97c1d-8c65-437f-8043-88340f347ad6", "fd0639af-89b5-4ca4-b06c-8ba953084fb0", "Pet Owner", "PET OWNER" },
-                    { "7d789b3b-c4fe-4e4e-b09a-9f8a5307330e", "235cd85a-f885-4efb-99d0-5bf231529bb8", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
+                    { "04b8f30d-ed0d-42e8-8dc4-23d71f920115", "172a258d-5d2e-4f04-8eae-5f528693aa09", "Pet Owner", "PET OWNER" },
+                    { "fc3cdf70-0ee5-4496-b5d3-a0b3beec8484", "4057a3ea-0c78-4074-aa2f-4cfe672cfa85", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
                 });
 
             migrationBuilder.InsertData(
@@ -658,19 +605,9 @@ namespace petOwnerOneStopShop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calendar_IdentityUserId",
-                table: "Calendar",
-                column: "IdentityUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Event_CalendarId",
-                table: "Event",
-                column: "CalendarId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FeedUpdate_NewsFeedId",
+                name: "IX_FeedUpdate_PetBusinessId",
                 table: "FeedUpdate",
-                column: "NewsFeedId");
+                column: "PetBusinessId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Follow_PetBusinessId",
@@ -683,29 +620,24 @@ namespace petOwnerOneStopShop.Migrations
                 column: "PetOwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invite_CalendarEventId",
-                table: "Invite",
-                column: "CalendarEventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invite_IdentityUserId",
-                table: "Invite",
+                name: "IX_ObjectCalendar_IdentityUserId",
+                table: "ObjectCalendar",
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsFeed_IdentityUserId",
-                table: "NewsFeed",
+                name: "IX_ObjectEvent_ObjectCalendarId",
+                table: "ObjectEvent",
+                column: "ObjectCalendarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ObjectInvite_IdentityUserId",
+                table: "ObjectInvite",
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsFeed_PetBusinessId",
-                table: "NewsFeed",
-                column: "PetBusinessId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NewsFeed_PetOwnerId",
-                table: "NewsFeed",
-                column: "PetOwnerId");
+                name: "IX_ObjectInvite_ObjectEventId",
+                table: "ObjectInvite",
+                column: "ObjectEventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PetBusiness_AddressId",
@@ -774,19 +706,16 @@ namespace petOwnerOneStopShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
                 name: "FeedUpdate");
 
             migrationBuilder.DropTable(
                 name: "Follow");
 
             migrationBuilder.DropTable(
-                name: "Invite");
+                name: "Message");
 
             migrationBuilder.DropTable(
-                name: "Message");
+                name: "ObjectInvite");
 
             migrationBuilder.DropTable(
                 name: "ServiceOffered");
@@ -798,25 +727,22 @@ namespace petOwnerOneStopShop.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "NewsFeed");
-
-            migrationBuilder.DropTable(
-                name: "Event");
-
-            migrationBuilder.DropTable(
-                name: "Service");
-
-            migrationBuilder.DropTable(
-                name: "PetType");
+                name: "ObjectEvent");
 
             migrationBuilder.DropTable(
                 name: "PetBusiness");
 
             migrationBuilder.DropTable(
+                name: "Service");
+
+            migrationBuilder.DropTable(
                 name: "PetOwner");
 
             migrationBuilder.DropTable(
-                name: "Calendar");
+                name: "PetType");
+
+            migrationBuilder.DropTable(
+                name: "ObjectCalendar");
 
             migrationBuilder.DropTable(
                 name: "BusinessType");

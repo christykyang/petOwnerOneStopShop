@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
     public class FeedUpdateRepository : RepositoryBase<FeedUpdate>, IFeedUpdateRepository
     {
@@ -16,24 +16,23 @@ namespace petOwnerOneStopShop.Data
         }
         public async Task<ICollection<FeedUpdate>> FindUpdatesByPetBusinessIncludeAll(string userId)
         {
-            return await FindAll().Where(f => f.NewsFeed.IdentityUserId == userId).ToListAsync();
+            return await FindAll().Where(f => f.PetBusiness.IdentityUserId == userId).ToListAsync();
         }
         public async Task<ICollection<FeedUpdate>> FindUpdatesByPetBusinessIdIncludeAllAsync(int id)
         {
-            return await FindAll().Where(f => f.NewsFeed.PetBusinessId == id).ToListAsync();
+            return await FindAll().Where(f => f.PetBusinessId == id).ToListAsync();
         }
 
         public ICollection<FeedUpdate> FindUpdatesByPetBusinessIdIncludeAll(int id)
         {
-            return FindAll().Where(f => f.NewsFeed.PetBusinessId == id).ToList();
+            return FindAll().Where(f => f.PetBusinessId == id).ToList();
         }
-
         public ICollection<FeedUpdate> FindUpdatesByNewsFeedId(int id)
         {
-            return FindAll().Where(f => f.NewsFeedId == id).ToList();
+            return FindAll().Where(f => f.PetBusinessId == id).ToList();
         }
 
         public FeedUpdate FindUpdateById(int updateId) => FindByCondition(u => u.Id == updateId).FirstOrDefault();
-        public FeedUpdate FindUpdateByUserId(string identityUserId) => FindByCondition(u => u.NewsFeed.IdentityUserId == identityUserId).FirstOrDefault();
+        public FeedUpdate FindUpdateByUserId(string identityUserId) => FindByCondition(u => u.PetBusiness.IdentityUserId == identityUserId).FirstOrDefault();
     }
 }

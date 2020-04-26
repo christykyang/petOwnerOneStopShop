@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace petOwnerOneStopShop.ActionFilters
+namespace PawentsOneStopShop.ActionFilters
 {
     public class GlobalRouting : IActionFilter
     {

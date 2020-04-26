@@ -1,6 +1,6 @@
 using System;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
     public class ErrorViewModel
     {

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
-    public class CalendarEvent
+    public class ObjectEvent
     {
         public int Id { get; set; }
         [Display(Name = "Event Name")]
@@ -23,7 +22,7 @@ namespace petOwnerOneStopShop.Models
         [NotMapped]
         public IEnumerable<string> Attendees { get; set; }
         [ForeignKey("Calendar")]
-        public int? CalendarId { get; set; }
-        public Calendar Calendar { get; set; }
+        public int? ObjectCalendarId { get; set; }
+        public ObjectCalendar ObjectCalendar { get; set; }
     }
 }

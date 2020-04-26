@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Data;
+using PawentsOneStopShop.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using petOwnerOneStopShop.ActionFilters;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Services;
+using PawentsOneStopShop.ActionFilters;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Services;
 
-namespace petOwnerOneStopShop
+namespace PawentsOneStopShop
 {
     public class Startup
     {

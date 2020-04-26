@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
-    [Authorize(Roles = "Pet Owner")]
     public class PetOwner
     {
         public int Id { get; set; }

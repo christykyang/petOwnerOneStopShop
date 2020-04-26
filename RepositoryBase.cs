@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Data;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Data;
 
-namespace petOwnerOneStopShop
+namespace PawentsOneStopShop
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

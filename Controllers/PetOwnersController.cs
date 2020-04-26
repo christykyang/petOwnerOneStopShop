@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Data;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Data;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Controllers
+namespace PawentsOneStopShop.Controllers
 {
     [Authorize(Roles = "Pet Owner")]
     public class PetOwnersController : Controller
@@ -34,24 +34,24 @@ namespace petOwnerOneStopShop.Controllers
         }
 
         // GET: PetOwners
-        public IActionResult Index()
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var petOwner = _repo.PetOwner.GetPetOwnerById(userId);
+        //public IActionResult Index()
+        //{
+        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var petOwner = _repo.PetOwner.GetPetOwnerById(userId);
 
-            NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetOwner(petOwner.Id);
-            if (newsFeed == null)
-            {
-                NewsFeed creatingNewsFeed = new NewsFeed();
-                creatingNewsFeed.PetOwnerId = petOwner.Id;
-                _repo.NewsFeed.Create(creatingNewsFeed);
-                _repo.Save();
-                newsFeed.Id = creatingNewsFeed.Id;
-            }
+        //    NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetOwner(petOwner.Id);
+        //    if (newsFeed == null)
+        //    {
+        //        NewsFeed creatingNewsFeed = new NewsFeed();
+        //        //creatingNewsFeed.PetOwnerId = petOwner.Id;
+        //        _repo.NewsFeed.Create(creatingNewsFeed);
+        //        _repo.Save();
+        //        newsFeed.Id = creatingNewsFeed.Id;
+        //    }
 
-            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByNewsFeedId(newsFeed.Id);
-            return View(newsFeedUpdate);
-        }
+        //    var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByNewsFeedId(newsFeed.Id);
+        //    return View(newsFeedUpdate);
+        //}
 
         // GET: PetOwners/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -149,6 +149,15 @@ namespace petOwnerOneStopShop.Controllers
                     petOwner.Address.Lng = _getCoordinates.GetLng(url, petOwner.Address).Result;
                     _repo.Save();
                 }
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
+                _repo.PetOwner.CreatePetOwner(petOwner.Name, petOwner.Address.Id, userId);
+                _repo.Save();
+
+                NewsFeed newsFeed = new NewsFeed();
+                newsFeed.IdentityUserId = userId;
+                _repo.NewsFeed.Create(newsFeed);
                 return RedirectToAction(nameof(Details));
             }
             catch
@@ -165,7 +174,7 @@ namespace petOwnerOneStopShop.Controllers
                 return NotFound();
             }
 
-            var petOwner = _repo.PetOwner.FindByCondition(o => o.Id == id);
+            var petOwner = _repo.PetOwner.FindByCondition((System.Linq.Expressions.Expression<Func<PetOwner, bool>>)(o => o.Id == id));
             if (petOwner == null)
             {
                 return NotFound();
@@ -257,7 +266,7 @@ namespace petOwnerOneStopShop.Controllers
 
         public IActionResult CreatePetProfile()
         {
-            PetProfileViewModel petProfile = new PetProfileViewModel();
+            ViewModelPetProfile petProfile = new ViewModelPetProfile();
 
             _repo.PetType.GetAllPetTypes();
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
@@ -273,7 +282,7 @@ namespace petOwnerOneStopShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePetProfile(int petOwnerId, PetProfileViewModel viewModel)
+        public IActionResult CreatePetProfile(int petOwnerId, ViewModelPetProfile viewModel)
         {
             try
             {
@@ -375,7 +384,7 @@ namespace petOwnerOneStopShop.Controllers
         //    return View();
         //}
 
-        private string UploadedPicture(PetProfileViewModel model)
+        private string UploadedPicture(ViewModelPetProfile model)
         {
             string uniqueFileName = null;
 
@@ -544,7 +553,7 @@ namespace petOwnerOneStopShop.Controllers
 
         public async Task<IActionResult> SearchPetProfiles()
         {
-            ViewModelPetProfiles viewModel = new ViewModelPetProfiles();
+            ViewModelPetProfile viewModel = new ViewModelPetProfile();
 
             var pets = await _repo.PetProfile.GetPetIncludeAll();
             IEnumerable<PetProfile> petProfiles = pets.ToList();
@@ -559,9 +568,9 @@ namespace petOwnerOneStopShop.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> FilteredThroughPetProfiles(ViewModelPetProfiles searchResults)
+        public async Task<IActionResult> FilteredThroughPetProfiles(ViewModelPetProfile searchResults)
         {
-            ViewModelPetProfiles viewModel = new ViewModelPetProfiles();
+            ViewModelPetProfile viewModel = new ViewModelPetProfile();
 
             var pets = await _repo.PetProfile.GetPetIncludeAll();
             IEnumerable<PetProfile> petProfiles = pets.ToList();
@@ -615,7 +624,7 @@ namespace petOwnerOneStopShop.Controllers
         }
         private bool PetOwnerExists(int id)
         {
-            if (_repo.PetOwner.FindByCondition(e => e.Id == id) == null)
+            if (_repo.PetOwner.FindByCondition((System.Linq.Expressions.Expression<Func<PetOwner, bool>>)(e => e.Id == id)) == null)
             {
                 return false;
             }

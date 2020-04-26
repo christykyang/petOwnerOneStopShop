@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
     public class PetBusiness
     {

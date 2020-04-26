@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using static PawentsOneStopShop.Models.PetOwner;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
     public class PetProfile
     {
@@ -15,7 +16,7 @@ namespace petOwnerOneStopShop.Models
         [Display(Name = "Age")]
         public int Age { get; set; }
         [Display(Name = "Gender")]
-        public bool?  IsMale { get; set; }
+        public bool? IsMale { get; set; }
         [Display(Name = "Adoption Status")]
         public bool? IsAdopted { get; set; }
         [ForeignKey("PetType")]
@@ -27,6 +28,5 @@ namespace petOwnerOneStopShop.Models
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
         public string? ProfilePicture { get; set; }
-
     }
 }

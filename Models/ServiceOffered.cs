@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
     public class ServiceOffered
     {

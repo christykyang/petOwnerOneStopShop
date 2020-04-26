@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Contracts
+namespace PawentsOneStopShop.Contracts
 {
-    public interface IEventRepository : IRepositoryBase<CalendarEvent>
+    public interface IEventRepository : IRepositoryBase<ObjectEvent>
     {
-        void CreateEvent(CalendarEvent _event);
+        void CreateEvent(ObjectEvent _event);
     }
 }

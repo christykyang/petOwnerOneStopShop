@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace petOwnerOneStopShop
+namespace PawentsOneStopShop
 {
     public static class API_Keys
     {

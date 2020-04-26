@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
-    public class Invite
+    public class ObjectInvite
     {
         public int Id { get; set; }
         public bool? isInvitationAccepted { get; set; }
@@ -18,7 +18,7 @@ namespace petOwnerOneStopShop.Models
         public IdentityUser IdentityUser { get; set; }
         [ForeignKey("Event")]
         [Display(Name = "Event")]
-        public int? CalendarEventId { get; set; }
-        public CalendarEvent Event { get; set; }
+        public int? ObjectCalendarEventId { get; set; }
+        public ObjectEvent ObjectEvent { get; set; }
     }
 }

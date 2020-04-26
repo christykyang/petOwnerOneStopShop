@@ -4,15 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace petOwnerOneStopShop.Models
+namespace PawentsOneStopShop.Models
 {
     public class FeedUpdate
     {
         public int Id { get; set; }
         public string Description { get; set; }
         public string PubDate { get; set; }
-        [ForeignKey("NewsFeed")]
-        public int? NewsFeedId { get; set; }
-        public NewsFeed NewsFeed { get; set; }
+        [ForeignKey("Pet Business")]
+        public int? PetBusinessId { get; set; }
+        public PetBusiness PetBusiness { get; set; }
+        public string BusinessName { get; set; }
     }
 }

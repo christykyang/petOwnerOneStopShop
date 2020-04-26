@@ -1,8 +1,8 @@
-﻿@model IEnumerable<petOwnerOneStopShop.Models.FeedUpdate>
+﻿@model IEnumerable<PawentsOneStopShop.Models.FeedUpdate>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_PetBusiness.cshtml";
 }
 
 <h1>News Feed</h1>
@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsFeed.PetBusiness.Name)
+                @Html.DisplayNameFor(model => model.BusinessName)
             </th>
             <th></th>
         </tr>
@@ -35,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NewsFeed.PetBusiness.Name)
+                @Html.DisplayFor(modelItem => item.BusinessName)
             </td>
         </tr>
 }

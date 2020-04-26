@@ -1,4 +1,4 @@
-﻿@model petOwnerOneStopShop.Models.FeedUpdate
+﻿@model PawentsOneStopShop.Models.FeedUpdate
 
 @{
     ViewData["Title"] = "CreateUpdate";
@@ -7,14 +7,16 @@
 
 <h1>Post to News Feed</h1>
 
-<h4>FeedUpdate</h4>
+<h4>Feed Update</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="NewsFeedId" />
-            <span asp-validation-for="NewsFeedId" class="text-danger"></span>
+            <input type="hidden" asp-for="PetBusinessId" />
+            <span asp-validation-for="PetBusinessId" class="text-danger"></span>
+            <input type="hidden" asp-for="BusinessName" />
+            <span asp-validation-for="BusinessName" class="text-danger"></span>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />

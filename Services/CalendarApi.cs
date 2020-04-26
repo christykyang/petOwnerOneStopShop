@@ -13,16 +13,15 @@ using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Web;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Models;
 using Microsoft.AspNetCore.Identity;
-using petOwnerOneStopShop.Contracts;
+using PawentsOneStopShop.Contracts;
 using Google.Apis.Auth;
-//using Calendar = petOwnerOneStopShop.Models.Calendar;
 using Calendar = Google.Apis.Calendar.v3.Data.Calendar;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
-namespace petOwnerOneStopShop.Services
+namespace PawentsOneStopShop.Services
 {
     public class CalendarApi : ICalendarRequest
     {

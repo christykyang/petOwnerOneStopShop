@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Bson;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
     public class PetBusinessRepository : RepositoryBase<PetBusiness>, IPetBusinessRepository
     {

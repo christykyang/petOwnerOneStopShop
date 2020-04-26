@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Data;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Data;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Controllers
+namespace NewPetApp.Controllers
 {
     [Authorize(Roles = "Pet-Friendly Business")]
     public class PetBusinessesController : Controller
@@ -40,34 +40,20 @@ namespace petOwnerOneStopShop.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var newsFeedUpdates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusiness);
 
-            NewsFeed newsFeed = new NewsFeed();
-            newsFeed.IdentityUserId
-
-            if()
-            //NewsFeed? newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
-            if(newsFeed == null)
-            {
-                NewsFeed creatingNewsFeed = new NewsFeed();
-                creatingNewsFeed.PetBusinessId = petBusiness.Id;
-                _repo.NewsFeed.Create(creatingNewsFeed);
-                _repo.Save();
-                newsFeed.Id = creatingNewsFeed.Id;
-            }
-            
-            var newsFeedUpdate = _repo.FeedUpdate.FindUpdatesByNewsFeedId(newsFeed.Id);
-            return View(newsFeedUpdate);
+            return View(newsFeedUpdates);
         }
 
         public IActionResult CreateUpdate()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId);
-            NewsFeed newsFeed = _repo.NewsFeed.GetNewsFeedByPetBusiness(petBusiness.Id);
-            FeedUpdate update = new FeedUpdate();
 
-            update.NewsFeedId = newsFeed.Id;
+            FeedUpdate update = new FeedUpdate();
+            update.PetBusinessId = petBusiness.Id;
+            update.BusinessName = petBusiness.Name;
 
             return View(update);
         }
@@ -83,7 +69,8 @@ namespace petOwnerOneStopShop.Controllers
 
             newUpdate.Description = update.Description;
             newUpdate.PubDate = timeStamp;
-            newUpdate.NewsFeedId = update.NewsFeedId;
+            newUpdate.PetBusinessId = update.PetBusinessId;
+            newUpdate.BusinessName = update.BusinessName;
             _repo.FeedUpdate.Create(newUpdate);
             _repo.Save();
 
@@ -158,19 +145,21 @@ namespace petOwnerOneStopShop.Controllers
                 }
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
                 _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
                 _repo.Save();
 
-                NewsFeed newsFeed = new NewsFeed();
-                newsFeed.IdentityUserId = userId;
-                _repo.NewsFeed.Create(newsFeed);
-                _repo.Save();
+                //NewsFeed newsFeed = new NewsFeed();
+                //newsFeed.IdentityUserId = userId;
+                //_repo.NewsFeed.CreateNewsFeed(petBusiness.Id, userId);
+                //_repo.Save();
 
-                return RedirectToAction(nameof(Details));
+                return RedirectToAction(nameof(Index));
             }
 
             catch
             {
+                ViewData["BusinessType"] = new SelectList(_repo.BusinessType.GetAllBusinessTypes(), "Id", "TypeOfBusiness", petBusiness.BusinessType);
                 return View(petBusiness);
             }
             

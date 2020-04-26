@@ -4,9 +4,9 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Data
+namespace PawentsOneStopShop.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -218,20 +218,17 @@ namespace petOwnerOneStopShop.Data
                     ServiceName = "Volunteering",
                 });
         }
-        public DbSet<petOwnerOneStopShop.Models.PetOwner> PetOwner { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.PetBusiness> PetBusiness { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Address> Address { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.CalendarEvent> Event { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Calendar> Calendar { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Follow> Follow { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.PetProfile> PetProfile { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Adoptable> Adoptable { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Invite> Invite { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.Message> Message { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.FeedUpdate> FeedUpdate { get; set; }
-        public DbSet<petOwnerOneStopShop.Models.ServiceOffered> ServiceOffered { get; set; }
-        
-        //DELETE
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<PawentsOneStopShop.Models.PetOwner> PetOwner { get; set; }
+        public DbSet<PawentsOneStopShop.Models.PetBusiness> PetBusiness { get; set; }
+        public DbSet<PawentsOneStopShop.Models.Address> Address { get; set; }
+        public DbSet<PawentsOneStopShop.Models.ObjectEvent> ObjectEvent { get; set; }
+        public DbSet<PawentsOneStopShop.Models.ObjectInvite> ObjectInvite { get; set; }
+        public DbSet<PawentsOneStopShop.Models.ObjectCalendar> ObjectCalendar { get; set; }
+        public DbSet<PawentsOneStopShop.Models.Follow> Follow { get; set; }
+        public DbSet<PawentsOneStopShop.Models.PetProfile> PetProfile { get; set; }
+        public DbSet<PawentsOneStopShop.Models.Adoptable> Adoptable { get; set; }
+        public DbSet<PawentsOneStopShop.Models.Message> Message { get; set; }
+        public DbSet<PawentsOneStopShop.Models.FeedUpdate> FeedUpdate { get; set; }
+        public DbSet<PawentsOneStopShop.Models.ServiceOffered> ServiceOffered { get; set; }
     }
 }

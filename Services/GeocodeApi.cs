@@ -6,11 +6,11 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using petOwnerOneStopShop.Contracts;
-using petOwnerOneStopShop.Data;
-using petOwnerOneStopShop.Models;
+using PawentsOneStopShop.Contracts;
+using PawentsOneStopShop.Data;
+using PawentsOneStopShop.Models;
 
-namespace petOwnerOneStopShop.Services
+namespace PawentsOneStopShop.Services
 {
     public class GeocodeApi : IGetCoordinatesRequest
     {
