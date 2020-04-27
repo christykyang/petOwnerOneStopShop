@@ -28,6 +28,6 @@ namespace PawentsOneStopShop.Models
         public int? PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
         [Display(Name = "Picture")]
-        public string? ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }

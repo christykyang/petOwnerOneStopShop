@@ -52,7 +52,7 @@ namespace PawentsOneStopShop.Data
 			return await FindAll().Include(o => o.PetOwner)
 								  .Include(t => t.PetType).ToListAsync();
 		}
-		public void CreatePetProfile(int? petOwnerId, int? petTypeId, string name, int age, bool? isMale, bool? isAdopted, string? picture)
+		public void CreatePetProfile(int? petOwnerId, int? petTypeId, string name, int age, bool? isMale, bool? isAdopted, string picture)
 		{
 			PetProfile petProfile = new PetProfile();
 			petProfile.PetOwnerId = petOwnerId;
