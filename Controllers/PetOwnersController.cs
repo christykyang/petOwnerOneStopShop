@@ -304,7 +304,7 @@ namespace PawentsOneStopShop.Controllers
                     ProfilePicture = uniqueFileName,
                 };
 
-                _repo.PetProfile.CreatePetProfile(petProfile.PetOwnerId, petProfile.PetType.Id, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
+                _repo.PetProfile.CreatePetProfile(petProfile.PetOwnerId, petProfile.PetTypeId, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
                 _repo.Save();
 
                 return RedirectToAction(nameof(DisplayPetProfiles));
