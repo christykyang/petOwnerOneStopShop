@@ -255,8 +255,8 @@ namespace PawentsOneStopShop.Controllers
         public async Task<IActionResult> DisplayPetProfiles()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var petOwner = _repo.PetOwner.GetPetOwnerById(userId).Id;
-            IEnumerable<PetProfile> petProfiles = await _repo.PetProfile.GetPetsByOwnerIdAndIncludeAll(petOwner);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+            IEnumerable<PetProfile> petProfiles = await _repo.PetProfile.GetPetsByOwnerIdAndIncludeAll(petOwnerId);
 
             return View(petProfiles);
         }
@@ -290,7 +290,9 @@ namespace PawentsOneStopShop.Controllers
 
             try
             {
-                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
                 string uniqueFileName = UploadedPicture(viewModel);
 
                 PetProfile petProfile = new PetProfile
@@ -299,12 +301,12 @@ namespace PawentsOneStopShop.Controllers
                     Age = viewModel.Age,
                     IsMale = viewModel.IsMale,
                     IsAdopted = viewModel.IsAdopted,
-                    PetOwnerId = viewModel.PetOwnerId,
+                    PetOwnerId = petOwnerId,
                     PetTypeId = viewModel.PetTypeId,
                     ProfilePicture = uniqueFileName,
                 };
 
-                _repo.PetProfile.CreatePetProfile(petProfile.PetOwnerId, petProfile.PetTypeId, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
+                _repo.PetProfile.CreatePetProfile(petOwnerId, petProfile.PetTypeId, petProfile.Name, petProfile.Age, petProfile.IsMale, petProfile.IsAdopted, uniqueFileName);
                 _repo.Save();
 
                 return RedirectToAction(nameof(DisplayPetProfiles));
