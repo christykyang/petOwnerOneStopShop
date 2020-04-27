@@ -38,7 +38,7 @@ namespace PawentsOneStopShop.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Please choose profile image")]
         [Display(Name = "Profile Picture")]
-        public IFormFile ProfilePicture { get; set; }
+        public IFormFile ProfileImage { get; set; }
         [Display(Name = "Gender")]
         public Dictionary<int, string> GenderOptions { get; set; }
         [Display(Name = "Adoption Status")]
