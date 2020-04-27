@@ -257,14 +257,6 @@ namespace PawentsOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
             IEnumerable<PetProfile> petProfiles = await _repo.PetProfile.GetPetsByOwnerIdAndIncludeAll(petOwnerId);
-            _repo.PetType.GetAllPetTypes();
-            ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
-
-            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
-            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
-
-            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
-            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
 
             return View(petProfiles);
         }

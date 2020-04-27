@@ -42,31 +42,66 @@
         <tr>
             <td>
                 <img src="~/images/@item.ProfilePicture"
-                     class="rounded-circle"
-                     height="40" width="40"
+                     height="100" width="50"
                      asp-append-version="true" />
                 @item.Name
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsMale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAdopted)
-            </td>
+            @if(item.IsMale != null)
+             {
+                  switch(item.IsMale)
+                  {
+                      case null:
+                          <td>
+                              Not Applicable
+                          </td>
+                          break;
+                      case false:
+                          <td>
+                              Female
+                          </td>
+                          break;
+                      case true:
+                          <td>
+                              Male
+                          </td>
+                          break;
+                  }
+             }
+             @if(item.IsAdopted != null)
+              {
+                     switch(item.IsAdopted)
+                     {
+                         case false:
+                            <td>
+                                Avaliable
+                            </td>
+                            break;
+                         case true: 
+                            <td>
+                                Adopted
+                            </td>
+                            break;
+                         default:
+                            <td>
+                                Not Applicable
+                            </td>
+                            break;
+                     }
+              }
             <td>
                 @Html.DisplayFor(modelItem => item.PetType.TypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PetOwner.Name)
             </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <td>
+                <a asp-action="EditPetProfile" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DisplayPetProfileDetails" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeletePetProfile" asp-route-id="@item.Id">Delete</a>
+            </td>
         </tr>
 }
     </tbody>
