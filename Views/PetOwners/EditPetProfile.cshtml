@@ -7,11 +7,11 @@
 
 <h1>Edit Pet Profile</h1>
 
-<h4>Service Offered</h4>
+<h4>Pet Profile</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditServiceOffered">
+        <form asp-action="EditPetProfile">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="PetOwnerId" />
@@ -48,7 +48,7 @@
 </div>
 
 <div>
-    <a asp-action="DisplayServices">Back to Services Offered</a> |
-    <a asp-action="DeleteServiceOffered" asp-route-id="@Model.Id">Delete</a>
+    <a asp-action="DisplayPetProfiles">Back to My Pets</a> |
+    <a asp-action="DeletePetProfile" asp-route-id="@Model.Id">Delete</a>
 </div>
 
