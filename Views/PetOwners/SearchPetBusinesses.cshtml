@@ -1,4 +1,4 @@
-﻿@model PawentsOneStopShop.Models.ViewModelServiceOffered
+﻿@model ViewModelServiceOffered
 @{
     ViewData["Title"] = "SearchPetBusinesses";
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
@@ -41,7 +41,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
 
     <button onclick='openFilterResourcesMenu()'>Filter Through Businesses</button>
-    <a asp-action="Resources">Reset Filter</a>
+    <a asp-action="SearchPetBusinesses">Reset Filter</a>
     <div id="filter" style="display:none;">
         <form asp-action="FilteredPetBusinessSearch">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

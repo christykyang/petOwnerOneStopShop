@@ -1,4 +1,4 @@
-﻿@model PawentsOneStopShop.Models.ViewModelPetProfile
+﻿@model ViewModelPetProfile
 @{
     ViewData["Title"] = "SearchPetProfiles";
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
@@ -9,7 +9,7 @@
 <body>
 
     <button onclick='openFilterResourcesMenu()'>Search For Pet Profiles</button>
-    <a asp-action="Resources">Reset Filter</a>
+    <a asp-action="SearchPetProfiles">Reset Filter</a>
     <div id="filter" style="display:none;">
         <form asp-action="FilteredThroughPetProfiles">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
