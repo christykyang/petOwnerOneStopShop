@@ -339,17 +339,20 @@ namespace PawentsOneStopShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditPetProfile(int id, PetProfile petProfile)
+        public IActionResult EditPetProfile(int id, ViewModelPetProfile viewModel)
         {
-            PetProfile updatedPetProfile = new PetProfile();
-            updatedPetProfile.Id = id;
-            updatedPetProfile.PetOwnerId = petProfile.PetOwnerId;
-            updatedPetProfile.PetTypeId = petProfile.PetTypeId;
-            updatedPetProfile.Name = petProfile.Name;
-            updatedPetProfile.Age = petProfile.Age;
-            updatedPetProfile.IsMale = petProfile.IsMale;
-            updatedPetProfile.IsAdopted = petProfile.IsAdopted;
-            _repo.PetProfile.Update(updatedPetProfile);
+            string uniqueFileName = UploadedPicture(viewModel);
+
+            PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();
+            petProfile.Name = viewModel.Name;
+            petProfile.Age = viewModel.Age;
+            petProfile.IsMale = viewModel.IsMale;
+            petProfile.IsAdopted = viewModel.IsAdopted;
+            petProfile.PetOwnerId = viewModel.PetOwnerId;
+            petProfile.PetTypeId = viewModel.PetTypeId;
+            petProfile.ProfilePicture = uniqueFileName;
+
+            _repo.PetProfile.Update(petProfile);
             _repo.Save();
             return RedirectToAction(nameof(DisplayPetProfiles));
         }

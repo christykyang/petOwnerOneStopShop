@@ -1,4 +1,4 @@
-﻿@model PawentsOneStopShop.Models.PetProfile
+﻿@model PawentsOneStopShop.Models.ViewModelPetProfile
 
 @{
     ViewData["Title"] = "EditPetProfile";
@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form asp-action="EditPetProfile">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="PetOwnerId" />
             <input type="hidden" asp-for="PetOwnerId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -41,6 +41,14 @@
                 <span asp-validation-for="IsAdopted" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ProfileImage" class="custom-file-input" id="customFile" value="@Model.Name">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -49,6 +57,15 @@
 
 <div>
     <a asp-action="DisplayPetProfiles">Back to My Pets</a> |
-    <a asp-action="DeletePetProfile" asp-route-id="@Model.Id">Delete</a>
+    <a asp-action="DeletePetProfile" asp-route-id="PetProfileId">Delete</a>
 </div>
 
+
+@section scripts{
+    <script type="text/javascript">
+// Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+}
