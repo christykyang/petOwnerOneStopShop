@@ -53,16 +53,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var pet in Model.PetProfiles)
-            {
+         @foreach (var pet in Model.PetProfiles)
+          {
             <tr>
-                <td>
-                <img src="~/images/@pet.ProfilePicture"
-                     class="rounded-circle"
-                     height="80" width="40"
-                     asp-append-version="true" />
-                @pet.Name
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => pet.Name)
                 </td>
@@ -72,17 +65,62 @@
                         @Html.DisplayFor(modelItem => pet.PetType)
                     </td>
                 }
-                <td>
-                    @Html.DisplayFor(modelItem => pet.IsMale)
-                </td>
+                @if (pet.IsMale != null)
+                {
+                    switch (pet.IsMale)
+                    {
+                        case false:
+                            <td>
+                                Female
+                            </td>
+                            break;
+                        case true:
+                            <td>
+                                Male
+                            </td>
+                            break;
+                        default:
+                            <td>
+                                Not Applicable
+                            </td>
+                            break;
+                    }
+                }
                 @if (pet.IsAdopted != null)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => pet.IsAdopted)
-                    </td>
+                    switch (pet.IsAdopted)
+                    {
+                        case false:
+                            <td>
+                                Avaliable
+                            </td>
+                            break;
+                        case true:
+                            <td>
+                                Adopted
+                            </td>
+                            break;
+                        default:
+                            <td>
+                                Not Applicable
+                            </td>
+                            break;
+                    }
                 }
+                <td>
+                    <img src="~/images/@pet.ProfilePicture"
+                         height="80" width="60"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    <a asp-action="EditPetProfile" asp-route-id="@pet.Id">Edit</a> |
+                    <a asp-action="DisplayPetProfileDetails" asp-route-id="@pet.Id">Details</a> |
+                    <a asp-action="DeletePetProfile" asp-route-id="@pet.Id">Delete</a>
+                </td>
             </tr>
-            }
+
+
+          }
         </tbody>
     </table>
 </body>
