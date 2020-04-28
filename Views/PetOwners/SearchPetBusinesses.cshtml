@@ -40,7 +40,7 @@
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
 
-        <button onclick='openFilterThroughBusinessesMenu()'>Filter Through Businesses</button>
+    <button onclick="openFilterThroughBusinessesMenu()">Filter Through Businesses</button>
         <a asp-action="SearchPetBusinesses">Reset Filter</a>
         <div id="filter" style="display:none;">
             <form asp-action="FilteredPetBusinessSearch">
