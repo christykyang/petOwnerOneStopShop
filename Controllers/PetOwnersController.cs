@@ -325,6 +325,14 @@ namespace PawentsOneStopShop.Controllers
         public IActionResult EditPetProfile(int id)
         {
             PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ViewModelPetProfile petProfileUpdating = new ViewModelPetProfile();
+            petProfileUpdating.PetOwnerId = petOwnerId;
+            petProfileUpdating.PetProfileId = petProfile.Id;
+
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
 
             Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
@@ -341,6 +349,7 @@ namespace PawentsOneStopShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditPetProfile(int id, ViewModelPetProfile viewModel)
         {
+
             string uniqueFileName = UploadedPicture(viewModel);
 
             PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();

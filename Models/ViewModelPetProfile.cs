@@ -14,6 +14,7 @@ namespace PawentsOneStopShop.Models
         public List<PetProfile> PetProfiles { get; set; }
         [Display(Name = "Pet")]
         public PetProfile PetProfile { get; set; }
+        public int? PetProfileId { get; set; }
         [Display(Name = "List of Pet Types")]
         public List<PetType> PetTypes { get; set; }
         [Display(Name = "Type of Pet")]
