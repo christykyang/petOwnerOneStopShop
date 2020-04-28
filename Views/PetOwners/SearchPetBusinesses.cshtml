@@ -7,7 +7,7 @@
 <h1>Pet Businesses</h1>
 
 <body>
-    @*<div id="map" style="width: 500px; height: 400px;"></div>
+    <div id="map" style="width: 500px; height: 400px;"></div>
         <script type="text/javascript">
             function initMap() {
 
@@ -16,7 +16,7 @@
                     center: new google.maps.LatLng(43.0343, -87.9115)
                 });
 
-                var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
+                @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
                 var infowindow = new google.maps.InfoWindow();
 
@@ -35,7 +35,7 @@
                             infowindow.open(map, marker);
                         }
                     })(marker, i));
-                }
+                }*@
             }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
@@ -64,8 +64,8 @@
                     <input type="submit" value="Filter" class="btn btn-primary" />
                 </div>
             </form>
-        </div>*@
-    <p>
+        </div>
+    @*<p>
         <form asp-controller="PetOwners" asp-action="FilterByBusinessType">
     <p>
         Filter by Pet Business Type <input type="text" name="filterSearch">
@@ -85,7 +85,7 @@
         Filter by Services <input type="text" name="services">
         <input type="submit" value="Filter" />
     </p>
-    </form> 
+    </form>*@ 
     <table class="table">
         <thead>
             <tr>
@@ -127,7 +127,6 @@
                         </td>
                     }
                     <td>
-                        <a asp-action="CreateFollow" asp-route-id="@item.Id">Follow</a> |
                         <a asp-action="DisplayPetBusinessDetails" asp-route-id="@item.Id">Details</a>
                     </td>
                 </tr>
