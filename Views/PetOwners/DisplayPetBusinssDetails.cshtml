@@ -1,0 +1,90 @@
+﻿@model PawentsOneStopShop.Models.ViewModelPetBusiness
+
+@{
+    ViewData["Title"] = "DisplayPetBusinssDetails";
+    Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
+}
+
+<h1>Display Pet Businsses</h1>
+<body>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 400px; /* The width is the width of the web page */
+        }
+    </style>
+    <div class="row">
+        <div id="map"></div>
+        <script>
+
+
+        // Initialize and add the map
+        function initMap() {
+
+            var coordinates = { lat: @Model.Address.Lat, lng: @Model.Address.Lng };
+
+            var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: coordinates });
+
+            var marker = new google.maps.Marker({ position: coordinates, map: map });
+
+        }
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1EFcPNZaoqx_naYg7PH_PZxWPpHtFt4c&callback=initMap">
+        </script>
+
+        <h1>Details</h1>
+
+        <div>
+            <h4>Pet Business</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.BusinessType)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BusinessType)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.BusinessType)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BusinessType)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.IsFollowing)
+                </dt>
+                @if (Model.IsFollowing == true)
+                {
+                    <dd class="col-sm-10">
+                        Following |
+                        <a asp-action="Unfollow" asp-route-referralId="model.FollowId">Unfollow</a>
+                    </dd>
+                }
+                @if (Model.IsFollowing == false)
+                {
+                    <dd class="col-sm-10">
+                        Not Following |
+                        <a asp-action="CreateFollow" asp-route-referralId="model.PetBusinessId, model.PetOwnerId" >Follow</a>
+                    </dd>
+                }
+            </dl>
+        </div>
+        <div>
+            <a asp-action="SearchPetBusinesses">Back to List</a> |
+            <a asp-action="PetBusinessNewsFeed" asp-route-referralId=""
+        </div>
+</body>

@@ -1,6 +1,6 @@
 ﻿@model PawentsOneStopShop.Models.ViewModelServiceOffered
 @{
-    ViewData["Title"] = "DisplayPetBusinesses";
+    ViewData["Title"] = "SearchPetBusinesses";
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
 }
 
@@ -92,27 +92,31 @@
         <tbody>
             @foreach (var item in Model.PetBusinesses)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                @if (item.Address != null)
-                {
+                <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Address.StreetAddress), @Html.DisplayFor(modelItem => item.Address.City),
-                        @Html.DisplayFor(modelItem => item.Address.State), @Html.DisplayFor(modelItem => item.Address.ZipCode)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                }
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.BusinessType)
-                </td>*@
-                @if (item.BusinessType != null)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BusinessType.TypeOfBusiness)
-                    </td>
-                }
-            </tr>
+                    @if (item.Address != null)
+                     {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address.StreetAddress), @Html.DisplayFor(modelItem => item.Address.City),
+                            @Html.DisplayFor(modelItem => item.Address.State), @Html.DisplayFor(modelItem => item.Address.ZipCode)
+                        </td>
+                     }
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.BusinessType)
+                        </td>*@
+                    @if (item.BusinessType != null)
+                     {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BusinessType.TypeOfBusiness)
+                        </td>
+                     }
+                     <td>
+                        <a asp-action="CreateFollow" asp-route-id="@item.Id">Follow</a> |
+                        <a asp-action="DisplayPetBusinessDetails" asp-route-id="@item.Id">Details</a> 
+                     </td>
+                </tr>
             }
         </tbody>
     </table>

@@ -16,6 +16,10 @@ namespace PawentsOneStopShop.Data
 
         }
         public void CreateFollow(Follow follow) => Create(follow);
+        public Follow GetFollowByPetOwnerAndPetBusiness(int petBusinessId, int petOwnerId)
+        {
+            return FindByCondition(f => f.PetBusinessId == petBusinessId && f.PetOwnerId == petOwnerId).FirstOrDefault();
+        }
         public ICollection<Follow> GetAllFollowsEqualTrueByPetOwnerIncludeAll(int petOwnerId)
         {
             return FindAll().Include(f => f.PetBusiness).Where(o => o.PetOwnerId == petOwnerId && o.IsFollowing == true).ToList();

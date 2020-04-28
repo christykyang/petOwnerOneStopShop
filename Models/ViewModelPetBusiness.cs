@@ -20,5 +20,13 @@ namespace PawentsOneStopShop.Models
         [Display(Name = "Type of Business")]
         public int? BusinessTypeId { get; set; }
         public BusinessType BusinessType { get; set; }
+        public int PetBusinessId { get; set; }
+        public PetBusiness PetBusiness { get; set; }
+        public Follow Follow { get; set; }
+        public int? FollowId { get; set; }
+        [Display(Name = "Follow Status")]
+        public bool IsFollowing { get; set; }
+        public int PetOwnerId { get; set; }
+        public PetOwner PetOwner { get; set; }
     }
 }

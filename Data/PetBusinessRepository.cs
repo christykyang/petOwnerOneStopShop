@@ -18,6 +18,12 @@ namespace PawentsOneStopShop.Data
         }
         public PetBusiness GetPetBusiness(int petBusinessId) => FindByCondition(i => i.Id == petBusinessId).SingleOrDefault();
         public PetBusiness GetPetBusinessById(string userId) => FindByCondition(p => p.IdentityUserId == userId).FirstOrDefault();
+        public ICollection<PetBusiness> GetBusinessesIncludeAll(int petBusinessId)
+        {
+            return FindAll()
+                .Include(t => t.BusinessType)
+                .Include(a => a.Address).ToList();
+        }
         public async Task<ICollection<PetBusiness>> GetBusinessesIncludeAllAsync()
         {
             return await FindAll()

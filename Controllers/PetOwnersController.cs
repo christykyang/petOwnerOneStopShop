@@ -261,10 +261,50 @@ namespace PawentsOneStopShop.Controllers
             return View(petProfiles);
         }
 
-        public IActionResult DisplayPetProfileDetails(int id)
+        public IActionResult DisplayMyPetProfileDetails(int id)
         {
-            PetProfile pet = _repo.PetProfile.GetPetAndIncludeAll().Where(p => p.Id == id).FirstOrDefault();
-            return View(pet);
+            //PetProfile pet = _repo.PetProfile.GetPetAndIncludeAll().Where(p => p.Id == id).FirstOrDefault();
+
+            PetProfile petProfile = _repo.PetProfile.GetPetByIdIncludeAll(id);
+
+            ViewModelPetProfile petProfileViewing = new ViewModelPetProfile();
+            petProfileViewing.PetProfileId = id;
+            petProfileViewing.Name = petProfile.Name;
+            petProfileViewing.Age = petProfile.Age;
+
+            ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+
+
+            return View(petProfileViewing);
+        }
+
+        public IActionResult DisplayNotMyPetProfileDetails(int id)
+        {
+            //PetProfile pet = _repo.PetProfile.GetPetAndIncludeAll().Where(p => p.Id == id).FirstOrDefault();
+
+            PetProfile petProfile = _repo.PetProfile.GetPetByIdIncludeAll(id);
+
+            ViewModelPetProfile petProfileViewing = new ViewModelPetProfile();
+            petProfileViewing.PetProfileId = id;
+            petProfileViewing.Name = petProfile.Name;
+            petProfileViewing.Age = petProfile.Age;
+
+            ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+
+
+            return View(petProfileViewing);
         }
 
         public IActionResult CreatePetProfile()
@@ -396,8 +436,8 @@ namespace PawentsOneStopShop.Controllers
             //_repo.Save();
             //return RedirectToAction(nameof(DisplayPetProfiles));
 
-            PetProfile petProfileDeleting = new PetProfile();
-            petProfileDeleting.Id = viewModel.PetProfileId;
+            PetProfile petProfileDeleting = _repo.PetProfile.GetPetAndIncludeAll().FirstOrDefault(s => s.Id == viewModel.PetProfileId);
+            //petProfileDeleting.Id = viewModel.PetProfileId;
 
             _repo.PetProfile.Delete(petProfileDeleting);
             _repo.Save();
@@ -422,7 +462,7 @@ namespace PawentsOneStopShop.Controllers
             return uniqueFileName;
         }
 
-        public async Task<IActionResult> DisplayPetBusinesses()
+        public async Task<IActionResult> SearchPetBusinesses()
         {
             ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
 
@@ -489,40 +529,70 @@ namespace PawentsOneStopShop.Controllers
             return View("DisplayPetBusinesses", viewModel);
         }
 
-        public IActionResult ToggleFollowAndUnfollow(int? followId, int petBusinessId, int petOwnerId)
+        public IActionResult DisplayPetBusinessDetails(int id)
         {
-            Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
-            if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == true).Any())
-            {
-                _repo.Follow.Unfollow(followId, petBusinessId, petOwnerId);
-                _repo.Save();
-            }
-            else if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == false).Any())
-            {
-                _repo.Follow.Follow(followId, petBusinessId, petBusinessId);
-                _repo.Save();
-            }
-            else
-            {
-                CreateFollow(petBusinessId, petOwnerId);
-            }
-            return RedirectToAction(nameof(DisplayPetBusinesses));
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            PetBusiness petBusiness = _repo.PetBusiness.GetPetBusiness(id);
+
+            ViewModelPetBusiness petBusinessViewing = new ViewModelPetBusiness();
+            petBusinessViewing.PetBusinessId = id;
+            petBusinessViewing.PetOwnerId = petOwnerId;
+            petBusinessViewing.Name = petBusiness.Name;
+            petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
+            petBusinessViewing.Address = petBusiness.Address;
+
+            return View(petBusinessViewing);
         }
+
+        //public IActionResult ToggleFollowAndUnfollow(int? followId, int petBusinessId, int petOwnerId)
+        //{
+        //    Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
+        //    if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == true).Any())
+        //    {
+        //        _repo.Follow.Unfollow(followId, petBusinessId, petOwnerId);
+        //        _repo.Save();
+        //    }
+        //    else if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == false).Any())
+        //    {
+        //        _repo.Follow.Follow(followId, petBusinessId, petBusinessId);
+        //        _repo.Save();
+        //    }
+        //    else
+        //    {
+        //        CreateFollow(petBusinessId, petOwnerId);
+        //    }
+        //    return RedirectToAction(nameof(DisplayPetBusinessDetails));
+        //}
 
         public IActionResult CreateFollow(int petBusinessId, int petOwnerId)
         {
-            Follow follow = new Follow();
-            follow.PetBusinessId = petBusinessId;
-            follow.PetOwnerId = petOwnerId;
+            Follow follow = _repo.Follow.GetFollowByPetOwnerAndPetBusiness(petBusinessId, petOwnerId);
 
-            Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
-            ViewData["Follow Status"] = new SelectList(following, "Key", "Value");
+            if(follow == null)
+            {
+                Follow newFollow = new Follow();
+                newFollow.PetBusinessId = petBusinessId;
+                newFollow.PetOwnerId = petOwnerId;
+
+                Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
+                ViewData["Follow Status"] = new SelectList(following, "Key", "Value");
+
+                follow = newFollow;
+            }
+            else
+            {
+                Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
+                ViewData["Follow Status"] = new SelectList(following, "Key", "Value");
+            }
 
             return View(follow);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateFollow(int petBusinessId, int petOwnerId, PetBusiness petBusiness, PetOwner petOwner)
+        public IActionResult CreateFollow(int followId, int petBusinessId, int petOwnerId, PetBusiness petBusiness, PetOwner petOwner)
         {
             Follow following = new Follow();
 
@@ -533,7 +603,7 @@ namespace PawentsOneStopShop.Controllers
                 following.IsFollowing = true;
                 _repo.Follow.CreateFollow(following);
                 _repo.Save();
-                return RedirectToAction(nameof(DisplayPetBusinesses));
+                return RedirectToAction(nameof(DisplayPetBusinessDetails));
             }
             else
             {
@@ -542,10 +612,17 @@ namespace PawentsOneStopShop.Controllers
                 following.IsFollowing = true;
                 _repo.Follow.Update(following);
                 _repo.Save();
-                return RedirectToAction(nameof(DisplayPetBusinesses));
+                return RedirectToAction(nameof(DisplayPetBusinessDetails));
             }
 
 
+        }
+
+        public IActionResult PetBusinessNewsFeed(int petBusinessId)
+        {
+            var newsFeedUpdates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusinessId);
+
+            return View(newsFeedUpdates);
         }
 
         public IActionResult Unfollow(int id)

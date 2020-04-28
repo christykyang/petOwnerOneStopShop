@@ -1,0 +1,82 @@
+﻿@model PawentsOneStopShop.Models.ViewModelPetProfile
+
+@{
+    ViewData["Title"] = "DisplayPetProfileDetails";
+    Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
+}
+
+<div>
+    <h4>Pet Profile</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsMale)
+        </dt>
+        @if (Model.IsMale)
+            switch (Model.IsMale)
+            {
+                case false:
+                    <dd class="col-sm-10">
+                        Female
+                    </dd>
+                    break;
+                case true:
+                    <dd class="col-sm-10">
+                        Male
+                    </dd>
+                    break;
+                default:
+                    <dd class="col-sm-10">
+                        Not Applicable
+                    </dd>
+                    break;
+            }
+        @*<dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsMale)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsAdopted)
+        </dt>
+        @if (Model.IsAdopted)
+            switch (Model.IsAdopted)
+            {
+                case false:
+                    <dd class="col-sm-10">
+                        Avaliable
+                    </dd>
+                    break;
+                case true:
+                    <dd class="col-sm-10">
+                        Adopted
+                    </dd>
+                    break;
+                default:
+                    <dd class="col-sm-10">
+                        Not Applicable
+                    </dd>
+                    break;
+            }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PetType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PetType.TypeName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditPetProfile" asp-route-id="@Model.PetProfileId">Edit Pet Information</a> |
+    <a asp-action="DisplayPetProfiles">Back to List of Pet Profiles</a> 
+</div>
