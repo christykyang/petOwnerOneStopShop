@@ -7,7 +7,7 @@
 <h1>DisplayServices</h1>
 
 <body>
-    <div id="map" style="width: 500px; height: 400px;"></div>
+    @*<div id="map" style="width: 500px; height: 400px;"></div>
     <script type="text/javascript">
         function initMap() {
 
@@ -16,7 +16,7 @@
                 center: new google.maps.LatLng(43.0343, -87.9115)
             });
 
-            @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));*@
+            var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
             var infowindow = new google.maps.InfoWindow();
 
@@ -29,16 +29,16 @@
                     map: map
                 });
 
-                //google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                //    return function () {
-                //        infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
-                //        infowindow.open(map, marker);
-                //    }
-                //})(marker, i));
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
             }
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>*@
 
     <button onclick='openFilterResourcesMenu()'>Filter Through Businesses</button>
     <a asp-action="SearchPetBusinesses">Reset Filter</a>
