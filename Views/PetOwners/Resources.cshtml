@@ -40,10 +40,10 @@
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
 
-    @*<button onclick="openFilterThroughBusinessesMenu()">Filter Through Businesses</button>*@
-        <a asp-action="SearchPetBusinesses">Reset Filter</a>
+    <button onclick="openFilterResoursesMenu()">Filter Resources</button>
+        <a asp-action="Resources">Reset Filter</a>
         <div id="filter" style="display:none;">
-            <form asp-action="FilteredPetBusinessSearch">
+            <form asp-action="FilteredResources">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="PetBusinessId" class="control-label"></label>
