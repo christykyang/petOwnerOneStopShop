@@ -484,7 +484,16 @@ namespace PawentsOneStopShop.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> FilterByPetBusinessType(string filterSearch)
+        public async Task<IActionResult> FilterByBusinessType(string filterSearch)
+        {
+            var businessTypeId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
+
+            var petBusinesses = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == businessTypeId).ToListAsync();
+
+            return View(await petBusinesses);
+        }
+
+        public async Task<IActionResult> FilterByZipcode(string filterSearch)
         {
             var petBusinessId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
 
@@ -493,6 +502,14 @@ namespace PawentsOneStopShop.Controllers
             return View(await petBusinesses);
         }
 
+        public async Task<IActionResult> FilterByService(string filterSearch)
+        {
+            var petBusinessId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
+
+            var petBusinesses = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == petBusinessId).ToListAsync();
+
+            return View(await petBusinesses);
+        }
         //public async Task<IActionResult> FilteredPetBusinessSearch(ViewModelServiceOffered searchResults)
         //{
         //    ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
@@ -729,6 +746,7 @@ namespace PawentsOneStopShop.Controllers
             viewModel.Adoption = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
             return View("SearchPetProfiles", viewModel);
         }
+
         private bool PetOwnerExists(int id)
         {
             if (_repo.PetOwner.FindByCondition((System.Linq.Expressions.Expression<Func<PetOwner, bool>>)(e => e.Id == id)) == null)

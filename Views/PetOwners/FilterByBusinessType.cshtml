@@ -1,0 +1,64 @@
+﻿@model ViewModelPetBusiness
+@{
+    ViewData["Title"] = "FilterByBusinessType";
+    Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
+}
+
+<h1>Pet Businesses by Filtered Business Type</h1>
+
+<body>
+    <p>
+        <form asp-controller="PetOwners" asp-action="FilterByZipcode">
+        Filter by Address Zipcode <input type="text" name="zipcode">
+        <input type="submit" value="Filter" />
+        </form> |
+        <form asp-controller="PetOwners" asp-action="FilterByService">
+        Filter by Services <input type="text" name="services">
+        <input type="submit" value="Filter" />
+        </form>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Pet-Friendly Business
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BusinessType)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PetBusinesses)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @if (item.Address != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address.StreetAddress), @Html.DisplayFor(modelItem => item.Address.City),
+                            @Html.DisplayFor(modelItem => item.Address.State), @Html.DisplayFor(modelItem => item.Address.ZipCode)
+                        </td>
+                    }
+                    @if (item.BusinessType != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BusinessType.TypeOfBusiness)
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="CreateFollow" asp-route-id="@item.Id">Follow</a> |
+                        <a asp-action="DisplayPetBusinessDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+
