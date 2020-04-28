@@ -324,14 +324,16 @@ namespace PawentsOneStopShop.Controllers
 
         public IActionResult EditPetProfile(int id)
         {
-            PetProfile petProfile = _repo.PetProfile.FindByCondition(p => p.Id == id).FirstOrDefault();
+            PetProfile petProfile = _repo.PetProfile.GetPetByIdIncludeAll(id);
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
             ViewModelPetProfile petProfileUpdating = new ViewModelPetProfile();
             petProfileUpdating.PetOwnerId = petOwnerId;
-            petProfileUpdating.PetProfileId = petProfile.Id;
+            petProfileUpdating.PetProfileId = id;
+            petProfileUpdating.Name = petProfile.Name;
+            petProfileUpdating.Age = petProfile.Age;
 
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
 
