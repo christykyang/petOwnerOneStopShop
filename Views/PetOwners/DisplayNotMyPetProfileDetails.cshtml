@@ -25,49 +25,40 @@
             @Html.DisplayNameFor(model => model.IsMale)
         </dt>
         @if (Model.IsMale)
+        {
             switch (Model.IsMale)
             {
                 case false:
-                    <dd class="col-sm-10">
+                    <dt class="col-sm-10">
                         Female
-                    </dd>
+                    </dt>
                     break;
                 case true:
-                    <dd class="col-sm-10">
+                    <dt class="col-sm-10">
                         Male
-                    </dd>
-                    break;
-                default:
-                    <dd class="col-sm-10">
-                        Not Applicable
-                    </dd>
+                    </dt>
                     break;
             }
-        @*<dd class="col-sm-10">
-                @Html.DisplayFor(model => model.IsMale)
-            </dd>*@
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsAdopted)
         </dt>
-        @if (Model.IsAdopted)
+        @if (Model.IsMale)
+        {
             switch (Model.IsAdopted)
             {
                 case false:
-                    <dd class="col-sm-10">
+                    <dt class="col-sm-10">
                         Avaliable
-                    </dd>
+                    </dt>
                     break;
                 case true:
-                    <dd class="col-sm-10">
+                    <dt class="col-sm-10">
                         Adopted
-                    </dd>
-                    break;
-                default:
-                    <dd class="col-sm-10">
-                        Not Applicable
-                    </dd>
+                    </dt>
                     break;
             }
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PetType)
         </dt>
@@ -78,5 +69,6 @@
 </div>
 <div>
     <a asp-action="CreateAdoption" asp-route-id="@Model.PetProfileId">Apply to Adopt</a> |
-    <a asp-action="CreateInvite" asp-route-id="@Model.PetProfileId">Send Play-date Invitation</a>
+    <a asp-action="CreateInvite" asp-route-id="@Model.PetProfileId">Send Play-date Invitation</a> |
+    <a asp-action="SearchPetProfiles">Return to Search Pets</a>
 </div>
