@@ -35,7 +35,7 @@ namespace PawentsOneStopShop.Models
         [Display(Name = "Service")]
         public int? ServiceId { get; set; }
         public Service Service { get; set; }
-        public List<Service> Services { get; set }
+        public List<Service> Services { get; set; }
 
     }
 }
