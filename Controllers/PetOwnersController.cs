@@ -342,7 +342,7 @@ namespace PawentsOneStopShop.Controllers
             ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
 
             //petProfile.PetOwner = new PetOwner();
-            return View(petProfile);
+            return View(petProfileUpdating);
         }
 
         [HttpPost]
