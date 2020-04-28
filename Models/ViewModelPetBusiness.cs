@@ -38,6 +38,7 @@ namespace PawentsOneStopShop.Models
         public List<Service> Services { get; set; }
         public int? ServiceOffered { get; set; }
         public List<ServiceOffered> ServicesOffered { get; set; }
-
+        [Display(Name = "Service Price")]
+        public string Cost { get; set; }
     }
 }

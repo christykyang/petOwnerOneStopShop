@@ -510,9 +510,9 @@ namespace PawentsOneStopShop.Controllers
 
         //    return View(await petBusinesses);
         //}
-        public async Task<IActionResult> FilteredPetBusinessSearch(ViewModelServiceOffered searchResults)
+        public async Task<IActionResult> FilteredPetBusinessSearch(ViewModelPetBusiness searchResults)
         {
-            ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
+            ViewModelPetBusiness viewModel = new ViewModelPetBusiness();
 
             var businesses = await _repo.PetBusiness.GetBusinessesIncludeAllAsync();
             IEnumerable<PetBusiness> petBusinesses = businesses.ToList();
@@ -569,6 +569,8 @@ namespace PawentsOneStopShop.Controllers
             petBusinessViewing.Name = petBusiness.Name;
             petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
             petBusinessViewing.Address = petBusiness.Address;
+            petBusinessViewing.Address.Lat = petBusiness.Address.Lat;
+            petBusinessViewing.Address.Lng = petBusiness.Address.Lng;
 
             return View(petBusinessViewing);
         }

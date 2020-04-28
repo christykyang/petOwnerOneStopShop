@@ -8,14 +8,20 @@
 
 <body>
 
-    <button onclick='openFilterResourcesMenu()'>Search For Pet Profiles</button>
+
+    <button onclick='openFilterResourcesMenu()'>Search Pet Profiles</button>
     <a asp-action="SearchPetProfiles">Reset Filter</a>
     <div id="filter" style="display:none;">
         <form asp-action="FilteredThroughPetProfiles">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <select asp-for="Name" asp-items='new SelectList(@Model.PetProfiles, "Id", "Name")' class="form-control"></select>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PetTypeId" class="control-label"></label>
-                <select asp-for="PetTypeId" asp-items='new SelectList(@Model.PetTypes, "Id", "TypeName")' class="form-control"></select>
+                <select asp-for="PetTypeId" asp-items='new SelectList(@Model.PetTypes, "Id", "Name")' class="form-control"></select>
                 <span asp-validation-for="PetTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,13 +39,38 @@
             </div>
         </form>
     </div>
+    @*<button onclick='openFilterResourcesMenu()'>Search For Pet Profiles</button>
+        <a asp-action="SearchPetProfiles">Reset Filter</a>
+        <div id="filter" style="display:none;">
+            <form asp-action="FilteredThroughPetProfiles">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PetTypeId" class="control-label"></label>
+                    <select asp-for="PetTypeId" asp-items='new SelectList(@Model.PetTypes, "Id", "TypeName")' class="form-control"></select>
+                    <span asp-validation-for="PetTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderSelection" class="control-label"></label>
+                    <select asp-for="GenderSelection" asp-items='new SelectList(@Model.GenderOptions, "Key", "Value")' class="form-control"></select>
+                    <span asp-validation-for="GenderSelection" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AdoptionStatus" class="control-label"></label>
+                    <select asp-for="AdoptionStatus" asp-items='new SelectList(@Model.Adoption, "Key", "Value")' class="form-control"></select>
+                    <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>*@
     <table class="table">
         <thead>
             <tr>
                 <th>
                 </th>
                 <th>
-                    
+
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.PetType)
@@ -53,72 +84,72 @@
             </tr>
         </thead>
         <tbody>
-         @foreach (var pet in Model.PetProfiles)
-          {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => pet.Name)
-                </td>
-                @if (pet.PetType != null)
-                {
+            @foreach (var pet in Model.PetProfiles)
+            {
+                <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => pet.PetType)
+                        @Html.DisplayFor(modelItem => pet.Name)
                     </td>
-                }
-                @if (pet.IsMale != null)
-                {
-                    switch (pet.IsMale)
+                    @if (pet.PetType != null)
                     {
-                        case false:
-                            <td>
-                                Female
-                            </td>
-                            break;
-                        case true:
-                            <td>
-                                Male
-                            </td>
-                            break;
-                        default:
-                            <td>
-                                Not Applicable
-                            </td>
-                            break;
+                        <td>
+                            @Html.DisplayFor(modelItem => pet.PetType)
+                        </td>
                     }
-                }
-                @if (pet.IsAdopted != null)
-                {
-                    switch (pet.IsAdopted)
+                    @if (pet.IsMale != null)
                     {
-                        case false:
-                            <td>
-                                Avaliable
-                            </td>
-                            break;
-                        case true:
-                            <td>
-                                Adopted
-                            </td>
-                            break;
-                        default:
-                            <td>
-                                Not Applicable
-                            </td>
-                            break;
+                        switch (pet.IsMale)
+                        {
+                            case false:
+                                <td>
+                                    Female
+                                </td>
+                                break;
+                            case true:
+                                <td>
+                                    Male
+                                </td>
+                                break;
+                            default:
+                                <td>
+                                    Not Applicable
+                                </td>
+                                break;
+                        }
                     }
-                }
-                <td>
-                    <img src="~/images/@pet.ProfilePicture"
-                         height="80" width="60"
-                         asp-append-version="true" />
-                </td>
-                <td>
-                    <a asp-action="DisplayNotMyPetProfileDetails" asp-route-id="@pet.Id">Details</a> |
-                </td>
-            </tr>
+                    @if (pet.IsAdopted != null)
+                    {
+                        switch (pet.IsAdopted)
+                        {
+                            case false:
+                                <td>
+                                    Avaliable
+                                </td>
+                                break;
+                            case true:
+                                <td>
+                                    Adopted
+                                </td>
+                                break;
+                            default:
+                                <td>
+                                    Not Applicable
+                                </td>
+                                break;
+                        }
+                    }
+                    <td>
+                        <img src="~/images/@pet.ProfilePicture"
+                             height="80" width="60"
+                             asp-append-version="true" />
+                    </td>
+                    <td>
+                        <a asp-action="DisplayNotMyPetProfileDetails" asp-route-id="@pet.Id">Details</a> |
+                    </td>
+                </tr>
 
 
-          }
+            }
         </tbody>
     </table>
 </body>
