@@ -471,7 +471,7 @@ namespace PawentsOneStopShop.Controllers
             var services = await _repo.ServiceOffered.GetServicesOfferedIncludeAllAsync();
             IEnumerable<ServiceOffered> servicesOffered = services.ToList();
 
-            viewModel.PetBusinesses = _repo.PetBusiness.FindAll().ToList();
+            viewModel.PetBusinesses = petBusinesses.ToList();
             viewModel.PetBusinesses.Insert(0, (new PetBusiness()));
             viewModel.ServicesOffered = servicesOffered.ToList();
             viewModel.BusinessTypes = _repo.BusinessType.GetAllBusinessTypes().ToList();
@@ -656,7 +656,7 @@ namespace PawentsOneStopShop.Controllers
             var pets = await _repo.PetProfile.GetPetIncludeAll();
             IEnumerable<PetProfile> petProfiles = pets.ToList();
 
-            viewModel.PetProfiles = _repo.PetProfile.FindAll().ToList();
+            viewModel.PetProfiles = petProfiles.ToList();
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
