@@ -36,6 +36,8 @@ namespace PawentsOneStopShop.Models
         public int? ServiceId { get; set; }
         public Service Service { get; set; }
         public List<Service> Services { get; set; }
+        public int? ServiceOffered { get; set; }
+        public List<ServiceOffered> ServicesOffered { get; set; }
 
     }
 }

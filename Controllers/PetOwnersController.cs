@@ -464,7 +464,7 @@ namespace PawentsOneStopShop.Controllers
 
         public async Task<IActionResult> SearchPetBusinesses()
         {
-            ViewModelServiceOffered viewModel = new ViewModelServiceOffered();
+            ViewModelPetBusiness viewModel = new ViewModelPetBusiness();
 
             var businesses = await _repo.PetBusiness.GetBusinessesIncludeAllAsync();
             IEnumerable<PetBusiness> petBusinesses = businesses.ToList();
