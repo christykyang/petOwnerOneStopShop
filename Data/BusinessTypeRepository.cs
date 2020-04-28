@@ -18,5 +18,9 @@ namespace PawentsOneStopShop.Data
         {
             return FindAll().ToList();
         }
+        public BusinessType GetBusinessTypeByBusinessTypeName(string businessType)
+        {
+            return FindByCondition(t => t.TypeOfBusiness == businessType).FirstOrDefault();
+        }
     }
 }

@@ -4,72 +4,88 @@
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
 }
 
-<h1>DisplayServices</h1>
+<h1>Pet Businesses</h1>
 
 <body>
-    <div id="map" style="width: 500px; height: 400px;"></div>
-    <script type="text/javascript">
-        function initMap() {
+    @*<div id="map" style="width: 500px; height: 400px;"></div>
+        <script type="text/javascript">
+            function initMap() {
 
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: new google.maps.LatLng(43.0343, -87.9115)
-            });
-
-            @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));*@
-
-            var infowindow = new google.maps.InfoWindow();
-
-            var coordinatesArray = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(a => new double[]{a.Address.Lat, a.Address.Lng}).ToArray()));
-
-            for (var i = 0; i < coordinatesArray.length; i++) {
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(coordinatesArray[i][0], coordinatesArray[i][1]),
-                    map: map
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: new google.maps.LatLng(43.0343, -87.9115)
                 });
 
-                //google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                //    return function () {
-                //        infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
-                //        infowindow.open(map, marker);
-                //    }
-                //})(marker, i));
-            }
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
+                var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
-    <button onclick='openFilterResourcesMenu()'>Filter Through Businesses</button>
-    <a asp-action="SearchPetBusinesses">Reset Filter</a>
-    <div id="filter" style="display:none;">
-        <form asp-action="FilteredPetBusinessSearch">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PetBusinessId" class="control-label"></label>
-                <select asp-for="PetBusinessId" asp-items='new SelectList(@Model.PetBusinesses, "Id", "Name")' class="form-control"></select>
-                <span asp-validation-for="PetBusinessId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BusinessTypeId" class="control-label"></label>
-                <select asp-for="BusinessTypeId" asp-items='new SelectList(@Model.BusinessTypes, "Id", "TypeOfBusiness")' class="form-control"></select>
-                <span asp-validation-for="BusinessTypeId" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="AddressId" class="control-label"></label>
-                <select asp-for="AddressId" asp-items='new SelectList(@Model.Addresses, "Id", "Zipcode")' class="form-control"></select>
-                <span asp-validation-for="AddressId" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="ServiceId" class="control-label"></label>
-                <select asp-for="ServiceId" asp-items='new SelectList(@Model.Services, "Id", "ServiceName")' class="form-control"></select>
-                <span asp-validation-for="ServiceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Filter" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+                var infowindow = new google.maps.InfoWindow();
+
+                var coordinatesArray = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(a => new double[]{a.Address.Lat, a.Address.Lng}).ToArray()));
+
+                for (var i = 0; i < coordinatesArray.length; i++) {
+
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(coordinatesArray[i][0], coordinatesArray[i][1]),
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
+
+        <button onclick='openFilterResourcesMenu()'>Filter Through Businesses</button>
+        <a asp-action="SearchPetBusinesses">Reset Filter</a>
+        <div id="filter" style="display:none;">
+            <form asp-action="FilteredPetBusinessSearch">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PetBusinessId" class="control-label"></label>
+                    <select asp-for="PetBusinessId" asp-items='new SelectList(@Model.PetBusinesses, "Id", "Name")' class="form-control"></select>
+                    <span asp-validation-for="PetBusinessId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BusinessTypeId" class="control-label"></label>
+                    <select asp-for="BusinessTypeId" asp-items='new SelectList(@Model.BusinessTypes, "Id", "TypeOfBusiness")' class="form-control"></select>
+                    <span asp-validation-for="BusinessTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ServiceId" class="control-label"></label>
+                    <select asp-for="ServiceId" asp-items='new SelectList(@Model.Services, "Id", "ServiceName")' class="form-control"></select>
+                    <span asp-validation-for="ServiceId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>*@
+    <p>
+        <form asp-controller="PetOwners" asp-action="FilterByBusinessType">
+    <p>
+        Filter by Pet Business Type <input type="text" name="filterSearch">
+        <input type="submit" value="Filter" />
+    </p>
+    </form> |
+    <p>
+        <form asp-controller="PetOwners" asp-action="filterSearch">
+    <p>
+        Filter by Address Zipcode <input type="text" name="zipcode">
+        <input type="submit" value="Filter" />
+    </p>
+    </form> |
+    <p>
+        <form asp-controller="PetOwners" asp-action="FilterByServices">
+    <p>
+        Filter by Services <input type="text" name="services">
+        <input type="submit" value="Filter" />
+    </p>
+    </form> 
     <table class="table">
         <thead>
             <tr>
@@ -83,8 +99,8 @@
                     @Html.DisplayNameFor(model => model.BusinessType)
                 </th>
                 @*<th>
-                    @Html.DisplayNameFor(model => model.Services)
-                </th>*@
+                        @Html.DisplayNameFor(model => model.Services)
+                    </th>*@
             </tr>
         </thead>
         <tbody>
@@ -95,25 +111,25 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     @if (item.Address != null)
-                     {
+                    {
                         <td>
                             @Html.DisplayFor(modelItem => item.Address.StreetAddress), @Html.DisplayFor(modelItem => item.Address.City),
                             @Html.DisplayFor(modelItem => item.Address.State), @Html.DisplayFor(modelItem => item.Address.ZipCode)
                         </td>
-                     }
-                        @*<td>
+                    }
+                    @*<td>
                             @Html.DisplayFor(modelItem => item.BusinessType)
                         </td>*@
                     @if (item.BusinessType != null)
-                     {
+                    {
                         <td>
                             @Html.DisplayFor(modelItem => item.BusinessType.TypeOfBusiness)
                         </td>
-                     }
-                     <td>
+                    }
+                    <td>
                         <a asp-action="CreateFollow" asp-route-id="@item.Id">Follow</a> |
-                        <a asp-action="DisplayPetBusinessDetails" asp-route-id="@item.Id">Details</a> 
-                     </td>
+                        <a asp-action="DisplayPetBusinessDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
                 </tr>
             }
         </tbody>
