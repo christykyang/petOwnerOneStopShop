@@ -48,5 +48,7 @@ namespace PawentsOneStopShop.Models
         public bool IsMale { get; set; }
         [Display(Name = "Adoption Status")]
         public bool IsAdopted { get; set; }
+        public string Zipcode { get; set; }
+        public Address Address { get; set; }
     }
 }

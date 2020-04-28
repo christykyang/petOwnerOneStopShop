@@ -10,7 +10,7 @@
 
 
     @*<button onclick="openFilterPetProfilesMenu()">Filter Pet Profiles</button>*@
-    <a asp-action="SearchPetProfiles">Reset Filter</a>
+    @*<a asp-action="SearchPetProfiles">Reset Filter</a>
     <div id="filter" style="display:none;">
         <form asp-action="FilteredThroughPetProfiles">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -38,39 +38,62 @@
                 <input type="submit" value="Filter" class="btn btn-primary" />
             </div>
         </form>
+    </div>*@
+
+
+    <div class="col-md-10 mx-auto py-4">
+        <div class="card">
+            <div class="card-header bg-primary text-uppercase text-white">
+                <h4>Filter Pet Profile</h4> |
+                <a asp-action="SearchPetProfiles">Reset Filter</a>
+            </div>
+            <div class="card-body">
+                <form enctype="multipart/form-data" asp-action="FilteredThroughPetProfiles">
+                    <div class="row">
+                        <<div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Age" class="control-label"></label>
+                                <input asp-for="Age" class="form-control" />
+                                <span asp-validation-for="Age" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="PetTypeId" class="control-label"></label>
+                                <select asp-for="PetTypeId" asp-items='new SelectList(@Model.PetTypes, "Id", "TypeName")' class="form-control"></select>
+                                <span asp-validation-for="PetTypeId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="GenderSelection" class="control-label"></label>
+                                <select asp-for="GenderSelection" asp-items='new SelectList(@Model.GenderOptions, "Key", "Value")' class="form-control"></select>
+                                <span asp-validation-for="GenderSelection" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AdoptionStatus" class="control-label"></label>
+                                <select asp-for="AdoptionStatus" asp-items='new SelectList(@Model.Adoption, "Key", "Value")' class="form-control"></select>
+                                <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="submit" class="btn btn-sm btn-primary rounded-0 text-uppercase" />
+                        <a asp-action="SearchPetProfiles" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-fast-backward"></i> Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    @*<button onclick='openFilterResourcesMenu()'>Search For Pet Profiles</button>
-        <a asp-action="SearchPetProfiles">Reset Filter</a>
-        <div id="filter" style="display:none;">
-            <form asp-action="FilteredThroughPetProfiles">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="PetTypeId" class="control-label"></label>
-                    <select asp-for="PetTypeId" asp-items='new SelectList(@Model.PetTypes, "Id", "TypeName")' class="form-control"></select>
-                    <span asp-validation-for="PetTypeId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="GenderSelection" class="control-label"></label>
-                    <select asp-for="GenderSelection" asp-items='new SelectList(@Model.GenderOptions, "Key", "Value")' class="form-control"></select>
-                    <span asp-validation-for="GenderSelection" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AdoptionStatus" class="control-label"></label>
-                    <select asp-for="AdoptionStatus" asp-items='new SelectList(@Model.Adoption, "Key", "Value")' class="form-control"></select>
-                    <span asp-validation-for="AdoptionStatus" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Filter" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>*@
     <table class="table">
         <thead>
             <tr>
                 <th>
-                </th>
-                <th>
-
+                    Pet Name
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.PetType)
