@@ -370,15 +370,36 @@ namespace PawentsOneStopShop.Controllers
 
         public IActionResult DeletePetProfile(int id)
         {
-            PetProfile petProfile = _repo.PetProfile.GetPetById(id);
-            return View(petProfile);
+            PetProfile petProfile = _repo.PetProfile.GetPetByIdIncludeAll(id);
+
+            ViewModelPetProfile petProfileDeleting = new ViewModelPetProfile();
+            petProfileDeleting.PetProfileId = id;
+            petProfileDeleting.Name = petProfile.Name;
+            petProfileDeleting.Age = petProfile.Age;
+
+            ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
+
+            Dictionary<int, string> genderDictionary = CreateNullableBoolDictionary("N/A", "Male", "Female");
+            ViewData["GenderSelection"] = new SelectList(genderDictionary, "Key", "Value");
+
+            Dictionary<int, string> adoption = CreateNullableBoolDictionary("N/A", "Adopted", "Avaliable");
+            ViewData["AdoptionStatus"] = new SelectList(adoption, "Key", "Value");
+
+            return View(petProfileDeleting);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePetProfile(PetProfile petProfile)
+        public IActionResult DeletePetProfile(ViewModelPetProfile viewModel)
         {
-            PetProfile petProfileToDelete = _repo.PetProfile.GetPetAndIncludeAll().FirstOrDefault(s => s.Id == petProfile.Id);
-            _repo.PetProfile.Delete(_repo.PetProfile.GetPetById(petProfile.Id));
+            //PetProfile petProfileToDelete = _repo.PetProfile.GetPetAndIncludeAll().FirstOrDefault(s => s.Id == petProfile.Id);
+            //_repo.PetProfile.Delete(_repo.PetProfile.GetPetById(petProfile.Id));
+            //_repo.Save();
+            //return RedirectToAction(nameof(DisplayPetProfiles));
+
+            PetProfile petProfileDeleting = new PetProfile();
+            petProfileDeleting.Id = viewModel.PetProfileId;
+
+            _repo.PetProfile.Delete(petProfileDeleting);
             _repo.Save();
             return RedirectToAction(nameof(DisplayPetProfiles));
 

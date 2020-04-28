@@ -31,9 +31,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.PetOwner)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfilePicture)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,48 +46,48 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
-            @if(item.IsMale != null)
-             {
-                  switch(item.IsMale)
-                  {
-                      case null:
-                          <td>
-                              Not Applicable
-                          </td>
-                          break;
-                      case false:
-                          <td>
-                              Female
-                          </td>
-                          break;
-                      case true:
-                          <td>
-                              Male
-                          </td>
-                          break;
-                  }
-             }
-             @if(item.IsAdopted != null)
-              {
-                     switch(item.IsAdopted)
-                     {
-                         case false:
-                            <td>
-                                Avaliable
-                            </td>
-                            break;
-                         case true: 
-                            <td>
-                                Adopted
-                            </td>
-                            break;
-                         default:
-                            <td>
-                                Not Applicable
-                            </td>
-                            break;
-                     }
-              }
+            @if (item.IsMale != null)
+            {
+                switch (item.IsMale)
+                {
+                    case false:
+                        <td>
+                            Female
+                        </td>
+                        break;
+                    case true:
+                        <td>
+                            Male
+                        </td>
+                        break;
+                    default :
+                        <td>
+                            Not Applicable
+                        </td>
+                        break;
+                }
+            }
+            @if (item.IsAdopted != null)
+            {
+                switch (item.IsAdopted)
+                {
+                    case false:
+                        <td>
+                            Avaliable
+                        </td>
+                        break;
+                    case true:
+                        <td>
+                            Adopted
+                        </td>
+                        break;
+                    default:
+                        <td>
+                            Not Applicable
+                        </td>
+                        break;
+                }
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.PetType.TypeName)
             </td>
