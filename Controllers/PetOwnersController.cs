@@ -741,7 +741,7 @@ namespace PawentsOneStopShop.Controllers
                 }
             }
 
-            viewModel.PetProfiles = _repo.PetProfile.FindAll().ToList();
+            viewModel.PetProfiles = petProfiles.ToList();
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
