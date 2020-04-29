@@ -469,10 +469,6 @@ namespace PawentsOneStopShop.Controllers
 
             var businesses = await _repo.PetBusiness.GetBusinessesIncludeAllAsync();
             IEnumerable<PetBusiness> petBusinesses = businesses.ToList();
-            //var addresses = await _repo.Address.GetAllAddressesAsync();
-            //IEnumerable<Address> businessAddresses = addresses.ToList();
-            //var typesOfBusinesses = await _repo.BusinessType.GetAllBusinessTypesAsync();
-            //IEnumerable<BusinessType> businessTypes = typesOfBusinesses.ToList();
 
             viewModel.PetBusinesses = petBusinesses.ToList();
             viewModel.PetBusinesses.Insert(0, (new PetBusiness()));
@@ -491,8 +487,8 @@ namespace PawentsOneStopShop.Controllers
 
             var businesses = await _repo.PetBusiness.GetBusinessesIncludeAllAsync();
             IEnumerable<PetBusiness> petBusinesses = businesses.ToList();
-            var services = await _repo.ServiceOffered.GetServicesOfferedIncludeAllAsync();
-            IEnumerable<ServiceOffered> servicesOffered = services.ToList();
+            var services = await _repo.Service.GetAllServicesAsync();
+            IEnumerable<Service> servicesList = services.ToList();
             var addresses = await _repo.Address.GetAllAddressesAsync();
             IEnumerable<Address> businessAddresses = addresses.ToList();
             var typesOfBusinesses = await _repo.BusinessType.GetAllBusinessTypesAsync();
@@ -504,27 +500,27 @@ namespace PawentsOneStopShop.Controllers
             }
             if (searchResults.BusinessTypeId != 0)
             {
-                businessTypes = businessTypes.Where(bt => bt.Id == searchResults.BusinessTypeId);
+                petBusinesses = petBusinesses.Where(bt => bt.BusinessTypeId == searchResults.BusinessTypeId);
             }
-            if (searchResults.ServiceId != 0)
-            {
-                servicesOffered = servicesOffered.Where(s => s.ServiceId == searchResults.ServiceId);
-            }
+            //if (searchResults.ServiceId != 0)
+            //{
+            //    servicesList = servicesList.Where(s => s.Id == searchResults.ServiceId);
+            //}
             if (searchResults.AddressId != 0)
             {
-                businessAddresses = addresses.Where(a => a.Id == searchResults.AddressId);
+                petBusinesses = petBusinesses.Where(a => a.AddressId == searchResults.AddressId);
             }
 
             viewModel.PetBusinesses = petBusinesses.ToList();
             viewModel.PetBusinesses.Insert(0, (new PetBusiness()));
-            viewModel.ServicesOffered = servicesOffered.ToList();
-            viewModel.BusinessTypes = businessTypes.ToList();
+            viewModel.Services = _repo.Service.GetAllServices().ToList();
+            viewModel.Services.Insert(0, new Service());
+            viewModel.BusinessTypes = _repo.BusinessType.GetAllBusinessTypes().ToList();
             viewModel.BusinessTypes.Insert(0, new BusinessType());
-            viewModel.Addresses = businessAddresses.ToList();
+            viewModel.Addresses = _repo.Address.GetAllAddresses().ToList();
             viewModel.Addresses.Insert(0, new Address());
-            viewModel.ServicesOffered = servicesOffered.ToList();
-            viewModel.ServicesOffered.Insert(0, new ServiceOffered());
-            return View("DisplayPetBusinesses", viewModel);
+
+            return View("SearchPetBusinesses", viewModel);
         }
 
         public IActionResult DisplayPetBusinessDetails(int id)
