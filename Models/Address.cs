@@ -19,8 +19,8 @@ namespace PawentsOneStopShop.Models
 		[Display(Name = "State")]
 		public string State { get; set; }
 		[Required]
-		[Display(Name = "Zip Code")]
-		public string ZipCode { get; set; }
+		[Display(Name = "Zipcode")]
+		public string Zipcode { get; set; }
 		public double Lat { get; set; }
 		public double Lng { get; set; }
 	}
