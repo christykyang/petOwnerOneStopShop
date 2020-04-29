@@ -531,7 +531,9 @@ namespace PawentsOneStopShop.Controllers
 
             IEnumerable<ServiceOffered> servicesOffered =  _repo.ServiceOffered.GetServicesOfferedIncludeAll(id);
 
+            //NEED INCLUDE ALL reference in REPO
             PetBusiness petBusiness = _repo.PetBusiness.GetPetBusiness(id);
+            Address address = _repo.Address.GetAddressById(petBusiness.AddressId);
 
             ViewModelPetBusiness petBusinessViewing = new ViewModelPetBusiness();
             petBusinessViewing.PetBusinessId = id;
@@ -539,8 +541,8 @@ namespace PawentsOneStopShop.Controllers
             petBusinessViewing.Name = petBusiness.Name;
             petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
             petBusinessViewing.Address = petBusiness.Address;
-            petBusinessViewing.Address.Lat = petBusiness.Address.Lat;
-            petBusinessViewing.Address.Lng = petBusiness.Address.Lng;
+            petBusinessViewing.Address.Lat = address.Lat;
+            petBusinessViewing.Address.Lng = address.Lng;
             petBusinessViewing.ServicesOffered = servicesOffered.ToList();
 
             return View(petBusinessViewing);
