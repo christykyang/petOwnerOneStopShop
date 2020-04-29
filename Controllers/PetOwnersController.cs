@@ -540,9 +540,9 @@ namespace PawentsOneStopShop.Controllers
             petBusinessViewing.PetOwnerId = petOwnerId;
             petBusinessViewing.Name = petBusiness.Name;
             petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
-            petBusinessViewing.Address = petBusiness.Address;
-            petBusinessViewing.Address.Lat = address.Lat;
-            petBusinessViewing.Address.Lng = address.Lng;
+            petBusinessViewing.Address = address;
+            //petBusinessViewing.Address.Lat = address.Lat;
+            //petBusinessViewing.Address.Lng = address.Lng;
             petBusinessViewing.ServicesOffered = servicesOffered.ToList();
 
             return View(petBusinessViewing);
