@@ -8,6 +8,7 @@ namespace PawentsOneStopShop.Contracts
 {
     public interface IBusinessTypeRepository : IRepositoryBase<BusinessType>
     {
+        Task<ICollection<BusinessType>> GetAllBusinessTypesAsync();
         ICollection<BusinessType> GetAllBusinessTypes();
         BusinessType GetBusinessTypeByBusinessTypeName(string businessType);
     }

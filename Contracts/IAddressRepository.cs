@@ -14,5 +14,7 @@ namespace PawentsOneStopShop.Contracts
         Task<Address> GetAddressByIdAsync(int? addressId);
         Task<Address> GetByAddressAsync(Address address);
         ICollection<Address> GetAllAddresses();
+        Task<ICollection<Address>> GetAddressByZipcode(string zipcode);
+        Task<ICollection<Address>> GetAllAddressesAsync();
     }
 }

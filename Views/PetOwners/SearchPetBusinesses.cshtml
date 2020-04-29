@@ -65,27 +65,44 @@
                 </div>
             </form>
         </div>
-    @*<p>
-        <form asp-controller="PetOwners" asp-action="FilterByBusinessType">
-    <p>
-        Filter by Pet Business Type <input type="text" name="filterSearch">
-        <input type="submit" value="Filter" />
-    </p>
-    </form> 
-    <p>
-        <form asp-controller="PetOwners" asp-action="filterSearch">
-    <p>
-        Filter by Address Zipcode <input type="text" name="zipcode">
-        <input type="submit" value="Filter" />
-    </p>
-    </form> |
-    <p>
-        <form asp-controller="PetOwners" asp-action="FilterByServices">
-    <p>
-        Filter by Services <input type="text" name="services">
-        <input type="submit" value="Filter" />
-    </p>
-    </form>*@ 
+        <form asp-action="FilteredPetBusinessSearch">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="PetBusinessId" class="control-label"></label>
+                        <select asp-for="PetBusinessId" asp-items='new SelectList(@Model.PetBusinesses, "Id", "Name")' class="form-control"></select>
+                        <span asp-validation-for="PetBusinessId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="BusinessTypeId" class="control-label"></label>
+                        <select asp-for="BusinessTypeId" asp-items='new SelectList(@Model.BusinessTypes, "Id", "TypeOfBusiness")' class="form-control"></select>
+                        <span asp-validation-for="BusinessTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="ServiceId" class="control-label"></label>
+                        <select asp-for="ServiceId" asp-items='new SelectList(@Model.Services, "Id", "ServiceName")' class="form-control"></select>
+                        <span asp-validation-for="ServiceId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="Address.ZipCode" class="control-label"></label>
+                        <select asp-for="Address.ZipCode" asp-items='new SelectList(@Model.Addresses, "Id", "Zipcode")' class="form-control"></select>
+                        <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <input type="submit" value="submit" class="btn btn-sm btn-primary rounded-0 text-uppercase" />
+                        <a asp-action="SearchPetProfiles" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-fast-backward"></i>Reset Filter</a>
+                    </div>
+                </div>
+            </div>
+        </form>
     <table class="table">
         <thead>
             <tr>

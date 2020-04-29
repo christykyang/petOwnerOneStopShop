@@ -479,38 +479,11 @@ namespace PawentsOneStopShop.Controllers
             viewModel.BusinessTypes.Insert(0, new BusinessType());
             viewModel.Addresses = _repo.Address.GetAllAddresses().ToList();
             viewModel.Addresses.Insert(0, new Address());
-            viewModel.Services = _repo.Service.GetAllServices().ToList();
-            viewModel.Services.Insert(0, new Service());
+            viewModel.ServicesOffered = servicesOffered.ToList();
+            viewModel.ServicesOffered.Insert(0, new ServiceOffered());
 
             return View(viewModel);
         }
-
-        //public async Task<IActionResult> FilterByBusinessType(string filterSearch)
-        //{
-        //    var businessTypeId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
-
-        //    var petBusinesses = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == businessTypeId).ToListAsync();
-
-        //    return View(await petBusinesses);
-        //}
-
-        //public async Task<IActionResult> FilterByZipcode(string filterSearch)
-        //{
-        //    var petBusinessId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
-
-        //    var petBusinesses = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == petBusinessId).ToListAsync();
-
-        //    return View(await petBusinesses);
-        //}
-
-        //public async Task<IActionResult> FilterByService(string filterSearch)
-        //{
-        //    var petBusinessId = _repo.BusinessType.GetBusinessTypeByBusinessTypeName(filterSearch).Id;
-
-        //    var petBusinesses = _repo.PetBusiness.FindByCondition(b => b.BusinessTypeId == petBusinessId).ToListAsync();
-
-        //    return View(await petBusinesses);
-        //}
         public async Task<IActionResult> FilteredPetBusinessSearch(ViewModelPetBusiness searchResults)
         {
             ViewModelPetBusiness viewModel = new ViewModelPetBusiness();
@@ -519,40 +492,37 @@ namespace PawentsOneStopShop.Controllers
             IEnumerable<PetBusiness> petBusinesses = businesses.ToList();
             var services = await _repo.ServiceOffered.GetServicesOfferedIncludeAllAsync();
             IEnumerable<ServiceOffered> servicesOffered = services.ToList();
+            var addresses = await _repo.Address.GetAllAddressesAsync();
+            IEnumerable<Address> businessAddresses = addresses.ToList();
+            var typesOfBusinesses = await _repo.BusinessType.GetAllBusinessTypesAsync();
+            IEnumerable<BusinessType> businessTypes = typesOfBusinesses.ToList();
 
+            if (searchResults.PetBusiness.Name != null)
+            {
+                petBusinesses = petBusinesses.Where(b => b.Name == searchResults.Name);
+            }
             if (searchResults.BusinessTypeId != 0)
             {
-                petBusinesses = petBusinesses.Where(bt => bt.BusinessTypeId == searchResults.BusinessTypeId);
-            }
-            if (searchResults.AddressId != 0)
-            {
-                petBusinesses = petBusinesses.Where(bt => bt.BusinessTypeId == searchResults.AddressId);
+                businessTypes = businessTypes.Where(bt => bt.Id == searchResults.BusinessTypeId);
             }
             if (searchResults.ServiceId != 0)
             {
                 servicesOffered = servicesOffered.Where(s => s.ServiceId == searchResults.ServiceId);
             }
-
-            try
+            if (searchResults.Address.ZipCode != null)
             {
-                if (double.Parse(searchResults.Cost) != 0)
-                {
-                    servicesOffered = servicesOffered.Where(s => double.Parse(s.Cost) <= double.Parse(searchResults.Cost));
-                }
+                businessAddresses = addresses.Where(a => a.ZipCode == searchResults.Address.ZipCode);
             }
-            catch
-            {
 
-            }
-            viewModel.PetBusinesses = _repo.PetBusiness.FindAll().ToList();
+            viewModel.PetBusinesses = petBusinesses.ToList();
             viewModel.PetBusinesses.Insert(0, (new PetBusiness()));
             viewModel.ServicesOffered = servicesOffered.ToList();
-            viewModel.BusinessTypes = _repo.BusinessType.GetAllBusinessTypes().ToList();
+            viewModel.BusinessTypes = businessTypes.ToList();
             viewModel.BusinessTypes.Insert(0, new BusinessType());
-            viewModel.Addresses = _repo.Address.GetAllAddresses().ToList();
+            viewModel.Addresses = businessAddresses.ToList();
             viewModel.Addresses.Insert(0, new Address());
-            viewModel.Services = _repo.Service.GetAllServices().ToList();
-            viewModel.Services.Insert(0, new Service());
+            viewModel.ServicesOffered = servicesOffered.ToList();
+            viewModel.ServicesOffered.Insert(0, new ServiceOffered());
             return View("DisplayPetBusinesses", viewModel);
         }
 
@@ -575,26 +545,6 @@ namespace PawentsOneStopShop.Controllers
 
             return View(petBusinessViewing);
         }
-
-        //public IActionResult ToggleFollowAndUnfollow(int? followId, int petBusinessId, int petOwnerId)
-        //{
-        //    Follow follow = _repo.Follow.FindByCondition(f => f.Id == followId).FirstOrDefault();
-        //    if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == true).Any())
-        //    {
-        //        _repo.Follow.Unfollow(followId, petBusinessId, petOwnerId);
-        //        _repo.Save();
-        //    }
-        //    else if (followId >= 0 && _repo.Follow.FindByCondition(f => f.PetOwnerId == petOwnerId && f.PetBusinessId == petBusinessId && f.IsFollowing == false).Any())
-        //    {
-        //        _repo.Follow.Follow(followId, petBusinessId, petBusinessId);
-        //        _repo.Save();
-        //    }
-        //    else
-        //    {
-        //        CreateFollow(petBusinessId, petOwnerId);
-        //    }
-        //    return RedirectToAction(nameof(DisplayPetBusinessDetails));
-        //}
 
         public IActionResult CreateFollow(int petBusinessId, int petOwnerId)
         {

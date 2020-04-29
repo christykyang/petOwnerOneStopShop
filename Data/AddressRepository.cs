@@ -39,5 +39,13 @@ namespace PawentsOneStopShop.Data
 		{
 			return FindByCondition(a => a.StreetAddress == streetAddress && a.City == city && a.State == state && a.ZipCode == zipcode).FirstOrDefault();
 		}
+		public async Task<ICollection<Address>> GetAddressByZipcode (string zipcode)
+		{
+			return await FindAll().Where(a => a.ZipCode == zipcode).ToListAsync();
+		}
+		public async Task<ICollection<Address>> GetAllAddressesAsync()
+		{
+			return await FindAll().ToListAsync();
+		}
 	}
 }
