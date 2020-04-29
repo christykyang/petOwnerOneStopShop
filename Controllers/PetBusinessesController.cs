@@ -278,8 +278,6 @@ namespace NewPetApp.Controllers
         {
             try
             {
-                
-
                 _repo.ServiceOffered.CreateServiceOffered(serviceOffered.Cost, serviceOffered.PetBusinessId, serviceOffered.ServiceId);
                 _repo.Save();
 

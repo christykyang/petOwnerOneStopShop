@@ -57,9 +57,9 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <label asp-for="ServiceOfferedId" class="control-label"></label>
-                    <select asp-for="ServiceOfferedId" asp-items='new SelectList(@Model.ServicesOffered, "Id", "Service")' class="form-control"></select>
-                    <span asp-validation-for="ServiceOfferedId" class="text-danger"></span>
+                    <label asp-for="ServiceId" class="control-label"></label>
+                    <select asp-for="ServiceId" asp-items='new SelectList(@Model.Services, "Id", "ServiceName")' class="form-control"></select>
+                    <span asp-validation-for="ServiceId" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-2">

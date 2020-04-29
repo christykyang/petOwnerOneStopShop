@@ -82,6 +82,14 @@
                     </dd>
                 }
             </dl>
+            @foreach(var service in Model.ServicesOffered)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => service.ServiceName)
+                    </td>
+                </tr>
+            }
         </div>
         <div>
             <a asp-action="SearchPetBusinesses">Back to List</a> |

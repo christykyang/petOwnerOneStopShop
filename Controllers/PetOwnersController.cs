@@ -476,8 +476,8 @@ namespace PawentsOneStopShop.Controllers
 
             viewModel.PetBusinesses = petBusinesses.ToList();
             viewModel.PetBusinesses.Insert(0, (new PetBusiness()));
-            viewModel.ServicesOffered = _repo.ServiceOffered.GetServicesOfferedIncludeAll().ToList();
-            viewModel.ServicesOffered.Insert(0, new ServiceOffered());
+            viewModel.Services = _repo.Service.GetAllServices().ToList();
+            viewModel.Services.Insert(0, new Service());
             viewModel.BusinessTypes = _repo.BusinessType.GetAllBusinessTypes().ToList();
             viewModel.BusinessTypes.Insert(0, new BusinessType());
             viewModel.Addresses = _repo.Address.GetAllAddresses().ToList();
@@ -533,6 +533,8 @@ namespace PawentsOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
+            IEnumerable<ServiceOffered> servicesOffered =  _repo.ServiceOffered.GetServicesOfferedIncludeAll(id);
+
             PetBusiness petBusiness = _repo.PetBusiness.GetPetBusiness(id);
 
             ViewModelPetBusiness petBusinessViewing = new ViewModelPetBusiness();
@@ -543,6 +545,7 @@ namespace PawentsOneStopShop.Controllers
             petBusinessViewing.Address = petBusiness.Address;
             petBusinessViewing.Address.Lat = petBusiness.Address.Lat;
             petBusinessViewing.Address.Lng = petBusiness.Address.Lng;
+            petBusinessViewing.ServicesOffered = servicesOffered.ToList();
 
             return View(petBusinessViewing);
         }

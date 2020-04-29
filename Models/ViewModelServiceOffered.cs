@@ -35,6 +35,7 @@ namespace PawentsOneStopShop.Models
         public int AddressId { get; set; }
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
+        public string ServiceName { get; set; }
         [Display(Name = "Pet Owner")]
         public int PetOwnerId { get; set; }
         [Display(Name = "Service Price")]
