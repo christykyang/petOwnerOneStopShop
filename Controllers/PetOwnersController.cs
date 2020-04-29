@@ -498,9 +498,9 @@ namespace PawentsOneStopShop.Controllers
             var typesOfBusinesses = await _repo.BusinessType.GetAllBusinessTypesAsync();
             IEnumerable<BusinessType> businessTypes = typesOfBusinesses.ToList();
 
-            if (searchResults.PetBusiness.Name != null)
+            if (searchResults.PetBusinessId != 0)
             {
-                petBusinesses = petBusinesses.Where(b => b.Name == searchResults.Name);
+                petBusinesses = petBusinesses.Where(b => b.Id == searchResults.PetBusinessId);
             }
             if (searchResults.BusinessTypeId != 0)
             {
@@ -510,9 +510,9 @@ namespace PawentsOneStopShop.Controllers
             {
                 servicesOffered = servicesOffered.Where(s => s.ServiceId == searchResults.ServiceId);
             }
-            if (searchResults.Address.ZipCode != null)
+            if (searchResults.AddressId != 0)
             {
-                businessAddresses = addresses.Where(a => a.ZipCode == searchResults.Address.ZipCode);
+                businessAddresses = addresses.Where(a => a.Id == searchResults.AddressId);
             }
 
             viewModel.PetBusinesses = petBusinesses.ToList();

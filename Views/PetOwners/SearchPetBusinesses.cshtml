@@ -55,13 +55,13 @@
                     <span asp-validation-for="BusinessTypeId" class="text-danger"></span>
                 </div>
             </div>
-            @*<div class="col-md-2">
+            <div class="col-md-2">
                 <div class="form-group">
-                    <label asp-for="ServiceOffered" class="control-label"></label>
-                    <select asp-for="ServiceOffered" asp-items='new SelectList(@Model.ServicesOffered, "Id", "ServiceName")' class="form-control"></select>
-                    <span asp-validation-for="ServiceOffered" class="text-danger"></span>
+                    <label asp-for="ServiceOfferedId" class="control-label"></label>
+                    <select asp-for="ServiceOfferedId" asp-items='new SelectList(@Model.ServicesOffered, "Id", "Service.ServiceName")' class="form-control"></select>
+                    <span asp-validation-for="ServiceOfferedId" class="text-danger"></span>
                 </div>
-            </div>*@
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label asp-for="AddressId" class="control-label"></label>
