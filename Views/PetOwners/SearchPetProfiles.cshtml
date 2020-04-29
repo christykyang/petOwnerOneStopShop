@@ -121,7 +121,7 @@
                     @if (pet.PetType != null)
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => pet.PetType)
+                            @Html.DisplayFor(modelItem => pet.PetType.TypeName)
                         </td>
                     }
                     @if (pet.IsMale != null)
