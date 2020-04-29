@@ -48,15 +48,15 @@ namespace PawentsOneStopShop.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9a571bd2-e5cd-4288-b89c-c0fd5da3ce20",
-                            ConcurrencyStamp = "39d2657b-38e2-4a2d-af47-4f91af285abf",
+                            Id = "d3347838-04b4-4d30-8de5-84ceff6ec964",
+                            ConcurrencyStamp = "2b6e46cd-114c-4ded-899e-1101cf17d032",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "2b2cce34-12ad-4891-8110-d1993cd0b3cd",
-                            ConcurrencyStamp = "a864fe74-99c6-4192-8f8b-7565109dd655",
+                            Id = "0bb50f20-ddc2-4895-9d3c-068a65586175",
+                            ConcurrencyStamp = "1cc9143a-9f50-450e-a84f-5ad325ebefc2",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });

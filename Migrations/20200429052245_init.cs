@@ -371,7 +371,8 @@ namespace PawentsOneStopShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true),
                     PubDate = table.Column<string>(nullable: true),
-                    PetBusinessId = table.Column<int>(nullable: true)
+                    PetBusinessId = table.Column<int>(nullable: true),
+                    BusinessName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -419,7 +420,8 @@ namespace PawentsOneStopShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cost = table.Column<string>(nullable: true),
                     PetBusinessId = table.Column<int>(nullable: false),
-                    ServiceId = table.Column<int>(nullable: false)
+                    ServiceId = table.Column<int>(nullable: false),
+                    ServiceName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -498,8 +500,8 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "04b8f30d-ed0d-42e8-8dc4-23d71f920115", "172a258d-5d2e-4f04-8eae-5f528693aa09", "Pet Owner", "PET OWNER" },
-                    { "fc3cdf70-0ee5-4496-b5d3-a0b3beec8484", "4057a3ea-0c78-4074-aa2f-4cfe672cfa85", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
+                    { "d3347838-04b4-4d30-8de5-84ceff6ec964", "2b6e46cd-114c-4ded-899e-1101cf17d032", "Pet Owner", "PET OWNER" },
+                    { "0bb50f20-ddc2-4895-9d3c-068a65586175", "1cc9143a-9f50-450e-a84f-5ad325ebefc2", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
                 });
 
             migrationBuilder.InsertData(
