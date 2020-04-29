@@ -9,5 +9,6 @@ namespace PawentsOneStopShop.Contracts
     public interface IServiceRepository : IRepositoryBase<Service>
     {
         ICollection<Service> GetAllServices();
+        Task<ICollection<Service>> GetAllServicesAsync();
     }
 }
