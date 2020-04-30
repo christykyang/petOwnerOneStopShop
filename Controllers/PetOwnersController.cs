@@ -548,7 +548,7 @@ namespace PawentsOneStopShop.Controllers
             return View(petBusinessViewing);
         }
 
-        public async Task<IActionResult> CreateFollow(int petBusinessId, int petOwnerId)
+        public IActionResult FollowAndUnfollow(int petBusinessId, int petOwnerId)
         {
             Follow follow = _repo.Follow.GetFollowByPetOwnerAndPetBusiness(petBusinessId, petOwnerId);
 
