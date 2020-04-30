@@ -548,8 +548,11 @@ namespace PawentsOneStopShop.Controllers
             return View(petBusinessViewing);
         }
 
-        public IActionResult FollowAndUnfollow(int petBusinessId, int petOwnerId)
+        public IActionResult FollowAndUnfollow(int petBusinessId)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
             Follow follow = _repo.Follow.GetFollowByPetOwnerAndPetBusiness(petBusinessId, petOwnerId);
 
             if (follow == null)
