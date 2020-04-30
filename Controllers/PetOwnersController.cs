@@ -551,7 +551,7 @@ namespace PawentsOneStopShop.Controllers
             ViewModelPetBusiness petBusinessViewing = new ViewModelPetBusiness();
             petBusinessViewing.PetBusiness = petBusiness;
             petBusinessViewing.PetBusinessId = id;
-            petBusinessViewing.PetOwner.Id = petOwnerId;
+            petBusinessViewing.PetOwnerId = petOwnerId;
             petBusinessViewing.Name = petBusiness.Name;
             petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
             petBusinessViewing.Address = address;
