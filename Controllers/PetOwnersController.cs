@@ -538,15 +538,19 @@ namespace PawentsOneStopShop.Controllers
 
             if(follow == null)
             {
-                follow.PetOwnerId = petOwnerId;
-                follow.PetBusinessId = id;
-                follow.IsFollowing = false;
-                _repo.Follow.CreateFollow(follow);
+                Follow newFollow = new Follow();
+                newFollow.PetOwnerId = petOwnerId;
+                newFollow.PetBusinessId = id;
+                newFollow.IsFollowing = false;
+                _repo.Follow.CreateFollow(newFollow);
                 _repo.Save();
+
+                follow = newFollow;
             }
 
             ViewModelPetBusiness petBusinessViewing = new ViewModelPetBusiness();
-            petBusinessViewing.PetBusiness.Id = id;
+            petBusinessViewing.PetBusiness = petBusiness;
+            petBusinessViewing.PetBusinessId = id;
             petBusinessViewing.PetOwner.Id = petOwnerId;
             petBusinessViewing.Name = petBusiness.Name;
             petBusinessViewing.BusinessTypeId = petBusiness.BusinessTypeId;
