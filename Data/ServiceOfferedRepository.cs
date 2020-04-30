@@ -53,12 +53,13 @@ namespace PawentsOneStopShop.Data
 				.Include(b => b.PetBusiness)
 				.Include(s => s.Service).FirstOrDefault();
 		}
-		public void CreateServiceOffered(string cost, int petBusinessId, int serviceId)
+		public void CreateServiceOffered(string cost, int petBusinessId, int serviceId, string service)
 		{
 			ServiceOffered serviceOffered = new ServiceOffered();
 			serviceOffered.Cost = cost;
 			serviceOffered.PetBusinessId = petBusinessId;
 			serviceOffered.ServiceId = serviceId;
+			serviceOffered.
 			Create(serviceOffered);
 		}
 	}

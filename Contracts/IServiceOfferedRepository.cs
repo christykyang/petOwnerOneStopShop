@@ -14,7 +14,7 @@ namespace PawentsOneStopShop.Contracts
 		Task<ICollection<ServiceOffered>> GetServicesOfferedIncludeAllAsync();
 		Task<ICollection<ServiceOffered>> GetServicesOfferedIncludeAllAsync(int petBusinessId);
 		ServiceOffered GetServiceOffered(int id);
-		void CreateServiceOffered(string cost, int petBusinessId, int serviceId);
+		void CreateServiceOffered(string cost, int petBusinessId, int serviceId, string service);
 		ServiceOffered GetServiceOfferedByIdIncludeAll(int serviceOfferedId);
 	}
 }
