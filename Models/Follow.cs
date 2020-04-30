@@ -12,7 +12,7 @@ namespace PawentsOneStopShop.Models
     {
         public int Id { get; set; }
         [Display(Name = "Following Status")]
-        public bool? IsFollowing { get; set; }
+        public bool IsFollowing { get; set; }
         [ForeignKey("PetOwner")]
         [Display(Name = "Pet Owner")]
         public int? PetOwnerId { get; set; }
