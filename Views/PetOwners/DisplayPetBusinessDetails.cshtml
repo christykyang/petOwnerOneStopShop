@@ -71,14 +71,14 @@
                 {
                     <dd class="col-sm-10">
                         Following |
-                        <a asp-action="FollowAndUnfollow" asp-route-referralId="PetBusinessId, PetOwnerId" >Unfollow</a>
+                        <a asp-action="FollowAndUnfollow" asp-route-referralId="@Model.PetBusinessId, @Model.PetOwnerId" >Unfollow</a>
                     </dd>
                 }
                 @if (Model.IsFollowing == false)
                 {
                     <dd class="col-sm-10">
                         Not Following |
-                        <a asp-action="FollowAndUnfollow" asp-route-referralId="PetBusinessId, PetOwnerId" >Follow</a>
+                        <a asp-action="FollowAndUnfollow" asp-route-referralId="@Model.PetBusinessId, @Model.PetOwnerId" >Follow</a>
                     </dd>
                 }
             </dl>
@@ -93,7 +93,7 @@
         </div>
         <div>
             <a asp-action="SearchPetBusinesses">Back to List</a> |
-            <a asp-action="PetBusinessNewsFeed" asp-route-referralId="PetBusinessId">View News Feed</a>
+            <a asp-action="PetBusinessNewsFeed" asp-route-referralId="@Model.PetBusinessId">View News Feed</a>
         </div>
     </div>
 </body>
