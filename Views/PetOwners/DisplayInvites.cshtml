@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.isInvitationAccepted)
+                @Html.DisplayNameFor(model => model.ObjectEvent.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ObjectEventId)
+                @Html.DisplayNameFor(model => model.isInvitationAccepted)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OwnerSendingName)
@@ -29,7 +29,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.ObjectEvent.Title)
             </td>
             @if (item.isInvitationAccepted == null)
             {

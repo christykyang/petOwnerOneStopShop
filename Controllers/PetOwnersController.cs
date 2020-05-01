@@ -678,6 +678,7 @@ namespace PawentsOneStopShop.Controllers
             invitation.OwnerSendingId = petOwnerId;
             invitation.ObjectEventId = objectEvent.Id;
             invitation.OwnerSendingName = invite.OwnerSendingName;
+            invitation.ObjectEvent = objectEvent;
             _repo.ObjectInvite.CreateInvite(invitation);
             _repo.Save();
 
@@ -726,12 +727,12 @@ namespace PawentsOneStopShop.Controllers
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
             ObjectInvite invitation = _repo.ObjectInvite.FindByCondition(i => i.Id == id).FirstOrDefault();
+            ObjectEvent objectEvent = _repo.ObjectEvent.GetEventById(invitation.ObjectEventId);
+            ObjectCalendar invitedOwnerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId);
 
             if (!invitation.isInvitationAccepted.HasValue)
             {
                 invitation.isInvitationAccepted = true;
-                ObjectEvent objectEvent = _repo.ObjectEvent.GetEventById(invitation.ObjectEventId);
-                ObjectCalendar invitedOwnerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId);
 
                 ObjectEvent newEvent = new ObjectEvent();
                 newEvent.Title = objectEvent.Title;
@@ -743,15 +744,22 @@ namespace PawentsOneStopShop.Controllers
                 newEvent.ObjectCalendarId = invitedOwnerCalendar.Id;
                 _repo.ObjectEvent.CreateEvent(newEvent);
                 _repo.Save();
+
+                invitation.ObjectEvent = objectEvent;
+                invitation.isInvitationAccepted = true;
+                _repo.ObjectInvite.Update(invitation);
+                _repo.Save();
             }
             else if (invitation.isInvitationAccepted.Value == true)
             {
+                invitation.ObjectEvent = objectEvent;
                 invitation.isInvitationAccepted = false;
                 _repo.ObjectInvite.Update(invitation);
                 _repo.Save();
             }
             else
             {
+                invitation.ObjectEvent = objectEvent;
                 invitation.isInvitationAccepted = null;
                 _repo.ObjectInvite.Update(invitation);
                 _repo.Save();
