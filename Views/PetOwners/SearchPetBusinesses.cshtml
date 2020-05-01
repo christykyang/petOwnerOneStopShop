@@ -7,41 +7,7 @@
 <h1>Pet Businesses</h1>
 
 <body>
-
     <div id="map" style="width: 500px; height: 400px;"></div>
-    <script type="text/javascript">
-        function initMap() {
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: new google.maps.LatLng(43.0343, -87.9115)
-            });
-
-            @*var contantInformation = @Html.Raw(Json.Serialize(Model.ServicesOffered.Select(c => new string[]{c.Provider.ProviderName, c.Provider.PhoneNumber, c.Provider.Email}).ToArray()));
-
-            var infowindow = new google.maps.InfoWindow();
-
-            var coordinatesArray = @Html.Raw(Json.Serialize(Model.ServicesOffered.Select(a => new double[]{a.Address.Lat, a.Address.Lng}).ToArray()));
-
-            for (var i = 0; i < coordinatesArray.length; i++) {
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(coordinatesArray[i][0], coordinatesArray[i][1]),
-                    map: map
-                });
-
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(contantInformation[i][0] + '<br>' + contantInformation[i][1] + '<br>' + contantInformation[i][2]);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));*@
-            }
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
-
-    @*<div id="map" style="width: 500px; height: 400px;"></div>
     <script type="text/javascript">
             function initMap() {
 
@@ -50,28 +16,29 @@
                     center: new google.maps.LatLng(43.0343, -87.9115)
                 });
 
-                var businessInfo = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(b => new string[] { b.Name, b.BusinessType.ToString() }).ToArray()));
+                @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
-                var infoWindow = new google.maps.infoWindow();
+                var infowindow = new google.maps.InfoWindow();*@
 
-                var coordinates = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new double[] { c.Address.Lat, c.Address.Lng }).ToArray()));
+                @*var coordinatesArray = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(a => new double[]{a.Address.Lat, a.Address.Lng}).ToArray()));
 
-                for (var i = 0; i < coordinates.length; i++) {
+                for (var i = 0; i < coordinatesArray.length; i++) {
+
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(coordinates[i][0], coordinates[i][1]),
+                        position: new google.maps.LatLng(coordinatesArray[i][0], coordinatesArray[i][1]),
                         map: map
                     });
 
-                    google.maps.event.addlistener(marker, 'click', (function (marker, i) {
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
                         return function () {
-                            infoWindow.setContent(businessInfo[i][0] + '<br>' + businessInfo[i][1]);
+                            infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
+                            infowindow.open(map, marker);
                         }
                     })(marker, i));
-
-                }
-
+                }*@
+            }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>*@
+    <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
     <form asp-action="FilteredPetBusinessSearch">
         <div class="row">
             <div class="col-md-2">
