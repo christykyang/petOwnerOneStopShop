@@ -6,7 +6,7 @@ using PawentsOneStopShop.Models;
 
 namespace PawentsOneStopShop.Contracts
 {
-    public interface ICalendarRepository : IRepositoryBase<ObjectCalendar>
+    public interface IObjectCalendarRepository : IRepositoryBase<ObjectCalendar>
     {
         void CreateCalendar(ObjectCalendar objectCalendar);
         ObjectCalendar GetCalenderByIdentityUser(string userId);

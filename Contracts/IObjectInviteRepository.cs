@@ -6,7 +6,7 @@ using PawentsOneStopShop.Models;
 
 namespace PawentsOneStopShop.Contracts
 {
-    public interface IInviteRepository : IRepositoryBase<ObjectInvite>
+    public interface IObjectInviteRepository : IRepositoryBase<ObjectInvite>
     {
         void CreateInvite(ObjectInvite objectInvite);
         ICollection<ObjectInvite> GetInvitesSentToOwner(int ownerId);

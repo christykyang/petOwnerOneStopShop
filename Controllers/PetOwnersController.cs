@@ -122,7 +122,7 @@ namespace PawentsOneStopShop.Controllers
 
                 ObjectCalendar userCalender = new ObjectCalendar();
                 userCalender.IdentityUserId = userId;
-                _repo.Calendar.CreateCalendar(userCalender);
+                _repo.ObjectCalendar.CreateCalendar(userCalender);
                 _repo.Save();
 
                 return RedirectToAction(nameof(Index));
@@ -637,7 +637,7 @@ namespace PawentsOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-            ObjectCalendar objectCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId);
+            ObjectCalendar objectCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId);
 
             ObjectEvent eventCreated = new ObjectEvent();
             eventCreated.Title = invite.Title;
@@ -647,16 +647,16 @@ namespace PawentsOneStopShop.Controllers
             eventCreated.Location = invite.Location;
             eventCreated.EndTime = invite.EndTime;
             eventCreated.ObjectCalendarId = objectCalendar.Id;
-            _repo.Event.CreateEvent(eventCreated);
+            _repo.ObjectEvent.CreateEvent(eventCreated);
             _repo.Save();
 
-            ObjectEvent objectEvent = _repo.Event.GetEventByAllProperties(invite.Title, invite.Location, invite.Details, invite.Date, invite.StartTime, invite.EndTime, objectCalendar.Id);
+            ObjectEvent objectEvent = _repo.ObjectEvent.GetEventByAllProperties(invite.Title, invite.Location, invite.Details, invite.Date, invite.StartTime, invite.EndTime, objectCalendar.Id);
             ObjectInvite invitation = new ObjectInvite();
             invitation.isInvitationAccepted = null;
             invitation.ObjectEventId = eventCreated.Id;
             invitation.OwnerInvitedId = invite.OwnerInvitedId;
             invitation.OwnerSendingId = petOwnerId;
-            _repo.Invite.CreateInvite(invitation);
+            _repo.ObjectInvite.CreateInvite(invitation);
             _repo.Save();
 
             return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
@@ -698,14 +698,14 @@ namespace PawentsOneStopShop.Controllers
 
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-            var invites = _repo.Invite.GetInvitesSentToOwner(petOwnerId);
+            var invites = _repo.ObjectInvite.GetInvitesSentToOwner(petOwnerId);
 
             IQueryable<ObjectInvite> newInvites = new ObjectInvite[] { }.AsQueryable();
             foreach (var invite in invites)
             {
                 if(invite.isInvitationAccepted == null)
                 {
-                    var newInvite = _repo.Invite.FindByCondition(i => i.isInvitationAccepted == null);
+                    var newInvite = _repo.ObjectInvite.FindByCondition(i => i.isInvitationAccepted == null);
                     newInvites.Concat(newInvite);
                 }
             }
@@ -718,7 +718,7 @@ namespace PawentsOneStopShop.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-            ObjectInvite invitation = _repo.Invite.FindByCondition(i => i.Id == id).FirstOrDefault();
+            ObjectInvite invitation = _repo.ObjectInvite.FindByCondition(i => i.Id == id).FirstOrDefault();
 
             if (!invitation.isInvitationAccepted.HasValue)
             {
@@ -732,7 +732,7 @@ namespace PawentsOneStopShop.Controllers
             {
                 invitation.isInvitationAccepted = null;
             }
-            _repo.Invite.Update(invitation);
+            _repo.ObjectInvite.Update(invitation);
             _repo.Save();
             return RedirectToAction(nameof(DisplayInvites), id);
         }

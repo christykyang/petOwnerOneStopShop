@@ -7,7 +7,7 @@ using PawentsOneStopShop.Models;
 
 namespace PawentsOneStopShop.Data
 {
-    public class EventRepository : RepositoryBase<ObjectEvent>, IEventRepository
+    public class EventRepository : RepositoryBase<ObjectEvent>, IObjectEventRepository
     {
         public EventRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)

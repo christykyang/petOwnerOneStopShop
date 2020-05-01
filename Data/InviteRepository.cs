@@ -7,7 +7,7 @@ using PawentsOneStopShop.Models;
 
 namespace PawentsOneStopShop.Data
 {
-    public class InviteRepository : RepositoryBase<ObjectInvite>, IInviteRepository
+    public class InviteRepository : RepositoryBase<ObjectInvite>, IObjectInviteRepository
     {
         public InviteRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)

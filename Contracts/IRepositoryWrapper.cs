@@ -13,10 +13,10 @@ namespace PawentsOneStopShop.Contracts
 		IAddressRepository Address { get; }
 		IAdoptableRepository Adoptable { get; }
 		IBusinessTypeRepository BusinessType { get; }
-		ICalendarRepository Calendar { get; }
-		IEventRepository Event { get; }
+		IObjectCalendarRepository ObjectCalendar { get; }
+		IObjectEventRepository ObjectEvent { get; }
 		IFollowRepository Follow { get; }
-		IInviteRepository Invite { get; }
+		IObjectInviteRepository ObjectInvite { get; }
 		IMessageRepository Message { get; }
 		IPetBusinessRepository PetBusiness { get; }
 		IServiceRepository Service { get; }

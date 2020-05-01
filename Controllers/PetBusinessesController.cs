@@ -145,13 +145,13 @@ namespace NewPetApp.Controllers
                 }
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
-                _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
-                _repo.Save();
-
                 ObjectCalendar userCalender = new ObjectCalendar();
                 userCalender.IdentityUserId = userId;
-                _repo.Calendar.CreateCalendar(userCalender);
+                _repo.ObjectCalendar.CreateCalendar(userCalender);
+                _repo.Save();
+
+                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
+                _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
                 _repo.Save();
 
                 return RedirectToAction(nameof(Index));
@@ -334,8 +334,8 @@ namespace NewPetApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
-            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
-            var events = _repo.Event.GetEventsTiedToCalenderId(businessCalendar);
+            var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+            var events = _repo.ObjectEvent.GetEventsTiedToCalenderId(businessCalendar);
 
             return View(events);
         }
@@ -345,7 +345,7 @@ namespace NewPetApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
-            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+            var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
 
             ObjectEvent newEvent = new ObjectEvent();
             newEvent.ObjectCalendarId = businessCalendar;
@@ -360,7 +360,7 @@ namespace NewPetApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
-            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+            var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
 
             ObjectEvent newEvent = new ObjectEvent();
             newEvent.ObjectCalendarId = businessCalendar;
@@ -371,7 +371,7 @@ namespace NewPetApp.Controllers
             newEvent.StartTime = objectEvent.StartTime;
             newEvent.EndTime = objectEvent.EndTime;
 
-            _repo.Event.CreateEvent(newEvent);
+            _repo.ObjectEvent.CreateEvent(newEvent);
             _repo.Save();
 
             return View("DisplayCalendar", businessCalendar);
@@ -379,7 +379,7 @@ namespace NewPetApp.Controllers
 
         public IActionResult EditEvent(int id)
         {
-            ObjectEvent editedEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+            ObjectEvent editedEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
 
             return View(editedEvent);
         }
@@ -388,12 +388,12 @@ namespace NewPetApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditEvent(int id, ObjectEvent objectEvent)
         {
-            ObjectEvent newEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+            ObjectEvent newEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
-            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+            var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
 
             newEvent.ObjectCalendarId = businessCalendar;
             newEvent.Title = objectEvent.Title;
@@ -403,7 +403,7 @@ namespace NewPetApp.Controllers
             newEvent.StartTime = objectEvent.StartTime;
             newEvent.EndTime = objectEvent.EndTime;
 
-            _repo.Event.Update(newEvent);
+            _repo.ObjectEvent.Update(newEvent);
             _repo.Save();
 
             return View("DisplayCalendar", businessCalendar);
@@ -411,7 +411,7 @@ namespace NewPetApp.Controllers
 
         public IActionResult DeleteEvent(int id)
         {
-            ObjectEvent deletingEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+            ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
 
             return View(deletingEvent);
         }
@@ -422,10 +422,10 @@ namespace NewPetApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
-            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+            var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
 
-            ObjectEvent deletingEvent = _repo.Event.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
-            _repo.Event.Delete(deletingEvent);
+            ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
+            _repo.ObjectEvent.Delete(deletingEvent);
             _repo.Save();
             return View("DisplayCalendar", businessCalendar);
 

@@ -7,7 +7,7 @@ using PawentsOneStopShop.Models;
 
 namespace PawentsOneStopShop.Data
 {
-    public class CalendarRepository : RepositoryBase<ObjectCalendar>, ICalendarRepository
+    public class CalendarRepository : RepositoryBase<ObjectCalendar>, IObjectCalendarRepository
     {
         public CalendarRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)

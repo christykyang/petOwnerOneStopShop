@@ -16,13 +16,13 @@ namespace PawentsOneStopShop.Contracts
         private IAddressRepository _address;
         private IAdoptableRepository _adoptable;
         private IBusinessTypeRepository _businessType;
-        private ICalendarRepository _calendarRepo;
+        private IObjectCalendarRepository _calendarRepo;
         //private ICalendarRequest _calendarReq;
-        private IEventRepository _event;
+        private IObjectEventRepository _event;
 		private IFeedUpdateRepository _feedUpdate;
 		private IFollowRepository _follow;
 		//private IGetCoordinatesRequest _getCoordinatesReq;
-		private IInviteRepository _invite;
+		private IObjectInviteRepository _invite;
 		private IMessageRepository _message;
 		private IPetBusinessRepository _petBusiness;
 		private IPetOwnerRepository _petOwner;
@@ -69,7 +69,7 @@ namespace PawentsOneStopShop.Contracts
 				return _businessType;
 			}
 		}
-		public ICalendarRepository CaledarRepo
+		public IObjectCalendarRepository ObjectCalendar
 		{
 			get
 			{
@@ -80,7 +80,7 @@ namespace PawentsOneStopShop.Contracts
 				return _calendarRepo;
 			}
 		}
-		public IEventRepository Event
+		public IObjectEventRepository ObjectEvent
 		{
 			get
 			{
@@ -113,7 +113,7 @@ namespace PawentsOneStopShop.Contracts
 				return _follow;
 			}
 		}
-		public IInviteRepository Invite
+		public IObjectInviteRepository ObjectInvite
 		{
 			get
 			{
@@ -213,7 +213,7 @@ namespace PawentsOneStopShop.Contracts
 			}
 		}
 
-		public ICalendarRepository Calendar => throw new NotImplementedException();
+		public IObjectCalendarRepository Calendar => throw new NotImplementedException();
 
 		public void Save()
 		{
