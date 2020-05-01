@@ -662,7 +662,7 @@ namespace PawentsOneStopShop.Controllers
 
             return RedirectToAction("SearchPetProfiles");
         }
-        public IActionResult SendPlaydate(int petOwnerId)
+        public IActionResult SendPlaydate(int petOwnerId, int petProfileId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var thisPetOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
@@ -670,6 +670,7 @@ namespace PawentsOneStopShop.Controllers
             ViewModelSendInvite invite = new ViewModelSendInvite();
             invite.OwnerInvitedId = petOwnerId;
             invite.OwnerSendingId = thisPetOwnerId;
+            invite.PetProfileId = petProfileId;
 
             return View(invite);
         }
