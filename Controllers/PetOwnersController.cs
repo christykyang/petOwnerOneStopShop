@@ -671,24 +671,6 @@ namespace PawentsOneStopShop.Controllers
             invite.OwnerSendingId = petOwnerId;
             invite.PetProfileId = petProfile.Id;
 
-            //ObjectCalendar ownerSendingCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
-
-            //ObjectEvent objectEvent = new ObjectEvent();
-            //objectEvent.ObjectCalendarId = ownerSendingCalender.Id;
-            //objectEvent.Title = "Playdate with " + petProfile.Name;
-
-            //_repo.Event.CreateEvent(objectEvent);
-            //_repo.Save();
-
-            //ObjectCalendar ownerInvitedCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
-
-            //ObjectInvite objectInvite = new ObjectInvite();
-            //objectInvite.ObjectEventId = objectEvent.Id;
-            //objectInvite.isInvitationAccepted = null;
-            //objectInvite.OwnerInvitedId = petProfile.PetOwnerId;
-            //objectInvite.OwnerSendingId = petOwnerId;
-            //_repo.Invite.CreateInvite(objectInvite);
-
             return View();
         }
 
@@ -735,6 +717,107 @@ namespace PawentsOneStopShop.Controllers
             _repo.ObjectInvite.Update(invitation);
             _repo.Save();
             return RedirectToAction(nameof(DisplayInvites), id);
+        }
+
+        public IActionResult DisplayCalendar()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var ownerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+            var events = _repo.ObjectEvent.GetEventsTiedToCalenderId(ownerCalendar);
+
+            return View(events);
+        }
+
+        public IActionResult CreateEvent()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petOwner = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var ownerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+
+            ObjectEvent newEvent = new ObjectEvent();
+            newEvent.ObjectCalendarId = ownerCalendar;
+
+            return View(newEvent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateEvent(ObjectEvent objectEvent)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petOwner = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var ownerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+
+            ObjectEvent newEvent = new ObjectEvent();
+            newEvent.ObjectCalendarId = ownerCalendar;
+            newEvent.Title = objectEvent.Title;
+            newEvent.Location = objectEvent.Location;
+            newEvent.Details = objectEvent.Details;
+            newEvent.Date = objectEvent.Date;
+            newEvent.StartTime = objectEvent.StartTime;
+            newEvent.EndTime = objectEvent.EndTime;
+
+            _repo.ObjectEvent.CreateEvent(newEvent);
+            _repo.Save();
+
+            return RedirectToAction("DisplayCalendar");
+        }
+
+        public IActionResult EditEvent(int id)
+        {
+            ObjectEvent editedEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            return View(editedEvent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditEvent(int id, ObjectEvent objectEvent)
+        {
+            ObjectEvent newEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petOwner = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var ownerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+
+            newEvent.ObjectCalendarId = ownerCalendar;
+            newEvent.Title = objectEvent.Title;
+            newEvent.Location = objectEvent.Location;
+            newEvent.Details = objectEvent.Details;
+            newEvent.Date = objectEvent.Date;
+            newEvent.StartTime = objectEvent.StartTime;
+            newEvent.EndTime = objectEvent.EndTime;
+
+            _repo.ObjectEvent.Update(newEvent);
+            _repo.Save();
+
+            return RedirectToAction("DisplayCalendar");
+        }
+
+        public IActionResult DeleteEvent(int id)
+        {
+            ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            return View(deletingEvent);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteEvent(ObjectEvent objectEvent)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petOwner = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var ownerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
+
+            ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
+            _repo.ObjectEvent.Delete(deletingEvent);
+            _repo.Save();
+
+            return RedirectToAction("DisplayCalendar");
         }
 
         private bool PetOwnerExists(int id)
