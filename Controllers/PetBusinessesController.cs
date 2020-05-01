@@ -406,7 +406,7 @@ namespace NewPetApp.Controllers
             _repo.ObjectEvent.Update(newEvent);
             _repo.Save();
 
-            return View("DisplayCalendar", new { id = businessCalendar };
+            return View("DisplayCalendar", new { id = businessCalendar });
         }
 
         public IActionResult DeleteEvent(int id)
@@ -427,7 +427,7 @@ namespace NewPetApp.Controllers
             ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
             _repo.ObjectEvent.Delete(deletingEvent);
             _repo.Save();
-            return View("DisplayCalendar", new { id = businessCalendar };
+            return View("DisplayCalendar", new { id = businessCalendar });
 
         }
 

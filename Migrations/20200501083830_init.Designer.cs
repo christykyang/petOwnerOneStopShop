@@ -10,7 +10,7 @@ using PawentsOneStopShop.Data;
 namespace PawentsOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200501081233_init")]
+    [Migration("20200501083830_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,15 +50,15 @@ namespace PawentsOneStopShop.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bbce8049-77ec-49c4-ada1-532629135d0c",
-                            ConcurrencyStamp = "5bcec330-dd1d-4768-b4b3-8d0b63226b47",
+                            Id = "95b490d0-cc36-4b79-af68-272a28d4512f",
+                            ConcurrencyStamp = "4074f8fc-a7da-4dbc-8d4d-7a0627616ed9",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "8ba904ac-3bfc-40d7-93be-fd611fb9f6b7",
-                            ConcurrencyStamp = "915237fe-19f7-48c0-8cb6-aa5cde0d55bc",
+                            Id = "5281b029-6a78-4010-9e35-0db58c6d70cd",
+                            ConcurrencyStamp = "14bd9646-4673-42eb-9bf7-ff3a1bb1f926",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });

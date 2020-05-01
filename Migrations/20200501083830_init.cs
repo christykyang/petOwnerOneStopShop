@@ -492,8 +492,8 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "bbce8049-77ec-49c4-ada1-532629135d0c", "5bcec330-dd1d-4768-b4b3-8d0b63226b47", "Pet Owner", "PET OWNER" },
-                    { "8ba904ac-3bfc-40d7-93be-fd611fb9f6b7", "915237fe-19f7-48c0-8cb6-aa5cde0d55bc", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
+                    { "95b490d0-cc36-4b79-af68-272a28d4512f", "4074f8fc-a7da-4dbc-8d4d-7a0627616ed9", "Pet Owner", "PET OWNER" },
+                    { "5281b029-6a78-4010-9e35-0db58c6d70cd", "14bd9646-4673-42eb-9bf7-ff3a1bb1f926", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
                 });
 
             migrationBuilder.InsertData(
