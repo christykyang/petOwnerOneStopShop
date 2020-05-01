@@ -18,7 +18,7 @@ namespace PawentsOneStopShop.Models
         //public IdentityUser IdentityUser { get; set; }
         [ForeignKey("Event")]
         [Display(Name = "Event")]
-        public int? ObjectEventId { get; set; }
+        public int ObjectEventId { get; set; }
         public ObjectEvent ObjectEvent { get; set; }
         public int? OwnerSendingId { get; set; }
         public int? OwnerInvitedId { get; set; }

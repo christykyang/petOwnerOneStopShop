@@ -24,9 +24,9 @@ namespace PawentsOneStopShop.Data
         {
             return FindAll().Where(e => e.ObjectCalendarId == calendarId).ToList();
         }
-        //public ObjectEvent GetEventByIdAndIncludeAll(int id)
-        //{
-        //    return FindByCondition(i.Id == id).Include()
-        //}
+        public ObjectEvent GetEventById(int id)
+        {
+            return FindByCondition(i => i.Id == id).FirstOrDefault();
+        }
     }
 }

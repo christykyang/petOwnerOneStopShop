@@ -705,17 +705,33 @@ namespace PawentsOneStopShop.Controllers
             if (!invitation.isInvitationAccepted.HasValue)
             {
                 invitation.isInvitationAccepted = true;
+                ObjectEvent objectEvent = _repo.ObjectEvent.GetEventById(invitation.ObjectEventId);
+                ObjectCalendar invitedOwnerCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId);
+
+                ObjectEvent newEvent = new ObjectEvent();
+                newEvent.Title = objectEvent.Title;
+                newEvent.Location = objectEvent.Location;
+                newEvent.Details = objectEvent.Details;
+                newEvent.Date = objectEvent.Date;
+                newEvent.StartTime = objectEvent.StartTime;
+                newEvent.EndTime = objectEvent.EndTime;
+                newEvent.ObjectCalendarId = invitedOwnerCalendar.Id;
+                _repo.ObjectEvent.CreateEvent(newEvent);
+                _repo.Save();
             }
             else if (invitation.isInvitationAccepted.Value == true)
             {
                 invitation.isInvitationAccepted = false;
+                _repo.ObjectInvite.Update(invitation);
+                _repo.Save();
             }
             else
             {
                 invitation.isInvitationAccepted = null;
+                _repo.ObjectInvite.Update(invitation);
+                _repo.Save();
             }
-            _repo.ObjectInvite.Update(invitation);
-            _repo.Save();
+
             return RedirectToAction(nameof(DisplayInvites), id);
         }
 
