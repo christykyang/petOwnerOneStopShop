@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PawentsOneStopShop.Contracts;
 using PawentsOneStopShop.Models;
 
@@ -23,5 +24,9 @@ namespace PawentsOneStopShop.Data
         {
             return FindAll().Where(e => e.ObjectCalendarId == calendarId).ToList();
         }
+        //public ObjectEvent GetEventByIdAndIncludeAll(int id)
+        //{
+        //    return FindByCondition(i.Id == id).Include()
+        //}
     }
 }
