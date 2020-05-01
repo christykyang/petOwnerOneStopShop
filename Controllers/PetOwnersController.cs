@@ -257,6 +257,7 @@ namespace PawentsOneStopShop.Controllers
             petProfileViewing.PetProfileId = id;
             petProfileViewing.Name = petProfile.Name;
             petProfileViewing.Age = petProfile.Age;
+            petProfileViewing.PetOwnerId = petProfile.PetOwnerId;
 
             ViewData["PetType"] = new SelectList(_repo.PetType.GetAllPetTypes(), "Id", "TypeName");
 
