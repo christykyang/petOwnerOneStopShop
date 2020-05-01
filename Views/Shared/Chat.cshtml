@@ -4,8 +4,8 @@
 
 <div class="container">
     @if (SignInManager.IsSignedIn(User))
-    {<button hover="openChat()" id="chat">Instant Chat</button>
-        <div class="chat-popup" id="chatApp">
+    {<button onclick="openChat()" id="toggleChat">Open Chat</button>
+        <div id="chatApp">
         
          <div class="row">&nbsp;</div>
          <div class="row">

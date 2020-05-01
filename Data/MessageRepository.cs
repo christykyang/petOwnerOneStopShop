@@ -14,5 +14,18 @@ namespace PawentsOneStopShop.Data
         {
 
         }
+        public void CreateMessage(DateTime timeCreated, string userTo, string userFrom, string content)
+        {
+            Message message = new Message();
+            message.TimeStamp = timeCreated;
+            message.UserToId = userTo;
+            message.UserFromID = userFrom;
+            message.MessageContent = content;
+            Create(message);
+        }
+        public ICollection<Message> GetMessageToUserAndFromUser(string userTo, string userFrom)
+        {
+            return FindByCondition(m => m.UserToId == userTo && m.UserFromID == userFrom).ToList();
+        }
     }
 }

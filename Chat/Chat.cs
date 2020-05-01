@@ -14,11 +14,20 @@ namespace PawentsOneStopShop.Chat
         {
             _repo = repo;
         }
-        public async Task SendMessage(string userFrom, string userTo, string message, string timeStamp)
+        public async Task SendMessage(string timeStamp, string userTo, string userFrom, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", userFrom, userTo, message, timeStamp);
         }
-
+        public void SaveMessage(DateTime timeStamp, string userFrom, string userTo, string message)
+        {
+            _repo.Message.CreateMessage(timeStamp, userTo, userFrom, message);
+            _repo.Save();
+        }
+        public ICollection<string> SavedMessages(string userTo, string userFrom)
+        {
+            List<string> messages = _repo.Message.GetMessageToUserAndFromUser(userTo, userFrom).Select(m => m.TimeStamp + " " + m.UserFromID + ": " + m.MessageContent).ToList();
+            return messages;
+        }
 
     }
 }

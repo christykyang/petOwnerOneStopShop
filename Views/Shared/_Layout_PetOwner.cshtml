@@ -41,14 +41,15 @@
             @RenderBody()
         </main>
     </div>
-    <div id="chatWindow" class="z-index-popover p-3">
-        <div class="container">
-            <partial name="Chat" />
-        </div>
-    </div>
+    
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - petOwnerOneStopShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        <div id="chatWindow" class="z-index-popover p-3">
+            <div class="container">
+                <partial name="Chat" />
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

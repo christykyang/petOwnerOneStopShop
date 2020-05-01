@@ -8,6 +8,7 @@ namespace PawentsOneStopShop.Contracts
 {
     public interface IMessageRepository : IRepositoryBase<Message>
     {
-
+        void CreateMessage(DateTime timeCreated, string userTo, string userFrom, string content);
+        ICollection<Message> GetMessageToUserAndFromUser(string userTo, string userFrom);
     }
 }
