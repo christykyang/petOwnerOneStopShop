@@ -678,7 +678,7 @@ namespace PawentsOneStopShop.Controllers
             invitation.OwnerSendingId = petOwnerId;
             invitation.ObjectEventId = objectEvent.Id;
             invitation.OwnerSendingName = invite.OwnerSendingName;
-            invitation.ObjectEvent = objectEvent;
+            invitation.ObjectEventName = invite.Title;
             _repo.ObjectInvite.CreateInvite(invitation);
             _repo.Save();
 
