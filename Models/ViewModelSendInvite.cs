@@ -24,6 +24,8 @@ namespace PawentsOneStopShop.Models
         public int? ObjectEventId { get; set; }
         public ObjectEvent ObjectEvent { get; set; }
         public int? OwnerSendingId { get; set; }
+        [Display(Name = "What is your name? (Will be displayed to the other owner)")]
+        public string OwnerSendingName { get; set; }
         public int? OwnerInvitedId { get; set; }
         public PetProfile PetProfile { get; set; }
         public int PetProfileId { get; set; }

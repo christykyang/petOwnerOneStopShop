@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.ObjectEventId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerSendingId)
+                @Html.DisplayNameFor(model => model.OwnerSendingName)
             </th>
             <th></th>
         </tr>
@@ -53,10 +53,7 @@
                 </td>
             }
             <td>
-                @Html.DisplayFor(modelItem => item.ObjectEventId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerSendingId)
+                @Html.DisplayFor(modelItem => item.OwnerSendingName)
             </td>
         </tr>
 }

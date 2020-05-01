@@ -21,6 +21,8 @@ namespace PawentsOneStopShop.Models
         public int ObjectEventId { get; set; }
         public ObjectEvent ObjectEvent { get; set; }
         public int? OwnerSendingId { get; set; }
+        public string? OwnerSendingName { get; set; }
         public int? OwnerInvitedId { get; set; }
+        public string? OwnerInvitedName { get; set; }
     }
 }

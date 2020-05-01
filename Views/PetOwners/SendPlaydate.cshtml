@@ -50,6 +50,11 @@
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="OwnerSendingName" class="control-label"></label>
+                <input asp-for="OwnerSendingName" class="form-control" />
+                <span asp-validation-for="OwnerSendingName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Send Playdate" class="btn btn-primary" />
             </div>
         </form>
