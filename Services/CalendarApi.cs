@@ -34,7 +34,18 @@ namespace PawentsOneStopShop.Services
         static string[] Scopes = { CalendarService.Scope.Calendar, CalendarService.Scope.CalendarEvents };
         static string ApplicationName = "Google Calendar API .NET Quickstart";
 
-        public void DisplayCalendar ()
+        //public string GetMyCalendar()
+        //{
+        //    //string api = "https://www.googleapis.com/calendar/v3/users/me/calendarList/calendarId"
+        //    Calendar calender = Google.Apis()
+        //}
+
+        //public async Task<Event> CreateEvent()
+        //{
+        //    var calendar = 
+        //}
+
+        public void DisplayCalendar()
         {
             UserCredential credential;
 
@@ -90,29 +101,26 @@ namespace PawentsOneStopShop.Services
             Console.Read();
         }
 
-        public void CreateEvent()
-        {
-            var ev = new Event();
-            EventDateTime start = new EventDateTime();
-            start.DateTime = new DateTime(2019, 3, 11, 10, 0, 0);
-
-            EventDateTime end = new EventDateTime();
-            end.DateTime = new DateTime(2019, 3, 11, 10, 30, 0);
-
-
-            ev.Start = start;
-            ev.End = end;
-            ev.Summary = "New Event";
-            ev.Description = "Description...";
-
-            var calendarId = "primary";
-            Event recurringEvent = service.Events.Insert(ev, calendarId).Execute();
-            Console.WriteLine("Event created: %s\n", ev.HtmlLink);
-        }
-
-        //public string GetMyCalendar ()
+        //public void CreateEvent()
         //{
-        //    string api = "https://www.googleapis.com/calendar/v3/users/me/calendarList/calendarId"
+        //    var ev = new Event();
+        //    EventDateTime start = new EventDateTime();
+        //    start.DateTime = new DateTime(2019, 3, 11, 10, 0, 0);
+
+        //    EventDateTime end = new EventDateTime();
+        //    end.DateTime = new DateTime(2019, 3, 11, 10, 30, 0);
+
+
+        //    ev.Start = start;
+        //    ev.End = end;
+        //    ev.Summary = "New Event";
+        //    ev.Description = "Description...";
+
+        //    var calendarId = "primary";
+        //    Event recurringEvent = service.Events.Insert(ev, calendarId).Execute();
+        //    Console.WriteLine("Event created: %s\n", ev.HtmlLink);
         //}
+
+
     }
 }
