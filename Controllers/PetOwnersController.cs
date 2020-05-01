@@ -43,7 +43,7 @@ namespace PawentsOneStopShop.Controllers
 
             var petBusinesses = _repo.PetBusiness.FindAll();
 
-            IQueryable<FeedUpdate> allUpdates = new FeedUpdate[] { }.AsQueryable();
+            IEnumerable<FeedUpdate> allUpdates = new FeedUpdate[] { }.AsQueryable();
 
             foreach (var follow in follows)
             {
@@ -52,7 +52,10 @@ namespace PawentsOneStopShop.Controllers
                     if(follow.PetBusinessId == business.Id)
                     {
                         var updates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(business.Id);
-                        allUpdates.Concat(updates);
+                        foreach (var update in updates)
+                        {
+                            allUpdates.Append(update);
+                        }
                     }
                 }
             }
