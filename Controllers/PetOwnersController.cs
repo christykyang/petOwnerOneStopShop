@@ -116,13 +116,13 @@ namespace PawentsOneStopShop.Controllers
                 }
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
-                _repo.PetOwner.CreatePetOwner(petOwner.Name, petOwner.Address.Id, userId);
-                _repo.Save();
-
                 ObjectCalendar userCalender = new ObjectCalendar();
                 userCalender.IdentityUserId = userId;
                 _repo.ObjectCalendar.CreateCalendar(userCalender);
+                _repo.Save();
+
+                //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
+                _repo.PetOwner.CreatePetOwner(petOwner.Name, petOwner.Address.Id, userId);
                 _repo.Save();
 
                 return RedirectToAction(nameof(Index));
