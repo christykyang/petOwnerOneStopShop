@@ -568,18 +568,19 @@ namespace PawentsOneStopShop.Controllers
 
             var pets = await _repo.PetProfile.GetPetIncludeAll();
             IEnumerable<PetProfile> petProfiles = pets.ToList();
-            IEnumerable<PetProfile> notMyPets = new PetProfile[] { }.AsQueryable();
+            //IQueryable<PetProfile> notMyPets = new PetProfile[] { }.AsQueryable();
 
-            foreach (var pet in petProfiles)
-            {
-                if(pet.PetOwnerId != petOwnerId)
-                {
-                    var notMyPet = _repo.PetProfile.GetPetById(pet.Id);
-                    notMyPets.Append(notMyPet);
-                }
-            }
+            //foreach (var pet in petProfiles)
+            //{
+            //    if(pet.PetOwnerId != petOwnerId)
+            //    {
+            //        var notMyPet = _repo.PetProfile.GetPetById(pet.Id);
+            //        notMyPets.Concat(notMyPet);
+            //    }
+            //}
 
-            viewModel.PetProfiles = notMyPets.ToList();
+            //viewModel.PetProfiles = petProfiles.ToList();
+            viewModel.PetProfiles = petProfiles.ToList();
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
