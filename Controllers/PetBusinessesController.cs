@@ -329,11 +329,10 @@ namespace NewPetApp.Controllers
 
         }
 
-        public IActionResult DisplayCalendar(int id)
+        public IActionResult DisplayCalendar()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
             var businessCalendar = _repo.ObjectCalendar.GetCalenderByIdentityUser(userId).Id;
             var events = _repo.ObjectEvent.GetEventsTiedToCalenderId(businessCalendar);
 
@@ -374,7 +373,7 @@ namespace NewPetApp.Controllers
             _repo.ObjectEvent.CreateEvent(newEvent);
             _repo.Save();
 
-            return View("DisplayCalendar", new { id = businessCalendar });
+            return RedirectToAction("DisplayCalendar");
         }
 
         public IActionResult EditEvent(int id)
@@ -406,7 +405,7 @@ namespace NewPetApp.Controllers
             _repo.ObjectEvent.Update(newEvent);
             _repo.Save();
 
-            return View("DisplayCalendar", new { id = businessCalendar });
+            return RedirectToAction("DisplayCalendar");
         }
 
         public IActionResult DeleteEvent(int id)
@@ -427,8 +426,8 @@ namespace NewPetApp.Controllers
             ObjectEvent deletingEvent = _repo.ObjectEvent.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
             _repo.ObjectEvent.Delete(deletingEvent);
             _repo.Save();
-            return View("DisplayCalendar", new { id = businessCalendar });
 
+            return RedirectToAction("DisplayCalendar");
         }
 
         private bool PetBusinessExists(int id)
