@@ -1,7 +1,7 @@
 ﻿@model PawentsOneStopShop.Models.ViewModelPetBusiness
 
 @{
-    ViewData["Title"] = "DisplayPetBusinssDetails";
+    ViewData["Title"] = "PetBusinssDetails";
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
 }
 
@@ -47,22 +47,28 @@
                     @Html.DisplayFor(model => model.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Address)
+                    @Html.DisplayNameFor(model => model.Address.StreetAddress)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Address)
+                    @Html.DisplayFor(model => model.Address.StreetAddress)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Address.City)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Address.City)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Address.Zipcode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Address.Zipcode)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.BusinessType)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessType)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.BusinessType)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.BusinessType)
+                    @Html.DisplayFor(model => model.BusinessType.TypeOfBusiness)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.IsFollowing)
@@ -71,14 +77,14 @@
                 {
                     <dd class="col-sm-10">
                         @*Following |*@
-                        <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId" >Unfollow</a>
+                        <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId">Unfollow</a>
                     </dd>
                 }
                 @if (Model.IsFollowing == false)
                 {
                     <dd class="col-sm-10">
                         @*Not Following |*@
-                        <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId" >Follow</a>
+                        <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId">Follow</a>
                     </dd>
                 }
             </dl>

@@ -16,7 +16,7 @@
                     center: new google.maps.LatLng(43.0343, -87.9115)
                 });
 
-                @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
+                var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
                 var infowindow = new google.maps.InfoWindow();
 
@@ -35,7 +35,7 @@
                             infowindow.open(map, marker);
                         }
                     })(marker, i));
-                }*@
+                }
             }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=@API_Keys.GeocodeAndGoogleMapsKey&callback=initMap"></script>
@@ -90,9 +90,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BusinessType)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Services)
-                </th>*@
             </tr>
         </thead>
         <tbody>
