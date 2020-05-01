@@ -408,17 +408,58 @@ namespace NewPetApp.Controllers
 
             return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
         }
-        public IActionResult SendPlaydate(PetProfile petProfile)
+        public IActionResult EditEvent(int id)
+        {
+            ObjectEvent editedEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            return View(editedEvent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditEvent(int id, ObjectEvent objectEvent)
+        {
+            ObjectEvent newEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+
+            newEvent.ObjectCalendarId = businessCalendar;
+            newEvent.Title = objectEvent.Title;
+            newEvent.Location = objectEvent.Location;
+            newEvent.Details = objectEvent.Details;
+            newEvent.Date = objectEvent.Date;
+            newEvent.StartTime = objectEvent.StartTime;
+            newEvent.EndTime = objectEvent.EndTime;
+
+            _repo.Event.Update(newEvent);
+            _repo.Save();
+
+            return View("DisplayCalendar", businessCalendar);
+        }
+
+        public IActionResult DeleteEvent(int id)
+        {
+            ObjectEvent deletingEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
+
+            return View(deletingEvent);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteEvent(ObjectEvent objectEvent)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-            ViewModelSendInvite invite = new ViewModelSendInvite();
-            invite.OwnerInvitedId = petProfile.PetOwnerId;
-            invite.OwnerSendingId = petOwnerId;
-            invite.PetProfileId = petProfile.Id;
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
 
-            return View();
+            ObjectEvent deletingEvent = _repo.Event.FindByCondition(e => e.Id == objectEvent.Id).FirstOrDefault();
+            _repo.Event.Delete(deletingEvent);
+            _repo.Save();
+            return View("DisplayCalendar", businessCalendar);
+
         }
 
         private bool PetBusinessExists(int id)
