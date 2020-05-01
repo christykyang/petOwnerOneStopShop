@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
 }
 
-<h1>SendPlaydate</h1>
+<h1>Playdate</h1>
 
-<h4>ViewModelSendInvite</h4>
+<h4>Create Event and Send Invitation</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -55,48 +55,13 @@
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HostCalendarId" class="control-label"></label>
-                <input asp-for="HostCalendarId" class="form-control" />
-                <span asp-validation-for="HostCalendarId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="isInvitationAccepted" class="control-label"></label>
-                <input asp-for="isInvitationAccepted" class="form-control" />
-                <span asp-validation-for="isInvitationAccepted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ObjectEventId" class="control-label"></label>
-                <input asp-for="ObjectEventId" class="form-control" />
-                <span asp-validation-for="ObjectEventId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerSendingId" class="control-label"></label>
-                <input asp-for="OwnerSendingId" class="form-control" />
-                <span asp-validation-for="OwnerSendingId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerInvitedId" class="control-label"></label>
-                <input asp-for="OwnerInvitedId" class="form-control" />
-                <span asp-validation-for="OwnerInvitedId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PetProfileId" class="control-label"></label>
-                <input asp-for="PetProfileId" class="form-control" />
-                <span asp-validation-for="PetProfileId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Send Playdate" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="DisplayNotMyPetBusinessDetails" asp-route-Id="PetProfileId">Back to Pet Profile</a>
 </div>
 
