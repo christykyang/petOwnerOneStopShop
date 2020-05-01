@@ -377,37 +377,6 @@ namespace NewPetApp.Controllers
             return View("DisplayCalendar", businessCalendar);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SendPlaydate(ViewModelSendInvite invite)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
-
-            ObjectCalendar objectCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId);
-
-            ObjectEvent eventCreated = new ObjectEvent();
-            eventCreated.Title = invite.Title;
-            eventCreated.Date = invite.Date;
-            eventCreated.Details = invite.Details;
-            eventCreated.StartTime = invite.StartTime;
-            eventCreated.Location = invite.Location;
-            eventCreated.EndTime = invite.EndTime;
-            eventCreated.ObjectCalendarId = objectCalendar.Id;
-            _repo.Event.CreateEvent(eventCreated);
-            _repo.Save();
-
-            ObjectEvent objectEvent = _repo.Event.GetEventByAllProperties(invite.Title, invite.Location, invite.Details, invite.Date, invite.StartTime, invite.EndTime, objectCalendar.Id);
-            ObjectInvite invitation = new ObjectInvite();
-            invitation.isInvitationAccepted = null;
-            invitation.ObjectEventId = eventCreated.Id;
-            invitation.OwnerInvitedId = invite.OwnerInvitedId;
-            invitation.OwnerSendingId = petOwnerId;
-            _repo.Invite.CreateInvite(invitation);
-            _repo.Save();
-
-            return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
-        }
         public IActionResult EditEvent(int id)
         {
             ObjectEvent editedEvent = _repo.Event.FindByCondition(e => e.Id == id).FirstOrDefault();
