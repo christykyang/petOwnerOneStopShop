@@ -445,9 +445,11 @@ namespace PawentsOneStopShop.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isInvitationAccepted = table.Column<bool>(nullable: true),
-                    ObjectEventId = table.Column<int>(nullable: true),
+                    ObjectEventId = table.Column<int>(nullable: false),
                     OwnerSendingId = table.Column<int>(nullable: true),
-                    OwnerInvitedId = table.Column<int>(nullable: true)
+                    OwnerSendingName = table.Column<string>(nullable: true),
+                    OwnerInvitedId = table.Column<int>(nullable: true),
+                    OwnerInvitedName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -457,7 +459,7 @@ namespace PawentsOneStopShop.Migrations
                         column: x => x.ObjectEventId,
                         principalTable: "ObjectEvent",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,8 +494,8 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "95b490d0-cc36-4b79-af68-272a28d4512f", "4074f8fc-a7da-4dbc-8d4d-7a0627616ed9", "Pet Owner", "PET OWNER" },
-                    { "5281b029-6a78-4010-9e35-0db58c6d70cd", "14bd9646-4673-42eb-9bf7-ff3a1bb1f926", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
+                    { "5d91c4ae-591a-49e8-a3a1-399fb4bc4648", "195d0fa3-66b5-434a-9168-6c93f1fb8027", "Pet Owner", "PET OWNER" },
+                    { "6c6ce202-4b18-4d27-8d11-fb3397062d42", "2f58d95f-060e-44bd-b4d9-6a40f49c5a6a", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
                 });
 
             migrationBuilder.InsertData(
