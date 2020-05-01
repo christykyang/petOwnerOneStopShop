@@ -149,10 +149,10 @@ namespace NewPetApp.Controllers
                 _repo.PetBusiness.CreatePetBusiness(petBusiness.Name, petBusiness.BusinessTypeId, petBusiness.Address.Id, userId);
                 _repo.Save();
 
-                //NewsFeed newsFeed = new NewsFeed();
-                //newsFeed.IdentityUserId = userId;
-                //_repo.NewsFeed.CreateNewsFeed(petBusiness.Id, userId);
-                //_repo.Save();
+                ObjectCalendar userCalender = new ObjectCalendar();
+                userCalender.IdentityUserId = userId;
+                _repo.Calendar.CreateCalendar(userCalender);
+                _repo.Save();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -327,6 +327,98 @@ namespace NewPetApp.Controllers
             _repo.Save();
             return RedirectToAction(nameof(DisplayServices));
 
+        }
+
+        public IActionResult DisplayCalendar(int id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+            var events = _repo.Event.GetEventsTiedToCalenderId(businessCalendar);
+
+            return View(events);
+        }
+
+        public IActionResult CreateEvent()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+
+            ObjectEvent newEvent = new ObjectEvent();
+            newEvent.ObjectCalendarId = businessCalendar;
+
+            return View(newEvent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateEvent(ObjectEvent objectEvent)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petBusiness = _repo.PetBusiness.GetPetBusinessById(userId).Id;
+            var businessCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId).Id;
+
+            ObjectEvent newEvent = new ObjectEvent();
+            newEvent.ObjectCalendarId = businessCalendar;
+            newEvent.Title = objectEvent.Title;
+            newEvent.Location = objectEvent.Location;
+            newEvent.Details = objectEvent.Details;
+            newEvent.Date = objectEvent.Date;
+            newEvent.StartTime = objectEvent.StartTime;
+            newEvent.EndTime = objectEvent.EndTime;
+
+            _repo.Event.CreateEvent(newEvent);
+            _repo.Save();
+
+            return View("DisplayCalendar", businessCalendar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SendPlaydate(ViewModelSendInvite invite)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ObjectCalendar objectCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId);
+
+            ObjectEvent eventCreated = new ObjectEvent();
+            eventCreated.Title = invite.Title;
+            eventCreated.Date = invite.Date;
+            eventCreated.Details = invite.Details;
+            eventCreated.StartTime = invite.StartTime;
+            eventCreated.Location = invite.Location;
+            eventCreated.EndTime = invite.EndTime;
+            eventCreated.ObjectCalendarId = objectCalendar.Id;
+            _repo.Event.CreateEvent(eventCreated);
+            _repo.Save();
+
+            ObjectEvent objectEvent = _repo.Event.GetEventByAllProperties(invite.Title, invite.Location, invite.Details, invite.Date, invite.StartTime, invite.EndTime, objectCalendar.Id);
+            ObjectInvite invitation = new ObjectInvite();
+            invitation.isInvitationAccepted = null;
+            invitation.ObjectEventId = eventCreated.Id;
+            invitation.OwnerInvitedId = invite.OwnerInvitedId;
+            invitation.OwnerSendingId = petOwnerId;
+            _repo.Invite.CreateInvite(invitation);
+            _repo.Save();
+
+            return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
+        }
+        public IActionResult SendPlaydate(PetProfile petProfile)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ViewModelSendInvite invite = new ViewModelSendInvite();
+            invite.OwnerInvitedId = petProfile.PetOwnerId;
+            invite.OwnerSendingId = petOwnerId;
+            invite.PetProfileId = petProfile.Id;
+
+            return View();
         }
 
         private bool PetBusinessExists(int id)

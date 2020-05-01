@@ -10,5 +10,7 @@ namespace PawentsOneStopShop.Contracts
     {
         void CreateEvent(ObjectEvent _event);
         ObjectEvent GetEventByAllProperties(string? title, string? location, string? details, DateTime? date, DateTime? startTime, DateTime? endTime, int hostCalendarId);
+        ICollection<ObjectEvent> GetEventsTiedToCalenderId(int calendarId);
     }
+
 }

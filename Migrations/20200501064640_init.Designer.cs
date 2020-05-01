@@ -10,8 +10,8 @@ using PawentsOneStopShop.Data;
 namespace PawentsOneStopShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200501061829_addedViewModelForSendInvite")]
-    partial class addedViewModelForSendInvite
+    [Migration("20200501064640_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace PawentsOneStopShop.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3abebcdd-f398-45bc-81ce-cf783548c537",
-                            ConcurrencyStamp = "4e8ebe5c-0b6d-4e98-b95c-f417c691d378",
+                            Id = "56d7e1f8-969d-4ff5-b003-18a94ec619af",
+                            ConcurrencyStamp = "2b9efd1a-dbff-4a50-a1bf-19af3443790d",
                             Name = "Pet Owner",
                             NormalizedName = "PET OWNER"
                         },
                         new
                         {
-                            Id = "c3b96a69-5014-4ae6-9d81-5408f2872e95",
-                            ConcurrencyStamp = "2ed0eba0-8c0e-4fcb-afc5-482765bc9ab3",
+                            Id = "10a28e6a-8a2c-4627-952f-92f813175bff",
+                            ConcurrencyStamp = "f0a84f39-ad7d-4a03-9de6-61e4bbc49997",
                             Name = "Pet-Friendly Business",
                             NormalizedName = "PET-FRIENDLY BUSINESS"
                         });
@@ -345,7 +345,27 @@ namespace PawentsOneStopShop.Migrations
                         new
                         {
                             Id = 8,
-                            TypeOfBusiness = "Miscellaneous"
+                            TypeOfBusiness = "Food Manufacture"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            TypeOfBusiness = "Pet Cafe"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            TypeOfBusiness = "Pet-Friendly Restuarants"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            TypeOfBusiness = "Pet-Friendly Stores"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            TypeOfBusiness = "Kibble"
                         });
                 });
 
@@ -669,27 +689,27 @@ namespace PawentsOneStopShop.Migrations
                         new
                         {
                             Id = 1,
-                            ServiceName = "Pet Bathing"
+                            ServiceName = "Bathing"
                         },
                         new
                         {
                             Id = 2,
-                            ServiceName = "Pet Grooming"
+                            ServiceName = "Grooming"
                         },
                         new
                         {
                             Id = 3,
-                            ServiceName = "Pet Training"
+                            ServiceName = "Training"
                         },
                         new
                         {
                             Id = 4,
-                            ServiceName = "Pet Boarding"
+                            ServiceName = "Boarding"
                         },
                         new
                         {
                             Id = 5,
-                            ServiceName = "Swimming Pool"
+                            ServiceName = "Swimming Facilities"
                         },
                         new
                         {
@@ -699,37 +719,37 @@ namespace PawentsOneStopShop.Migrations
                         new
                         {
                             Id = 7,
-                            ServiceName = "Pet Vaccines"
+                            ServiceName = "Vaccines"
                         },
                         new
                         {
                             Id = 8,
-                            ServiceName = "Pet Physical Theraphy"
+                            ServiceName = "Physical Theraphy"
                         },
                         new
                         {
                             Id = 9,
-                            ServiceName = "Pet Food"
+                            ServiceName = "Raw Food"
                         },
                         new
                         {
                             Id = 10,
-                            ServiceName = "Pet Socialization"
+                            ServiceName = "Socialization"
                         },
                         new
                         {
                             Id = 11,
-                            ServiceName = "Pet Exercise"
+                            ServiceName = "Exercise"
                         },
                         new
                         {
                             Id = 12,
-                            ServiceName = "Pet Supplies"
+                            ServiceName = "Supplies"
                         },
                         new
                         {
                             Id = 13,
-                            ServiceName = "Pet Transportation"
+                            ServiceName = "Transportation"
                         },
                         new
                         {

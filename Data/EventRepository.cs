@@ -19,5 +19,9 @@ namespace PawentsOneStopShop.Data
         {
             return FindByCondition(i => i.Title == title && i.Location == location && i.Details == details && i.Date == date && i.StartTime == startTime && i.EndTime == endTime && i.ObjectCalendarId == hostCalendarId).FirstOrDefault();
         }
+        public ICollection<ObjectEvent> GetEventsTiedToCalenderId(int calendarId)
+        {
+            return FindAll().Where(e => e.ObjectCalendarId == calendarId).ToList();
+        }
     }
 }

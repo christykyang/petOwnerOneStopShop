@@ -123,34 +123,52 @@ namespace PawentsOneStopShop.Data
                 new BusinessType
                 {
                     Id = 8,
-                    TypeOfBusiness = "Miscellaneous",
+                    TypeOfBusiness = "Food Manufacture",
+                });
+            builder.Entity<BusinessType>().HasData(
+                new BusinessType
+                {
+                    Id = 9,
+                    TypeOfBusiness = "Pet Cafe",
+                });
+            builder.Entity<BusinessType>().HasData(
+                new BusinessType
+                {
+                    Id = 10,
+                    TypeOfBusiness = "Pet-Friendly Restuarants",
+                });
+            builder.Entity<BusinessType>().HasData(
+                new BusinessType
+                {
+                    Id = 11,
+                    TypeOfBusiness = "Pet-Friendly Stores",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 1,
-                    ServiceName = "Pet Bathing",
+                    ServiceName = "Bathing",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 2,
-                    ServiceName = "Pet Grooming",
+                    ServiceName = "Grooming",
                 }); builder.Entity<Service>().HasData(
                  new Service
                  {
                      Id = 3,
-                     ServiceName = "Pet Training",
+                     ServiceName = "Training",
                  }); builder.Entity<Service>().HasData(
                  new Service
                  {
                      Id = 4,
-                     ServiceName = "Pet Boarding",
+                     ServiceName = "Boarding",
                  }); builder.Entity<Service>().HasData(
                  new Service
                  {
                      Id = 5,
-                     ServiceName = "Swimming Pool",
+                     ServiceName = "Swimming Facilities",
                  }); builder.Entity<Service>().HasData(
                  new Service
                  {
@@ -161,43 +179,43 @@ namespace PawentsOneStopShop.Data
                 new Service
                 {
                     Id = 7,
-                    ServiceName = "Pet Vaccines",
+                    ServiceName = "Vaccines",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 8,
-                    ServiceName = "Pet Physical Theraphy",
+                    ServiceName = "Physical Theraphy",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 9,
-                    ServiceName = "Pet Food",
+                    ServiceName = "Raw Food",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 10,
-                    ServiceName = "Pet Socialization",
+                    ServiceName = "Socialization",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 11,
-                    ServiceName = "Pet Exercise",
+                    ServiceName = "Exercise",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 12,
-                    ServiceName = "Pet Supplies",
+                    ServiceName = "Supplies",
                 });
             builder.Entity<Service>().HasData(
                 new Service
                 {
                     Id = 13,
-                    ServiceName = "Pet Transportation",
+                    ServiceName = "Transportation",
                 });
             builder.Entity<Service>().HasData(
                 new Service
@@ -216,6 +234,12 @@ namespace PawentsOneStopShop.Data
                 {
                     Id = 16,
                     ServiceName = "Volunteering",
+                });
+            builder.Entity<BusinessType>().HasData(
+                new BusinessType
+                {
+                    Id = 17,
+                    TypeOfBusiness = "Kibble",
                 });
         }
         public DbSet<PawentsOneStopShop.Models.PetOwner> PetOwner { get; set; }

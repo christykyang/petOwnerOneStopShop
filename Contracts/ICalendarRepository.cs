@@ -10,6 +10,5 @@ namespace PawentsOneStopShop.Contracts
     {
         void CreateCalendar(ObjectCalendar objectCalendar);
         ObjectCalendar GetCalenderByIdentityUser(string userId);
-
     }
 }

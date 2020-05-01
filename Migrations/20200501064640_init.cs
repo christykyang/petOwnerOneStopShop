@@ -314,12 +314,10 @@ namespace PawentsOneStopShop.Migrations
                     Title = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
                     Details = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    Delete = table.Column<bool>(nullable: false),
-                    ColorId = table.Column<int>(nullable: false),
-                    ObjectCalendarId = table.Column<int>(nullable: true)
+                    Date = table.Column<DateTime>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: true),
+                    EndTime = table.Column<DateTime>(nullable: true),
+                    ObjectCalendarId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -329,7 +327,7 @@ namespace PawentsOneStopShop.Migrations
                         column: x => x.ObjectCalendarId,
                         principalTable: "ObjectCalendar",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -391,7 +389,7 @@ namespace PawentsOneStopShop.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsFollowing = table.Column<bool>(nullable: true),
+                    IsFollowing = table.Column<bool>(nullable: false),
                     PetOwnerId = table.Column<int>(nullable: true),
                     PetBusinessId = table.Column<int>(nullable: true)
                 },
@@ -447,19 +445,13 @@ namespace PawentsOneStopShop.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     isInvitationAccepted = table.Column<bool>(nullable: true),
-                    IdentityUserId = table.Column<string>(nullable: true),
-                    ObjectCalendarEventId = table.Column<int>(nullable: true),
-                    ObjectEventId = table.Column<int>(nullable: true)
+                    ObjectEventId = table.Column<int>(nullable: true),
+                    OwnerSendingId = table.Column<int>(nullable: true),
+                    OwnerInvitedId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ObjectInvite", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ObjectInvite_AspNetUsers_IdentityUserId",
-                        column: x => x.IdentityUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ObjectInvite_ObjectEvent_ObjectEventId",
                         column: x => x.ObjectEventId,
@@ -500,8 +492,8 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "d3347838-04b4-4d30-8de5-84ceff6ec964", "2b6e46cd-114c-4ded-899e-1101cf17d032", "Pet Owner", "PET OWNER" },
-                    { "0bb50f20-ddc2-4895-9d3c-068a65586175", "1cc9143a-9f50-450e-a84f-5ad325ebefc2", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
+                    { "56d7e1f8-969d-4ff5-b003-18a94ec619af", "2b9efd1a-dbff-4a50-a1bf-19af3443790d", "Pet Owner", "PET OWNER" },
+                    { "10a28e6a-8a2c-4627-952f-92f813175bff", "f0a84f39-ad7d-4a03-9de6-61e4bbc49997", "Pet-Friendly Business", "PET-FRIENDLY BUSINESS" }
                 });
 
             migrationBuilder.InsertData(
@@ -509,14 +501,18 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "TypeOfBusiness" },
                 values: new object[,]
                 {
-                    { 1, "Pet Sitting" },
-                    { 2, "Pet Training" },
-                    { 3, "Pet Boarding" },
-                    { 4, "Veterinarian" },
-                    { 5, "Grooming" },
-                    { 6, "Pet Transportation" },
+                    { 17, "Kibble" },
+                    { 11, "Pet-Friendly Stores" },
+                    { 10, "Pet-Friendly Restuarants" },
+                    { 9, "Pet Cafe" },
+                    { 8, "Food Manufacture" },
                     { 7, "Pet Supply" },
-                    { 8, "Miscellaneous" }
+                    { 5, "Grooming" },
+                    { 4, "Veterinarian" },
+                    { 3, "Pet Boarding" },
+                    { 2, "Pet Training" },
+                    { 1, "Pet Sitting" },
+                    { 6, "Pet Transportation" }
                 });
 
             migrationBuilder.InsertData(
@@ -524,10 +520,10 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "TypeName" },
                 values: new object[,]
                 {
+                    { 7, "Amphibian" },
                     { 8, "Farm Animal" },
                     { 6, "Reptile" },
                     { 5, "Small Pet" },
-                    { 7, "Amphibian" },
                     { 3, "Fish" },
                     { 2, "Cat" },
                     { 1, "Dog" },
@@ -539,21 +535,21 @@ namespace PawentsOneStopShop.Migrations
                 columns: new[] { "Id", "ServiceName" },
                 values: new object[,]
                 {
-                    { 14, "Animal/Pet Educational Resources" },
-                    { 13, "Pet Transportation" },
-                    { 12, "Pet Supplies" },
-                    { 11, "Pet Exercise" },
-                    { 10, "Pet Socialization" },
-                    { 9, "Pet Food" },
-                    { 8, "Pet Physical Theraphy" },
-                    { 6, "Spay and Neuter" },
-                    { 5, "Swimming Pool" },
-                    { 4, "Pet Boarding" },
-                    { 3, "Pet Training" },
-                    { 2, "Pet Grooming" },
-                    { 1, "Pet Bathing" },
                     { 15, "Self-Bathing Service" },
-                    { 7, "Pet Vaccines" },
+                    { 14, "Animal/Pet Educational Resources" },
+                    { 13, "Transportation" },
+                    { 12, "Supplies" },
+                    { 11, "Exercise" },
+                    { 10, "Socialization" },
+                    { 9, "Raw Food" },
+                    { 6, "Spay and Neuter" },
+                    { 7, "Vaccines" },
+                    { 5, "Swimming Facilities" },
+                    { 4, "Boarding" },
+                    { 3, "Training" },
+                    { 2, "Grooming" },
+                    { 1, "Bathing" },
+                    { 8, "Physical Theraphy" },
                     { 16, "Volunteering" }
                 });
 
@@ -630,11 +626,6 @@ namespace PawentsOneStopShop.Migrations
                 name: "IX_ObjectEvent_ObjectCalendarId",
                 table: "ObjectEvent",
                 column: "ObjectCalendarId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ObjectInvite_IdentityUserId",
-                table: "ObjectInvite",
-                column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ObjectInvite_ObjectEventId",
