@@ -12,13 +12,15 @@ namespace PawentsOneStopShop.Models
     {
         public int Id { get; set; }
         public bool? isInvitationAccepted { get; set; }
-        [ForeignKey("IdentityUser")]
-        [Display(Name = "IdentityUser")]
-        public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser { get; set; }
+        //[ForeignKey("IdentityUser")]
+        //[Display(Name = "IdentityUser")]
+        //public string IdentityUserId { get; set; }
+        //public IdentityUser IdentityUser { get; set; }
         [ForeignKey("Event")]
         [Display(Name = "Event")]
-        public int? ObjectCalendarEventId { get; set; }
+        public int? ObjectEventId { get; set; }
         public ObjectEvent ObjectEvent { get; set; }
+        public int? OwnerSendingId { get; set; }
+        public int? OwnerInvitedId { get; set; }
     }
 }

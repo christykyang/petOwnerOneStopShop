@@ -11,18 +11,18 @@ namespace PawentsOneStopShop.Models
     {
         public int Id { get; set; }
         [Display(Name = "Event Name")]
-        public string Title { get; set; }
-        public string Location { get; set; }
-        public string Details { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public bool Delete { get; set; }
-        public int ColorId { get; set; }
+        public string? Title { get; set; }
+        public string? Location { get; set; }
+        public string? Details { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        //public bool Delete { get; set; }
+        //public int ColorId { get; set; }
         [NotMapped]
         public IEnumerable<string> Attendees { get; set; }
         [ForeignKey("Calendar")]
-        public int? ObjectCalendarId { get; set; }
+        public int ObjectCalendarId { get; set; }
         public ObjectCalendar ObjectCalendar { get; set; }
     }
 }

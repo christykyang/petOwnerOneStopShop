@@ -9,5 +9,6 @@ namespace PawentsOneStopShop.Contracts
     public interface ICalendarRepository : IRepositoryBase<ObjectCalendar>
     {
         void CreateCalendar(ObjectCalendar objectCalendar);
+        ObjectCalendar GetCalenderByIdentityUser(string userId);
     }
 }

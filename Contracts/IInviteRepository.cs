@@ -9,5 +9,6 @@ namespace PawentsOneStopShop.Contracts
     public interface IInviteRepository : IRepositoryBase<ObjectInvite>
     {
         void CreateInvite(ObjectInvite objectInvite);
+        ICollection<ObjectInvite> GetInvitesSentToOwner(int ownerId);
     }
 }

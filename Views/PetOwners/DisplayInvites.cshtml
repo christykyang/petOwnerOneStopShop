@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PawentsOneStopShop.Models.ObjectInvite>
+
+@{
+    ViewData["Title"] = "DisplayInvites";
+    Layout = "~/Views/Shared/_Layout_PetOwner.cshtml";
+}
+
+<h1>DisplayInvites</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isInvitationAccepted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjectEventId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerSendingId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerInvitedId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isInvitationAccepted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjectEventId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerSendingId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerInvitedId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

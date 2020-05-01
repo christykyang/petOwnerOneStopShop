@@ -15,5 +15,9 @@ namespace PawentsOneStopShop.Data
 
         }
         public void CreateInvite(ObjectInvite invite) => Create(invite);
+        public ICollection<ObjectInvite> GetInvitesSentToOwner(int ownerId)
+        {
+            return FindAll().Where(i => i.OwnerInvitedId == ownerId).ToList();
+        }
     }
 }

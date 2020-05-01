@@ -79,48 +79,6 @@ namespace PawentsOneStopShop.Controllers
             return View(petOwner);
         }
 
-        // GET: PetOwners/Create
-        //public IActionResult Create()
-        //{
-        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    PetOwner petOwner = new PetOwner();
-
-        //    petOwner.IdentityUserId = userId;
-        //    return View(petOwner);
-        //}
-
-        //// POST: PetOwners/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create([Bind("Id,Name")] PetOwner petOwner)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (_repo.Address.GetByAddress(petOwner.Address) == null)
-        //        {
-        //            _repo.Address.CreateAddress(petOwner.Address);
-        //            string url = _getCoordinates.GetAddressAsURL(petOwner.Address);
-        //            petOwner.Address.Lat = _getCoordinates.GetLat(url, petOwner.Address).Result;
-        //            petOwner.Address.Lng = _getCoordinates.GetLng(url, petOwner.Address).Result;
-        //            _repo.Save();
-
-        //        }
-        //        else
-        //        {
-        //            petOwner.Address = _repo.Address.GetByAddress(petOwner.Address);
-        //            string url = _getCoordinates.GetAddressAsURL(petOwner.Address);
-        //            petOwner.Address.Lat = _getCoordinates.GetLat(url, petOwner.Address).Result;
-        //            petOwner.Address.Lng = _getCoordinates.GetLng(url, petOwner.Address).Result;
-        //            _repo.Save();
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    return View(petOwner);
-        //}
-
         public IActionResult Create()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -160,6 +118,11 @@ namespace PawentsOneStopShop.Controllers
 
                 //TRY MOVING THIS AFTER DELETING and UPGRADING MIGRATION MY
                 _repo.PetOwner.CreatePetOwner(petOwner.Name, petOwner.Address.Id, userId);
+                _repo.Save();
+
+                ObjectCalendar userCalender = new ObjectCalendar();
+                userCalender.IdentityUserId = userId;
+                _repo.Calendar.CreateCalendar(userCalender);
                 _repo.Save();
 
                 return RedirectToAction(nameof(Index));
@@ -587,6 +550,7 @@ namespace PawentsOneStopShop.Controllers
             }
         }
 
+        //DOES NOT WORK DO NOT 
         public IActionResult PetBusinessNewsFeed(int petBusinessId)
         {
             var newsFeedUpdates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusinessId);
@@ -664,6 +628,53 @@ namespace PawentsOneStopShop.Controllers
             viewModel.GenderOptions = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Male" }, { 3, "Female" } };
             viewModel.Adoption = new Dictionary<int, string>() { { 0, "" }, { 1, "N/A" }, { 2, "Adopted" }, { 3, "Avaliable" } };
             return View("SearchPetProfiles", viewModel);
+        }
+
+        public IActionResult SendInvite(PetProfile petProfile)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ObjectCalendar ownerSendingCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
+
+            ObjectEvent objectEvent = new ObjectEvent();
+            objectEvent.ObjectCalendarId = ownerSendingCalender.Id;
+            objectEvent.Title = "Playdate with " + petProfile.Name;
+
+            _repo.Event.CreateEvent(objectEvent);
+            _repo.Save();
+
+            ObjectCalendar ownerInvitedCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
+
+            ObjectInvite objectInvite = new ObjectInvite();
+            objectInvite.ObjectEventId = objectEvent.Id;
+            objectInvite.isInvitationAccepted = null;
+            objectInvite.OwnerInvitedId = petProfile.PetOwnerId;
+            objectInvite.OwnerSendingId = petOwnerId;
+            _repo.Invite.CreateInvite(objectInvite);
+
+            return RedirectToAction("DisplayNotMyPetProfileDetails", new { id = petProfile.Id });
+        }
+
+        public IActionResult DisplayInvites()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            var invites = _repo.Invite.GetInvitesSentToOwner(petOwnerId);
+
+            IQueryable<ObjectInvite> newInvites = new ObjectInvite[] { }.AsQueryable();
+            foreach (var invite in invites)
+            {
+                if(invite.isInvitationAccepted == null)
+                {
+                    var newInvite = _repo.Invite.FindByCondition(i => i.isInvitationAccepted == null);
+                    newInvites.Concat(newInvite);
+                }
+            }
+
+            return View(newInvites);
         }
 
         private bool PetOwnerExists(int id)

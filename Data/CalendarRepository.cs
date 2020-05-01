@@ -15,5 +15,9 @@ namespace PawentsOneStopShop.Data
 
         }
         public void CreateCalendar(ObjectCalendar calendar) => Create(calendar);
+        public ObjectCalendar GetCalenderByIdentityUser(string userId)
+        {
+            return FindByCondition(c => c.IdentityUserId == userId).FirstOrDefault();
+        }
     }
 }
