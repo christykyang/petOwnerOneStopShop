@@ -630,30 +630,66 @@ namespace PawentsOneStopShop.Controllers
             return View("SearchPetProfiles", viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SendPlaydate(ViewModelSendInvite invite)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ObjectCalendar objectCalendar = _repo.Calendar.GetCalenderByIdentityUser(userId);
+
+            ObjectEvent eventCreated = new ObjectEvent();
+            eventCreated.Title = invite.Title;
+            eventCreated.Date = invite.Date;
+            eventCreated.Details = invite.Details;
+            eventCreated.StartTime = invite.StartTime;
+            eventCreated.Location = invite.Location;
+            eventCreated.EndTime = invite.EndTime;
+            eventCreated.ObjectCalendarId = objectCalendar.Id;
+            _repo.Event.CreateEvent(eventCreated);
+            _repo.Save();
+
+            ObjectEvent objectEvent = _repo.Event.GetEventByAllProperties(invite.Title, invite.Location, invite.Details, invite.Date, invite.StartTime, invite.EndTime, objectCalendar.Id);
+            ObjectInvite invitation = new ObjectInvite();
+            invitation.isInvitationAccepted = null;
+            invitation.ObjectEventId = eventCreated.Id;
+            invitation.OwnerInvitedId = invite.OwnerInvitedId;
+            invitation.OwnerSendingId = petOwnerId;
+            _repo.Invite.CreateInvite(invitation);
+            _repo.Save();
+
+            return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
+        }
         public IActionResult SendInvite(PetProfile petProfile)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
-            ObjectCalendar ownerSendingCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
+            ViewModelSendInvite invite = new ViewModelSendInvite();
+            invite.OwnerInvitedId = petProfile.PetOwnerId;
+            invite.OwnerSendingId = petOwnerId;
+            invite.PetProfileId = petProfile.Id;
 
-            ObjectEvent objectEvent = new ObjectEvent();
-            objectEvent.ObjectCalendarId = ownerSendingCalender.Id;
-            objectEvent.Title = "Playdate with " + petProfile.Name;
+            //ObjectCalendar ownerSendingCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
 
-            _repo.Event.CreateEvent(objectEvent);
-            _repo.Save();
+            //ObjectEvent objectEvent = new ObjectEvent();
+            //objectEvent.ObjectCalendarId = ownerSendingCalender.Id;
+            //objectEvent.Title = "Playdate with " + petProfile.Name;
 
-            ObjectCalendar ownerInvitedCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
+            //_repo.Event.CreateEvent(objectEvent);
+            //_repo.Save();
 
-            ObjectInvite objectInvite = new ObjectInvite();
-            objectInvite.ObjectEventId = objectEvent.Id;
-            objectInvite.isInvitationAccepted = null;
-            objectInvite.OwnerInvitedId = petProfile.PetOwnerId;
-            objectInvite.OwnerSendingId = petOwnerId;
-            _repo.Invite.CreateInvite(objectInvite);
+            //ObjectCalendar ownerInvitedCalender = _repo.Calendar.GetCalenderByIdentityUser(userId);
 
-            return RedirectToAction("DisplayNotMyPetProfileDetails", new { id = petProfile.Id });
+            //ObjectInvite objectInvite = new ObjectInvite();
+            //objectInvite.ObjectEventId = objectEvent.Id;
+            //objectInvite.isInvitationAccepted = null;
+            //objectInvite.OwnerInvitedId = petProfile.PetOwnerId;
+            //objectInvite.OwnerSendingId = petOwnerId;
+            //_repo.Invite.CreateInvite(objectInvite);
+
+            return View();
         }
 
         public IActionResult DisplayInvites()
@@ -699,24 +735,6 @@ namespace PawentsOneStopShop.Controllers
             _repo.Invite.Update(invitation);
             _repo.Save();
             return RedirectToAction(nameof(DisplayInvites), id);
-
-            Follow follow = _repo.Follow.GetFollowByPetOwnerAndPetBusiness(petBusinessId, petOwnerId);
-
-            if (follow.IsFollowing == false)
-            {
-                follow.IsFollowing = true;
-                _repo.Follow.Update(follow);
-                _repo.Save();
-                return RedirectToAction("DisplayPetBusinessDetails", new { id = petBusinessId });
-            }
-            else
-            {
-                follow.IsFollowing = false;
-                _repo.Follow.Update(follow);
-                _repo.Save();
-
-                return RedirectToAction("DisplayPetBusinessDetails", new { id = petBusinessId });
-            }
         }
 
         private bool PetOwnerExists(int id)

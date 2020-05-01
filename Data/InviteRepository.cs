@@ -19,5 +19,6 @@ namespace PawentsOneStopShop.Data
         {
             return FindAll().Where(i => i.OwnerInvitedId == ownerId).ToList();
         }
+        
     }
 }

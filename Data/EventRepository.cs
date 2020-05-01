@@ -15,5 +15,9 @@ namespace PawentsOneStopShop.Data
 
         }
         public void CreateEvent(ObjectEvent _event) => Create(_event);
+        public ObjectEvent GetEventByAllProperties(string? title, string? location, string? details, DateTime? date, DateTime? startTime, DateTime? endTime, int hostCalendarId)
+        {
+            return FindByCondition(i => i.Title == title && i.Location == location && i.Details == details && i.Date == date && i.StartTime == startTime && i.EndTime == endTime && i.ObjectCalendarId == hostCalendarId).FirstOrDefault();
+        }
     }
 }
