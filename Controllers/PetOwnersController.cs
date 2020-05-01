@@ -703,15 +703,18 @@ namespace PawentsOneStopShop.Controllers
 
             var invites = _repo.ObjectInvite.GetInvitesSentToOwner(petOwnerId);
 
-            IQueryable<ObjectInvite> newInvites = new ObjectInvite[] { }.AsQueryable();
+            List<ObjectInvite> listOfInvites = new List<ObjectInvite>();
+
             foreach (var invite in invites)
             {
                 if(invite.isInvitationAccepted == null)
                 {
-                    var newInvite = _repo.ObjectInvite.FindByCondition(i => i.isInvitationAccepted == null);
-                    newInvites.Concat(newInvite);
+                    //var newInvite = _repo.ObjectInvite.FindByCondition(i => i.isInvitationAccepted == null);
+                    //newInvites.Concat(newInvite);
+                    listOfInvites.Add(invite);
                 }
             }
+            IEnumerable<ObjectInvite> newInvites = listOfInvites.ToList();
 
             return View(newInvites);
         }
