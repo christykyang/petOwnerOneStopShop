@@ -561,12 +561,25 @@ namespace PawentsOneStopShop.Controllers
 
         public async Task<IActionResult> SearchPetProfiles()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;  
+
             ViewModelPetProfile viewModel = new ViewModelPetProfile();
 
             var pets = await _repo.PetProfile.GetPetIncludeAll();
             IEnumerable<PetProfile> petProfiles = pets.ToList();
+            IEnumerable<PetProfile> notMyPets = new PetProfile[] { }.AsQueryable();
 
-            viewModel.PetProfiles = petProfiles.ToList();
+            foreach (var pet in petProfiles)
+            {
+                if(pet.PetOwnerId != petOwnerId)
+                {
+                    var notMyPet = _repo.PetProfile.GetPetById(pet.Id);
+                    notMyPets.Append(notMyPet);
+                }
+            }
+
+            viewModel.PetProfiles = notMyPets.ToList();
             viewModel.PetProfiles.Insert(0, (new PetProfile()));
             viewModel.PetTypes = _repo.PetType.GetAllPetTypes().ToList();
             viewModel.PetTypes.Insert(0, new PetType());
@@ -657,6 +670,7 @@ namespace PawentsOneStopShop.Controllers
             invitation.ObjectEventId = eventCreated.Id;
             invitation.OwnerInvitedId = invite.OwnerInvitedId;
             invitation.OwnerSendingId = petOwnerId;
+            invitation.ObjectEventId = objectEvent.Id;
             _repo.ObjectInvite.CreateInvite(invitation);
             _repo.Save();
 
