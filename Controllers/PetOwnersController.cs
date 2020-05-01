@@ -661,13 +661,13 @@ namespace PawentsOneStopShop.Controllers
 
             return RedirectToAction("SearchPetProfiles");
         }
-        public IActionResult SendPlaydate(int thatPetOwnerId)
+        public IActionResult SendPlaydate(int petOwnerId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var thisPetOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
 
             ViewModelSendInvite invite = new ViewModelSendInvite();
-            invite.OwnerInvitedId = thatPetOwnerId;
+            invite.OwnerInvitedId = petOwnerId;
             invite.OwnerSendingId = thisPetOwnerId;
 
             return View(invite);
