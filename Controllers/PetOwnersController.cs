@@ -575,7 +575,7 @@ namespace PawentsOneStopShop.Controllers
                 follow.IsFollowing = true;
                 _repo.Follow.Update(follow);
                 _repo.Save();
-                return RedirectToAction(nameof(DisplayPetBusinessDetails));
+                return RedirectToAction("DisplayPetBusinessDetails", petBusinessId);
             }
             else 
             {
@@ -583,7 +583,7 @@ namespace PawentsOneStopShop.Controllers
                 _repo.Follow.Update(follow);
                 _repo.Save();
 
-                return RedirectToAction(nameof(DisplayPetBusinessDetails));
+                return RedirectToAction("DisplayPetBusinessDetails", petBusinessId);
             }
         }
 
