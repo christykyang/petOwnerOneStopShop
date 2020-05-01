@@ -550,7 +550,7 @@ namespace PawentsOneStopShop.Controllers
             }
         }
 
-        //DOES NOT WORK DO NOT 
+        //DOES NOT WORK to return to PetBusinessDetails
         public IActionResult PetBusinessNewsFeed(int petBusinessId)
         {
             var newsFeedUpdates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusinessId);
@@ -675,6 +675,48 @@ namespace PawentsOneStopShop.Controllers
             }
 
             return View(newInvites);
+        }
+
+        public IActionResult AcceptorDeclineInvite(int id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
+
+            ObjectInvite invitation = _repo.Invite.FindByCondition(i => i.Id == id).FirstOrDefault();
+
+            if (!invitation.isInvitationAccepted.HasValue)
+            {
+                invitation.isInvitationAccepted = true;
+            }
+            else if (invitation.isInvitationAccepted.Value == true)
+            {
+                invitation.isInvitationAccepted = false;
+            }
+            else
+            {
+                invitation.isInvitationAccepted = null;
+            }
+            _repo.Invite.Update(invitation);
+            _repo.Save();
+            return RedirectToAction(nameof(DisplayInvites), id);
+
+            Follow follow = _repo.Follow.GetFollowByPetOwnerAndPetBusiness(petBusinessId, petOwnerId);
+
+            if (follow.IsFollowing == false)
+            {
+                follow.IsFollowing = true;
+                _repo.Follow.Update(follow);
+                _repo.Save();
+                return RedirectToAction("DisplayPetBusinessDetails", new { id = petBusinessId });
+            }
+            else
+            {
+                follow.IsFollowing = false;
+                _repo.Follow.Update(follow);
+                _repo.Save();
+
+                return RedirectToAction("DisplayPetBusinessDetails", new { id = petBusinessId });
+            }
         }
 
         private bool PetOwnerExists(int id)

@@ -70,14 +70,14 @@
                 @if (Model.IsFollowing == true)
                 {
                     <dd class="col-sm-10">
-                        Following |
+                        @*Following |*@
                         <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId" >Unfollow</a>
                     </dd>
                 }
                 @if (Model.IsFollowing == false)
                 {
                     <dd class="col-sm-10">
-                        Not Following |
+                        @*Not Following |*@
                         <a asp-action="FollowAndUnfollow" asp-route-petbusinessid="@Model.PetBusinessId" >Follow</a>
                     </dd>
                 }

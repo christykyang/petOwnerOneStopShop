@@ -37,9 +37,27 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isInvitationAccepted)
-            </td>
+            @if (item.isInvitationAccepted == null)
+            {
+                <td>
+                    Pending |
+                    <a asp-action="AcceptorDeclineInvite" asp-route-Id="@item.Id">Change Referral Status</a>
+                </td>
+            }
+            else if (item.isInvitationAccepted == false)
+            {
+                <td>
+                    Deline |
+                    <a asp-action="AcceptorDeclineInvite" asp-route-Id="@item.Id">Change Referral Status</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    Accept |
+                    <a asp-action="AcceptorDeclineInvite" asp-route-Id="@item.Id">Change Referral Status</a>
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.ObjectEventId)
             </td>
