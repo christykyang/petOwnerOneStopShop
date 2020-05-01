@@ -43,7 +43,8 @@ namespace PawentsOneStopShop.Controllers
 
             var petBusinesses = _repo.PetBusiness.FindAll();
 
-            IEnumerable<FeedUpdate> allUpdates = new FeedUpdate[] { }.AsQueryable();
+            
+            List<FeedUpdate> feedUpdates = new List<FeedUpdate>();
 
             foreach (var follow in follows)
             {
@@ -54,11 +55,12 @@ namespace PawentsOneStopShop.Controllers
                         var updates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(business.Id);
                         foreach (var update in updates)
                         {
-                            allUpdates.Append(update);
+                            feedUpdates.Add(update);
                         }
                     }
                 }
             }
+            IEnumerable<FeedUpdate> allUpdates = feedUpdates.ToList();
 
             return View(allUpdates);
         }
