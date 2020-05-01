@@ -51,7 +51,7 @@ namespace PawentsOneStopShop.Controllers
                 {
                     if(follow.PetBusinessId == business.Id)
                     {
-                        var updates = _repo.FeedUpdate.FindByCondition(u => u.PetBusinessId == business.Id);
+                        var updates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(business.Id);
                         allUpdates.Concat(updates);
                     }
                 }
