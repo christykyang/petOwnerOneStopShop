@@ -661,7 +661,7 @@ namespace PawentsOneStopShop.Controllers
 
             return RedirectToAction("DisplayNotMyPetProfileDetails", invite.PetProfileId);
         }
-        public IActionResult SendInvite(PetProfile petProfile)
+        public IActionResult SendPlaydate(PetProfile petProfile)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
