@@ -16,9 +16,9 @@
                     center: new google.maps.LatLng(43.0343, -87.9115)
                 });
 
-                var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
+                @*var businessInformation = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(c => new string[]{c.Name, c.BusinessType.ToString(), c.Address.ToString()}).ToArray()));
 
-                var infowindow = new google.maps.InfoWindow();
+                var infowindow = new google.maps.InfoWindow();*@
 
                 var coordinatesArray = @Html.Raw(Json.Serialize(Model.PetBusinesses.Select(a => new double[]{a.Address.Lat, a.Address.Lng}).ToArray()));
 
@@ -29,12 +29,12 @@
                         map: map
                     });
 
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                        return function () {
-                            infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, i));
+                    //google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    //    return function () {
+                    //        infowindow.setContent(businessInformation[i][0] + '<br>' + businessInformation[i][1] + '<br>' + businessInformation[i][2]);
+                    //        infowindow.open(map, marker);
+                    //    }
+                    //})(marker, i));
                 }
             }
     </script>
