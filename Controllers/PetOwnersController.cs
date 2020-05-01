@@ -587,64 +587,12 @@ namespace PawentsOneStopShop.Controllers
             }
         }
 
-        public IActionResult CreateFollow(int petBusinessId)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var petOwnerId = _repo.PetOwner.GetPetOwnerById(userId).Id;
-
-            Follow follow = new Follow();
-            follow.PetBusinessId = petBusinessId;
-            follow.PetOwnerId = petOwnerId;
-
-            Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
-            ViewData["FollowStatus"] = new SelectList(following, "Key", "Value");
-
-            return View(follow);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateFollow(int petBusinessId, int petOwnerId)
-        {
-            Follow following = new Follow();
-
-            following.PetOwnerId = petOwnerId;
-            following.PetBusinessId = petBusinessId;
-            following.IsFollowing = true;
-            _repo.Follow.CreateFollow(following);
-            _repo.Save();
-            return RedirectToAction(nameof(DisplayPetBusinessDetails));
-        }
-
         public IActionResult PetBusinessNewsFeed(int petBusinessId)
         {
             var newsFeedUpdates = _repo.FeedUpdate.FindUpdatesByPetBusinessIdIncludeAll(petBusinessId);
 
             return View(newsFeedUpdates);
         }
-
-        //public IActionResult Unfollow(int id)
-        //{
-        //    Follow follow = _repo.Follow.FindByCondition(f => f.Id == id).FirstOrDefault();
-
-        //    Dictionary<int, string> following = CreateNullableBoolDictionary("N/A", "Following", "Not Following");
-        //    ViewData["FollowStatus"] = new SelectList(following, "Key", "Value");
-
-        //    return View(follow);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Unfollow(int id, PetBusiness petBusiness, PetOwner petOwner)
-        //{
-        //    Follow following = _repo.Follow.FindByCondition(f => f.Id == id).FirstOrDefault();
-        //    following.PetBusinessId = petBusiness.Id;
-        //    following.PetOwnerId = petOwner.Id;
-        //    following.IsFollowing = false;
-        //    _repo.Follow.Update(following);
-        //    _repo.Save();
-
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         public async Task<IActionResult> SearchPetProfiles()
         {
